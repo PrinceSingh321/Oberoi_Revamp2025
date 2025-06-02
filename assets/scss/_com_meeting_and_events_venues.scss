@@ -1,0 +1,345 @@
+@import "_var.scss";
+@import "_mixin.scss";
+.hideBox {
+  display: none !important;
+}
+.seatingStyleWrap {
+  .form-chart-tabs {
+    display: flex;
+    @include below(sm) {
+      justify-content: center;
+    }
+    .heading {
+      position: relative;
+      cursor: pointer;
+      padding: 0 20px;
+      width: auto !important;
+      &.activeAcc {
+        color: $colorOrange !important;
+      }
+      &:after {
+        position: absolute;
+        content: "";
+        width: 1px;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: $black3;
+      }
+      &:first-child {
+        &:after {
+          display: none;
+        }
+      }
+      &.capacityChartBox {
+        display: none;
+      }
+    }
+  }
+  .optionsWrap {
+    margin-top: 40px;
+  }
+  .eventsWapper {
+    display: none;
+    @include below(sm) {
+      overflow-x: auto;
+      float: left;
+      width: 100%;
+    }
+    table {
+      tr {
+        td,
+        th {
+          padding: 7px 10px;
+          text-align: center !important;
+          display: table-cell;
+          vertical-align: top;
+          font-size: 18px;
+          border: none;
+          border-right: 1px solid #ccc;
+          color: $grey;
+          font-family: $vardana;
+          vertical-align: top;
+          font-weight: normal;
+          font-family: "optimanormal", serif;
+          span {
+            font-size: $sub-text;
+            font-weight: normal;
+            display: block;
+            margin-top: 3px;
+          }
+          &:last-child {
+            border: none;
+          }
+          &:first-child {
+            @include below(sm) {
+              width: 130px !important;
+            }
+          }
+          @include below(sm) {
+            width: auto !important;
+            padding: 7px 5px;
+          }
+        }
+        th {
+          font-size: $paragraph-font-size;
+        }
+        td {
+          // font-size: $small-desc;
+          font-size: 14px;
+          @include below(md) {
+            width: 25%;
+          }
+
+          &:first-child {
+            padding-left: 0px;
+          }
+        }
+      }
+      @include below(sm) {
+        width: 170% !important;
+        opacity: 1 !important;
+        float: left;
+        height: auto !important;
+      }
+    }
+  }
+}
+
+.seatingChartWrapper {
+  display: none;
+  margin: 0 0 40px 0;
+  @include below(sm) {
+    overflow-x: auto;
+    width: 100%;
+    float: left;
+  }
+  table {
+    width: 100%;
+    table-layout: fixed;
+    tr {
+      th {
+        width: 16.66%;
+        padding: 10px 5px;
+        text-align: center;
+        border: 1px solid $gray4;
+        border-right: none;
+        color: #606161;
+        background: $white;
+        font-size: $paragraph-font-size;
+        font-family: $vardanaNormal;
+        &:first-child{
+          width: 300px;
+          @include between(sm, tb){
+            width: 16.16%;
+          }
+        }
+        @include below(sm) {
+          font-size: 0.937em;
+          width: 60px;
+        }
+        @include below(lgMid) {
+          font-size: 0.937em;
+        }
+        @include below(md) {
+          font-size: 0.937em;
+        }
+        &:last-child {
+          border-right: 1px solid $gray4;
+        }
+        span {
+          display: block;
+          font-weight: normal;
+          font-size: $small-desc;
+          margin-top: 5px;
+        }
+        &:first-child {
+          @include below(sm) {
+            width: 143px;
+          }
+        }
+        @include below(sm) {
+          font-size: 0.937em;
+          width: 60px;
+        }
+      }
+      td {
+        width: 16.66%;
+        padding: 15px 5px;
+        text-align: center;
+        font-weight: bold;
+        color: #606161;
+        font-size: $paragraph-font-size;
+        font-weight: normal;
+        font-family: $vardanaNormal;
+        span {
+          display: block;
+          font-weight: normal;
+          font-size: $small-desc;
+        }
+        &:first-child {
+          @include below(sm) {
+            width: 95px;
+          }
+        }
+        @include below(sm) {
+          font-size: 0.937em;
+          width: 60px;
+        }
+        @include below(lgMid) {
+          font-size: 0.937em;
+        }
+        @include below(md) {
+          font-size: 0.937em;
+        }
+      }
+      &:nth-child(even) {
+        background: $offwhite;
+      }
+    }
+    @include below(sm) {
+      width: 800px;
+    }
+  }
+}
+.image-and-description-with-legend-attributes-option-3 {
+  display: flex;
+  align-items: center;
+  .img-col {
+    width: 50%;
+    img {
+      width: 100%;
+    }
+  }
+  .description-col {
+    width: 45%;
+    padding-left: 40px;
+  }
+}
+
+.requestReservationForm-container {
+  .requestFormWrapper {
+    .revForm-control.col-6 {
+      .inputbox {
+        label.fix-label {
+          top: 12px !important;
+          transform: translate(0px, 0px) !important;
+          font-size: 1.125rem !important;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+.weddingNewForm {
+  .countryListInDropdown {
+    position: absolute;
+    background: #fff;
+    min-width: 200px;
+    z-index: 9;
+    top: 47px;
+    box-shadow: 0px 2px 7px 0px #ccc;
+    display: none;
+    @include below(sm) {
+      width: 100%;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        font-weight: bold;
+        position: relative;
+        padding: 15px 25px;
+        font-family: "optimanormal";
+        font-size: 1.2rem;
+        margin-bottom: 0;
+        line-height: 100%;
+        position: relative;
+        cursor: pointer;
+        white-space: nowrap;
+        @include below(sm) {
+          padding: 10px 15px;
+          white-space: normal;
+        }
+        ul.subMenuHotelsList {
+          position: absolute;
+          left: 100%;
+          background: #fff;
+          box-shadow: 0px 2px 7px 0px #ccc;
+          width: auto;
+          top: 0;
+          font-family: "verdanaNormal";
+          display: none;
+          @include below(sm) {
+            min-width: auto;
+            width: 100%;
+            box-shadow: none;
+            position: static;
+            margin-top: 10px;
+          }
+          li {
+            font-family: $vardanaNormal;
+            font-weight: normal;
+            @include below(sm) {
+              line-height: 140%;
+              padding-left: 0;
+            }
+            &:hover {
+              color: #616161;
+              &:after {
+                display: none;
+              }
+            }
+          }
+        }
+        &.hasSubHotel {
+          // position: relative;
+          &:hover {
+            &:after {
+              position: absolute;
+              width: 8px;
+              height: 8px;
+              content: "";
+              top: 50%;
+              right: 15%;
+              border-top: 2px solid #d8751b;
+              border-right: 2px solid #d8751b;
+              transform: translate(-50%, -50%) rotate(45deg);
+              @include below(sm) {
+                top: 20px;
+                right: 20px;
+                transform: translate(-50%, -50%) rotate(135deg);
+              }
+            }
+            // .subMenuHotelsList {
+            //   display: block;
+            // }
+          }
+        }
+        &:hover {
+          color: $colorOrange;
+        }
+      }
+    }
+  }
+  .selectedHotel {
+    color: #606161;
+    padding: 12px 2px;
+    font-size: 1.25rem;
+    font-family: verdana;
+    border-bottom: 1px solid #b7b7b7;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 25px;
+    cursor: pointer;
+    @include below(md2){
+      font-size: 1rem;
+    }
+    @include below(sm) {
+      font-size: $small-desc;
+      padding: 12px 0px;
+    }
+  }
+}

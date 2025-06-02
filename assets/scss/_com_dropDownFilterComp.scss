@@ -1,0 +1,150 @@
+.dropDownFilter_Comp {
+  position: relative;
+  .getDropdownValue {
+    display: inline-block;
+    margin-bottom: 30px;
+    text-align: left;
+    position: relative;
+    font-size: 1.188em;
+    font-family: $vardanaNormal;
+    color: $grey;
+    cursor: pointer;
+    &::after {
+      content: " ";
+      border-bottom: 1.5px solid $grey;
+      border-right: 1.5px solid $grey;
+      top: 38%;
+      margin-top: -0.21em;
+      height: 0.6em;
+      right: -22px;
+      position: absolute;
+      transform: rotate(45deg);
+      width: 0.6em;
+      z-index: 2;
+      @include below(tb) {
+        right: -15px;
+      }
+    }
+    @include below(lg) {
+      font-size: 0.937em;
+    }
+    @include below(sm) {
+      border: none;
+      padding: 0px 3px;
+      font-weight: 400;
+      margin-bottom: 15px;
+      font-size: 0.937em;
+    }
+    @include below(xs2) {
+      font-size: 0.9em;
+    }
+    &.active {
+      &:after {
+        display: none;
+      }
+    }
+  }
+  .dropFilter {
+    display: none !important;
+    li {
+      padding: 0px 10px 15px 5px;
+      line-height: 150%;
+      display: block;
+      cursor: pointer;
+      // &:last-child{
+      //   padding: 0px 10px 0px 0;
+      // }
+      @include below(sm) {
+        padding: 0px 0px 15px 0px;
+      }
+      &:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+  .openListItem {
+    display: block !important;
+    padding: 20px 15px 20px;
+    min-width: 150px;
+    position: absolute;
+    background: #fff;
+    z-index: 99;
+    top: 0px;
+    left: 0px;
+    width: auto;
+    box-shadow: 0px 0px 10px 0px #ccc;
+    @include below(lg) {
+      top: 0px;
+    }
+    @include below(tb) {
+      top: 0px;
+      //padding: 10px 5px 25px 5px;
+    }
+    @include below(sm) {
+      top: 0px;
+      min-width: 180px;
+    }
+    @include below(xs2) {
+      padding: 15px 12px 15px;
+    }
+    li {
+      @include below(sm) {
+        font-size: 0.837em;
+        padding-bottom: 0px;
+        margin-bottom: 8px;
+        &:last-child {
+          border: none;
+          padding-bottom: 0;
+        }
+      }
+      @include below(xs2) {
+        font-size: 0.9em !important;
+        padding: 0px;
+      }
+    }
+  }
+  &.w-70 {
+    width: 70%;
+    @include below(sm) {
+      width: 75%;
+    }
+  }
+}
+.experiencePageContent {
+  .dropDownFilter_Comp {
+    .openListItem {
+      top: 48px;
+      @include between(tb, md) {
+        top: 50px;
+      }
+      @include below(tb) {
+        top: 35px !important;
+      }
+    }
+  }
+}
+
+.experiencePageContent .dropDownFilter_Comp .getDropdownValue {
+  color: #d8751b;
+}
+.experiencePageContent .dropDownFilter_Comp .getDropdownValue::after {
+  border-color: #d8751b;
+  @include below(tb) {
+    border-bottom: 1.5px solid #d8751b;
+    border-right: 1.5px solid #d8751b;
+  }
+}
+
+.com_TwoImageSliderComponentRev {
+  .dropDownFilter_Comp {
+    .ComSlider-tab {
+      &.dropFilter {
+        top: 50px;
+        @include below(tb) {
+          top: 33px;
+        }
+      }
+    }
+  }
+}

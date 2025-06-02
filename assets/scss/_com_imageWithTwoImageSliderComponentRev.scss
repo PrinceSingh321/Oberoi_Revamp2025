@@ -1,0 +1,276 @@
+@import "_var.scss";
+@import "_mixin.scss";
+
+.com_TwoImageSliderComponentRev {
+  width: 100%;
+  position: relative;
+  @include commonTabCompRev();
+  .com_TwoImageSliderContent {
+    width: 100%;
+    position: relative;
+    .com_TwoImageTabSlider {
+      width: 100%;
+      position: relative;
+      display: none;
+      &.active {
+        display: block;
+      }
+      @include above(tb) {
+        .slick-track {
+          display: flex;
+        }
+      }
+      .com_TwoImageSlider-img-sec {
+        width: 100%;
+        &.slick-slide {
+          margin: 0 32.5px;
+          @include above(tb) {
+            position: relative;
+            padding-bottom: 26px;
+            .slidesBtnRev {
+              position: absolute;
+              bottom: 0px;
+            }
+          }
+          @include below(sm) {
+            margin: 0 20px;
+          }
+        }
+        &.swiper-slide{
+          //margin: 0 32.5px;
+          @include above(tb) {
+            position: relative;
+            padding-bottom: 26px;
+            height: auto;
+            .slidesBtnRev {
+              position: absolute;
+              bottom: 0px;
+            }
+          }
+          @include below(sm) {
+            //margin: 0 20px;
+          }
+        }
+        picture {
+          display: block;
+          overflow: hidden;
+          img {
+            transition: 3s ease;
+            width: 100%;
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+        }
+        // .slidesTextRev {
+        //   p {
+        //     display: -webkit-box;
+        //     -webkit-line-clamp: 2;
+        //     -webkit-box-orient: vertical;
+        //     overflow: hidden;
+        //   }
+        // }
+      }
+      .slick-list {
+        margin: 0 -32.5px;
+        @include below(md2) {
+          margin: 0 -30px;
+        }
+        @include below(sm) {
+          margin: 0 -20px;
+        }
+      }
+      &::after {
+        content: "";
+        width: 50px;
+        height: 100%;
+        background: #fff;
+        position: absolute;
+        left: -52px;
+        z-index: 9;
+        top: -2px;
+        @include below(sm) {
+          display: none;
+        }
+      }
+      &::before {
+        content: "";
+        width: 50px;
+        height: 100%;
+        background: #fff;
+        position: absolute;
+        right: -52px;
+        z-index: 9;
+        top: -2px;
+        @include below(sm) {
+          display: none;
+        }
+      }
+      .com_TwoImageSlickSlider{
+        &.swiper{
+          //margin: 0 -32.5px;
+        }
+      }
+      .com_TwoImageSlickSlider{
+        &.swiper{
+          position: initial;
+          @include below(tb){
+            position: relative;
+          }
+          .swiper-button-next{
+            right: -47px;
+            @include below(tb){
+              right: 0;
+            }
+            &:after{
+              color: rgb(110, 110, 110);
+              font-size: 1.7rem;
+              @include below(tb){
+                color: #fff;
+              }
+            }
+          }
+          .swiper-button-prev{
+            left: -47px;
+            @include below(tb){
+              left: 0;
+            }
+            &::after{
+              color: rgb(110, 110, 110);
+              font-size: 1.7rem;
+              @include below(tb){
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+    }
+    .slick-prev {
+      //left: -40px;
+      left: -2%;
+      z-index: 92;
+      @include below(tb) {
+        left: 0;
+      }
+      &::before {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-top: 1px solid $black;
+        border-left: 1px solid $black;
+        position: absolute;
+        top: 6px;
+        right: 0px;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        @include below(tb) {
+          top: 10px;
+          left: 15px;
+          border-top: 2px solid $white;
+          border-left: 2px solid $white;
+        }
+      }
+      @include below(tb) {
+        left: 0;
+        top: 36%;
+        //background: rgba(230, 230, 230, 0.5);
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .slick-next {
+      right: -2%;
+      z-index: 92;
+      @include below(tb) {
+        right: 0;
+      }
+      &::before {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-top: 1px solid $black;
+        border-left: 1px solid $black;
+        position: absolute;
+        top: 6px;
+        right: 0px;
+        transform: rotate(136deg);
+        -webkit-transform: rotate(136deg);
+        -moz-transform: rotate(136deg);
+        @include below(tb) {
+          top: 10px;
+          right: 15px;
+          border-top: 2px solid $white;
+          border-left: 2px solid $white;
+        }
+      }
+      @include below(tb) {
+        top: 50%;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        //background: rgba(230, 230, 230, 0.5);
+      }
+    }
+    // .slick-next,
+    // .slick-prev {
+    //   top: 34.5vh;
+    //   //transform: translate(0, -41.6%);
+    //   @include between(lg, lg2){
+    //     top: 31vh;
+    //   }
+    //   @include below(md2){
+    //     top: 26.2vh;
+    //   }
+    //   @include below(md3){
+    //     top: 29.2vh;
+    //   }
+    //   @include below(sm) {
+    //     top: 24vh;
+    //     //transform: translate(0, -50%);
+    //   }
+    // }
+    @include slickaroows();
+    &.com-arrows {
+      //   .slick-next,
+      //   .slick-prev{
+      //     top: 49%;
+      //     transform: translate(0, -50%);
+      //     @include between(lg, lg2){
+      //       top: 47%;
+      //     }
+      //     @include below(sm) {
+      //       top: 24vh;
+      //       transform: translate(0, -50%);
+      //     }
+      // }
+      @include slickaroows();
+    }
+  }
+  .headWrappRev {
+    .left-section-heading {
+      .titleRev {
+        h3 {
+          position: relative;
+          left: -3px;
+        }
+      }
+    }
+  }
+}
+.SlideCompWithoutText {
+  .com_TwoImageSliderContent {
+    // .slick-next,
+    // .slick-prev {
+    //   @include below(sm) {
+    //     top: 25vh;
+    //     transform: translate(0, -50%);
+    //   }
+    // }
+    @include slickaroows();
+  }
+}

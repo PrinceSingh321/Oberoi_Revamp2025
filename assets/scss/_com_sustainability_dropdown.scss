@@ -1,0 +1,46 @@
+.com_imageWithTextTwoColComponent{
+    .popbtn {
+        display: inline-block;
+        @include below(sm){
+            display: inline-block;
+        }
+        a{
+            padding-right: 10px;
+            margin-right: 10px;
+            &::after{
+                top:50%;
+            }
+            &.pop-active{
+                color: #d8751b;
+                &::after{
+                    top: 42% !important;
+                    transform: rotate(45deg);
+                    border-bottom: 1px solid #d8751b;
+                    border-right: 1px solid #d8751b;
+                    right:-3px;
+                }
+            }
+        }
+        &:last-child{
+            a{
+                margin-right: 0;
+            }
+            
+        }
+    }
+    .descriptionSec{
+        .contact-details{
+            #sustain-main{
+                display: none;
+                .map-detail-colm{
+                    p{
+                        margin: 0 0 8px;
+                        padding: 0;
+                    }
+                }
+            }
+            
+        }
+    } 
+     
+}

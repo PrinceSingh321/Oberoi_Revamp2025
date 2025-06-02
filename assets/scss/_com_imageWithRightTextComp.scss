@@ -1,0 +1,587 @@
+@import "_var.scss";
+@import "_mixin.scss";
+
+.com_imageWithrightTextCompRev {
+  .com_container {
+    .imageWithRightTextWrappRev {
+      width: 100%;
+      @include below(md2) {
+        // margin-bottom: 60px;
+      }
+      @include below(sm) {
+        margin-bottom: 0;
+      }
+      .imageWithRightTextWrapp {
+        display: flex;
+        align-items: center;
+        padding: 1px;
+        margin-bottom: 80px;
+        width: 100%;
+        @include below(md2) {
+          margin-bottom: 60px;
+        }
+        @include below(sm) {
+          margin-bottom: 60px;
+        }
+        .imageWrappRev {
+          width: 55%;
+          @include below(md) {
+            width: 50%;
+          }
+          @include below(tb) {
+            width: 100%;
+          }
+          picture {
+            display: block;
+            overflow: hidden;
+            img {
+              transition: 3s ease;
+              &:hover {
+                transform: scale(1.1);
+              }
+              @include below(tb) {
+                width: 100%;
+              }
+            }
+          }
+        }
+        .textWrappRev {
+          margin-left: 65px;
+          width: 40%;
+          @include below(md2) {
+            margin-left: 60px;
+          }
+          @include below(tb) {
+            margin-left: 0;
+            width: 100%;
+            margin-top: 23px;
+          }
+          @include below(sm) {
+            margin-left: 0px;
+            width: 100%;
+            margin-top: 23px;
+          }
+          .titleRev {
+            h3 {
+              margin-bottom: 15px;
+              @include below(sm) {
+                margin-bottom: 10px;
+
+                br {
+                  display: none;
+                }
+              }
+            }
+          }
+          .descriptionTxtBottomBox {
+            margin-top: 20px;
+            @include below(sm) {
+              margin-top: 10px;
+            }
+            p {
+              margin-bottom: 0px;
+            }
+            .mapsDestBtnRev {
+              a {
+                color: #606161;
+                cursor: pointer;
+                text-decoration: none;
+                padding: 0px 15px 0px 0px;
+                font-size: 1.188em;
+                transition: all 0.5s;
+                letter-spacing: 1px;
+                font-family: Verdana;
+                font-weight: bold;
+                position: relative;
+                transition: all 0.5s;
+                &:after {
+                  content: " ";
+                  border-bottom: 2.5px solid #606161;
+                  border-right: 2.5px solid #606161;
+                  top: 33%;
+                  height: 0.4em;
+                  right: -5px;
+                  position: absolute;
+                  transform: rotate(-45deg);
+                  width: 0.4em;
+                  z-index: 2;
+                  @include below(sm) {
+                    right: 3px;
+                    top: 40%;
+                  }
+                }
+                @include below(md2) {
+                  font-size: 0.937em;
+                }
+                &.active {
+                  color: #d8751b;
+
+                  &:after {
+                    top: 33%;
+                    transform: rotate(45deg);
+                    border-color: #d8751b;
+                  }
+                }
+                &:hover {
+                  color: $colorOrange;
+                  &:after {
+                    border-bottom: 2.5px solid $colorOrange;
+                    border-right: 2.5px solid $colorOrange;
+                  }
+                }
+              }
+            }
+          }
+          .textDiscription {
+            p {
+              margin-bottom: 9px;
+              @include below(sm) {
+                margin-bottom: 12px;
+              }
+            }
+          }
+        }
+        .buttonStyle1Rev {
+          margin-top: 1.5rem;
+        }
+        @include below(tb) {
+          display: block;
+        }
+        // @include below(sm) {
+        //   float: left;
+        // }
+        &.year2 {
+          display: none;
+        }
+      }
+      &.destination-container {
+        .filterWrapp {
+          .dropDownFilter_Comp {
+            .getDropdownValue {
+              pointer-events: none;
+              min-height: 23px;
+            }
+          }
+        }
+      }
+      &.sailingWrapper {
+        .mainImgTextWrapp {
+          display: none;
+          text-align: center;
+          .imageWithRightTextWrapp {
+            margin-bottom: 20px;
+            .imageWrappRev {
+              width: 50%;
+              @include below(tb) {
+                width: 100%;
+              }
+              img {
+                width: 100%;
+              }
+            }
+            .textWrappRev {
+              width: 50%;
+              @include below(tb) {
+                width: 100%;
+              }
+            }
+          }
+          .sailNote {
+            margin-bottom: 60px;
+            color: #606161;
+            font-size: 1rem;
+            font-family: $vardanaBold;
+          }
+        }
+      }
+    }
+    .imageTextFormSlide {
+      .imageWithRightTextWrapp {
+        flex-wrap: wrap;
+        .imageWrappRev,
+        .textWrappRev {
+          @include below(tb) {
+            width: 100%;
+            margin-left: 0px;
+          }
+        }
+        .textWrappRev {
+          @include below(tb) {
+            margin-top: 18px;
+          }
+        }
+      }
+      .slick-prev,
+      .slick-next {
+        transform: translate(0, 0%);
+        margin-top: -16px;
+      }
+      .slick-prev {
+        left: -1.9%;
+        @include below(sm) {
+          left: 15px;
+          z-index: 2;
+        }
+        &::before {
+          content: "";
+          display: block;
+          width: 20px;
+          height: 20px;
+          border-top: 1px solid #000;
+          border-left: 1px solid #000;
+          position: absolute;
+          top: 6px;
+          right: 0px;
+          transform: rotate(-45deg);
+          -webkit-transform: rotate(-45deg);
+          -moz-transform: rotate(-45deg);
+
+          @include below(tb) {
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            
+          }
+        }
+      }
+      .slick-next {
+        right: -2%;
+        @include below(sm) {
+          right: 15px;
+        }
+        &::before {
+          content: "";
+          display: block;
+          width: 20px;
+          height: 20px;
+          border-top: 1px solid #000;
+          border-left: 1px solid #000;
+          position: absolute;
+          top: 6px;
+          right: 0px;
+          transform: rotate(136deg);
+          -webkit-transform: rotate(136deg);
+          -moz-transform: rotate(136deg);
+
+          @include below(tb) {
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            
+          }
+        }
+      }
+    }
+    .ComSlider-tab {
+      .ComSlider-item {
+        font-family: $vard;
+        color: $colorOrange;
+        //text-shadow: 0 0 1px #d8751b, 0 0 1px #d8751b;
+      }
+      .inactive {
+        font-family: $vardanaNormal;
+        color: $black3;
+        text-shadow: none;
+        &:hover {
+          color: $colorOrange;
+          //text-shadow: 0 0 1px $colorOrange, 0 0 1px $colorOrange;
+        }
+      }
+      &.desTab {
+        li {
+          position: relative;
+          &::after {
+            content: " ";
+            border-bottom: 2.5px solid $colorOrange;
+            border-right: 2.5px solid $colorOrange;
+            top: 16%;
+            margin-top: -0.21em;
+            height: 0.6em;
+            right: 25px;
+            position: absolute;
+            transform: rotate(45deg);
+            width: 0.6em;
+            z-index: 2;
+            @include below(tb) {
+              right: 12px;
+              top: 10%;
+            }
+            @include below(xs) {
+              right: 4px;
+              top: 38%;
+              width: 0.4em;
+              height: 0.4em;
+              transform: translate(0, -50%) rotate(45deg);
+            }
+            @include below(xs2) {
+              right: 3px;
+            }
+          }
+          &.inactive {
+            &::after {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .viewMapData {
+    margin-bottom: 100px;
+    @include below(md2) {
+      margin-bottom: 60px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 73vh;
+    }
+  }
+  .viewMapData {
+    height: 75vh;
+    width: 100%;
+    float: left;
+    position: relative;
+    @include below(sm) {
+      height: 50vh;
+    }
+  }
+  .compMapshare {
+    width: 100%;
+    float: left;
+    display: none;
+  }
+  .filterWrapp {
+    &.fixedtab {
+      .ComSlider-tab {
+        &.desTab {
+          li {
+            &::after {
+              top: 30%;
+              @include below(tb) {
+                top: 9%;
+              }
+              @include below(xs) {
+                top: 36%;
+                right: 0px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .filterWrapp {
+    &.filterSticyTab {
+      .ComSlider-tab {
+        &.openListItem {
+          top: 54px;
+        }
+      }
+      &.fixedFilterTab {
+        .ComSlider-tab {
+          &.openListItem {
+            top: 39px;
+            @include below(tb) {
+              top: 34px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.targetScroll {
+  position: relative;
+  top: -150px;
+}
+.targetScrollwel {
+  position: relative;
+  top: -230px;
+}
+.is-hidden {
+  display: none !important;
+}
+.destinationMainWrapp {
+  .filterWrapp {
+    ul {
+      li {
+        padding: 0px 50px 20px 0;
+        @include below(sm) {
+          padding: 0px 30px 20px 0;
+          font-size: 0.837em;
+          margin-right: 10px;
+        }
+        @include below(xs) {
+          padding: 2px 20px 15px 0;
+          margin-right: 5px;
+        }
+        @include below(xs2) {
+          font-size: 0.85em !important;
+          padding: 2px 17px 15px 0;
+        }
+      }
+    }
+    .right-section-btn {
+      margin-bottom: 20px;
+    }
+    .dropDownFilter_Comp {
+      .destFIlterTab {
+        padding: 15px 10px 5px;
+        @include below(tb) {
+          padding: 15px 10px 5px;
+        }
+        .js-filter {
+          padding: 0px 10px 10px 5px;
+        }
+      }
+    }
+    .right-section-btn {
+      .buttonStyle2Rev {
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+}
+.imageWithRightTextSlide {
+  margin-bottom: 60px;
+  .two-imageWithHalfSlider-tab-content{
+    padding: 0 1px;
+  }
+}
+.globalDining {
+  .com_container {
+    .imageWithRightTextWrappRev {
+      .imageWithRightTextWrapp {
+        margin-bottom: 0px;
+      }
+    }
+  }
+  .request-a-proposal-form-wrap {
+    margin-top: 0px;
+    .selectBox2 {
+      position: relative;
+      &::after {
+        content: "";
+        display: block;
+        width: 0.7rem;
+        height: 0.7rem;
+        border-top: 2px solid #606161;
+        border-left: 2px solid #606161;
+        position: absolute;
+        bottom: 3rem;
+        right: 3rem;
+        transform: rotate(-135deg);
+        z-index: 1;
+      }
+    }
+  }
+}
+.destListWrapp {
+  position: relative;
+  .compMapshare {
+    position: absolute;
+    display: none;
+    @include below(sm) {
+      position: relative;
+      display: none;
+      float: left;
+      margin-top: -115px;
+      z-index: 1;
+    }
+    .share-component {
+      top: 60px;
+      right: 10px;
+      .share-toggle {
+        color: rgb(102, 102, 102);
+        cursor: pointer;
+        font-size: 1.3em;
+        width: 40px;
+        height: 40px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        background: none rgb(255, 255, 255);
+      }
+      span,
+      .fa {
+        margin: 0px;
+        color: #d8741b;
+        &.fa-link {
+          position: relative;
+          span {
+            position: absolute;
+            top: 0;
+            right: 40px;
+            visibility: hidden;
+            width: 110px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 6px 0;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75em;
+            font-family: "verdanaNormal";
+
+            &::after {
+              content: "";
+              position: absolute;
+              top: 35%;
+              right: -9px;
+              margin-left: 0;
+              border-width: 5px;
+              border-style: solid;
+              border-color: #555 transparent transparent transparent;
+              transform: rotate(-90deg);
+            }
+          }
+          &:hover {
+            span {
+              visibility: visible;
+              opacity: 1;
+            }
+          }
+        }
+      }
+      .share-list {
+        left: initial;
+        right: 0px;
+        width: 40px;
+        top: 45px;
+        @include below(sm) {
+          left: initial;
+          right: 0px;
+          width: auto;
+          top: 42px;
+          padding: 9px 5px 8px 10px;
+        }
+        li {
+          &:hover {
+            i {
+              color: $colorOrange;
+            }
+          }
+          .fa {
+            color: $gray;
+          }
+        }
+        &:before {
+          @include below(sm) {
+            background-color: #f2f2f2;
+            content: "";
+            height: 10px;
+            position: absolute;
+            right: 16px;
+            top: -9px;
+            transform: rotate(-129deg) translateX(-50%);
+            width: 10px;
+          }
+        }
+      }
+    }
+  }
+}

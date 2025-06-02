@@ -1,0 +1,360 @@
+@import "_var.scss";
+@import "_mixin.scss";
+
+.com_TwoTabHalfColImageComponentRev {
+  width: 100%;
+  .fullWidth-Container {
+    width: 100%;
+    position: relative;
+    @include below(tb) {
+      padding: 0 2.5% 0 2.5%;
+    }
+    @include between(sm3, sm2) {
+      padding: 0 2.5%;
+    }
+    @include below(xs) {
+      padding: 0 4%;
+    }
+    .tab-two-imageWithHalfSlider {
+      width: 100%;
+      display: none;
+      &.active {
+        display: block;
+      }
+      .slick-list {
+        padding-right: 28%;
+        @include below(tb) {
+          padding: 0 0% 0 0;
+          margin: 0 -20px;
+        }
+      }
+      .two-imageWithHalfSlider-img {
+        width: 100%;
+        position: relative;
+        //position: initial;
+        @include below(tb) {
+          position: relative;
+        }
+        @include above(tb) {
+          .slick-track {
+            display: flex;
+          }
+        }
+        .slider-img-sec {
+          width: 100%;
+          padding-right: 65px;
+          overflow: hidden;
+          @include above(tb) {
+            position: relative;
+            padding-bottom: 26px;
+            height: auto;
+            .slidesBtnRev {
+              position: absolute;
+              bottom: 0px;
+            }
+          }
+          @include below(tb) {
+            padding-right: 0px;
+            margin: 0px 20px;
+          }
+          @include below(sm) {
+            padding-right: 0px;
+            margin: 0 20px;
+          }
+          picture {
+            display: block;
+            overflow: hidden;
+            img {
+              transition: 3s ease;
+              &:hover {
+                @include imageScale(1.1);
+              }
+            }
+          }
+          &.swiper-slide{
+            @include below(tb){
+              margin:0;
+            }
+          }
+        }
+        .slick-prev {
+          left: -1.9%;
+          &::before {
+            content: "";
+            display: block;
+            width: 20px;
+            height: 20px;
+            border-top: 1px solid $black;
+            border-left: 1px solid $black;
+            position: absolute;
+            top: 6px;
+            right: 0px;
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            @include below(tb) {
+              border-top: 2px solid $white;
+              border-left: 2px solid $white;
+            }
+            @include below(sm) {
+              top: 10px;
+              left: 15px;
+            }
+          }
+          @include below(lg2) {
+            //left: -29px;
+          }
+          @include below(md2) {
+            //left: -34px;
+          }
+          @include below(sm) {
+            left: 0;
+            top: 36%;
+          }
+        }
+
+        .slick-next {
+          right: 29.5%;
+          &::before {
+            content: "";
+            display: block;
+            width: 20px;
+            height: 20px;
+            border-top: 1px solid $black;
+            border-left: 1px solid $black;
+            position: absolute;
+            top: 6px;
+            right: 0px;
+            transform: rotate(136deg);
+            -webkit-transform: rotate(136deg);
+            -moz-transform: rotate(136deg);
+            @include below(tb) {
+              top: 10px;
+              right: 15px;
+              border-top: 2px solid $white;
+              border-left: 2px solid $white;
+            }
+          }
+          @include below(lg2) {
+            right: 30%;
+          }
+          @include below(md2) {
+            right: 30.2%;
+          }
+          @include below(tb) {
+            right: 0px;
+            //top: 36%;
+          }
+          @include above(lg3) {
+            right: 29.2%;
+          }
+        }
+        // .slick-next,
+        // .slick-prev {
+        //   top: 30.8vh;
+        //   transform: translate(0, 0%);
+        //   margin-top: -16px;
+        //   @include between(lg, lg2){
+        //     top: 27.2vh;
+        //   }
+        //   @include below(md2){
+        //     top: 23.5vh;
+        //   }
+        //   @include below(md3){
+        //     top: 26.2vh;
+        //   }
+        //   @include below(sm) {
+        //     top: 24vh;
+        //     width: 40px;
+        //     height: 40px;
+        //     background: rgba(230, 230, 230, 0.5);
+        //     transform: translate(0, -50%);
+        //   }
+        // }
+        @include slickaroows();
+        @include below(tb) {
+          .slick-next {
+            right: 0px;
+          }
+          .slick-prev {
+            left: 0px;
+            z-index: 9;
+            &::before {
+              top: 10px;
+              left: 15px;
+            }
+          }
+        }
+        &.swiper{
+          position: initial;
+          .swiper-button-next{
+            right: 28.5%;
+            @include below(tb){
+              right: 0.5%;
+            }
+            &::after{
+              color: rgb(110 110 110);
+              font-size: 1.7rem;
+              @include below(tb){
+                color: #fff;
+                font-size: 1.4rem;
+              }
+            }
+          }
+          .swiper-button-prev{
+            left: 1%;
+            @include below(tb){
+              left: 0.5%;
+            }
+            &::after{
+              color: rgb(110 110 110);
+              font-size: 1.7rem;
+              @include below(tb){
+                color: #fff;
+                font-size: 1.4rem;
+              }
+            }
+          }
+        }
+      }
+      .two-imgSlider-main {
+        .slidesBtnRev {
+          // padding-bottom: 25px;
+          @include below(sm) {
+            display: block;
+          }
+        }
+      }
+      .slidesTextRev {
+        p {
+          strong + a {
+            color: #606161;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+    .two-imageWithHalfSlider {
+      width: 100%;
+      padding: 0 0 0 0%;
+      @include commonTabCompRev();
+      .filterWrapp {
+        padding-right: 76px;
+        @include below(lg2) {
+          padding-right: 55px;
+        }
+        @include below(tb) {
+          padding-right: 5px;
+        }
+      }
+    }
+    .two-imageWithHalfSlider-tab-content {
+      &.com-tab-arrows {
+        // .slick-next,
+        //   .slick-prev{
+        //     top: 30.8vh;
+        //     //transform: translate(0, -41.2%);
+        //     @include between(lg, lg2){
+        //       top: 27.2vh;
+        //     }
+
+        //     @include below(md2){
+        //       top: 23.6vh;
+        //     }
+        //     @include below(md3){
+        //       top: 26.2vh;
+        //     }
+        //     @include below(sm){
+        //       top: 24vh;
+        //       transform: translate(0, -50%);
+        //     }
+        // }
+
+        @include slickaroows();
+      }
+    }
+    &.RighttextSlide {
+      max-width: 93.2%;
+      width: 100%;
+      margin: 0 auto;
+      padding-left: 0%;
+      @include below(tb) {
+        max-width: 100%;
+        padding: 0px 15px;
+      }
+      .tab-two-imageWithHalfSlider {
+        .slick-list {
+          padding-right: 0%;
+        }
+
+        .two-imageWithHalfSlider-img {
+          .slick-track {
+            width: 100% !important;
+            flex-wrap: wrap;
+          }
+          .slider-img-sec {
+            width: 100% !important;
+            display: flex;
+            align-items: center;
+            padding-right: 0px;
+            @include below(tb) {
+              flex-wrap: wrap;
+            }
+            picture {
+              width: 50%;
+              @include below(tb) {
+                width: 100%;
+              }
+            }
+            .RighttextSlideContent {
+              width: 50%;
+              display: flex;
+              flex-wrap: wrap;
+              padding: 0 0 0 3.6%;
+              @include below(tb) {
+                width: 100%;
+                padding: 0 0 0 0%;
+              }
+            }
+            .slidesBtnRev {
+              position: inherit;
+              width: 100%;
+            }
+          }
+        }
+      }
+      .two-imageWithHalfSlider {
+        .filterWrapp {
+          padding-right: 9px;
+        }
+      }
+    }
+  }
+}
+
+.left-section-heading {
+  @include left-section-heading();
+  .commonTabtitle {
+    @include commonTabtitle();
+  }
+}
+
+.right-section-btn {
+  margin-bottom: 30px;
+  @include right-section-btn();
+  @include below(sm) {
+    display: block;
+    text-align: left;
+    margin-bottom: 15px;
+  }
+}
+#fitness {
+  .slidesTextRev {
+    p {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+@include slidesText();
+@include slidesBtnRev();

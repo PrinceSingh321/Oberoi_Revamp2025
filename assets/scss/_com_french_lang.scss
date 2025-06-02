@@ -1,0 +1,57 @@
+.body-fr-fr{
+   header{
+      .header-left-unit{
+         .left-side-menu{
+            ul{
+               li{
+                  padding: 0px 0.1vw;
+                  a{
+                     padding: 0 1vw;
+                     @include below(md3){
+                        padding: 0 0.9vw;
+                     }
+                  }
+               }
+            } 
+         }
+      }
+      &.hotel-pages{
+         .header-logo-unit{
+            width: 10%;
+         }
+      } 
+      &#header{
+         .header-right-unit{
+            @include above(tb){
+               width: 45%;
+            }
+            .right-side-menu{
+               ul{
+                  li{
+                     padding: 0px 1vw;
+                     @include below(md3){
+                        padding: 0px 0.6vw;
+                     }
+                     a{
+                        padding: 0 0.1vw;
+                        
+                     }
+                  }
+               } 
+            }
+            &.overview-links{
+               .right-side-menu{
+                  .cta-box{
+                     @include below(md3){
+                     width: 7vw;
+                     min-width: 95px;
+                     max-width: 135px;
+                     }
+                  }
+               } 
+            } 
+         } 
+      }
+       
+   }   
+}

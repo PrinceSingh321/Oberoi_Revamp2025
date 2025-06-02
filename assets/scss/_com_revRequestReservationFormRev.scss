@@ -1,0 +1,903 @@
+.requestReservationForm-container {
+  width: 100%;
+  padding: 40px 0;
+  position: relative;
+  display: none;
+  &.active {
+    display: block;
+  }
+  &.activeC {
+    padding-bottom: 0px;
+    @include below(tb) {
+      padding: 0px;
+    }
+  }
+  #RequestFromThanks-box {
+    .bookinginfo {
+      p {
+        @include below(tb) {
+          padding: 25px 15px 20px;
+        }
+      }
+    }
+  }
+  .bookinginfo {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    p {
+      background: $gray3;
+      width: 100%;
+      color: $grey;
+      text-align: center;
+      padding: 10px 50px;
+      font-size: 1.125rem;
+      border: 1px solid #b7b7b7;
+
+      @include below(lgMid) {
+        font-size: 1.05rem;
+      }
+      @include below(tb) {
+        padding: 25px 15px 20px;
+      }
+      a {
+        color: $colorOrange;
+        text-decoration: none;
+        @include below(md3) {
+          display: inline-block;
+        }
+      }
+    }
+  }
+  .requestFormWrapper {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    .selectBox2::after {
+      content: "";
+      display: block;
+      width: 0.7rem;
+      height: 0.7rem;
+      border-top: 2px solid #606161;
+      border-left: 2px solid #606161;
+      position: absolute;
+      bottom: 3rem;
+      right: 3rem;
+      transform: rotate(-135deg);
+      z-index: 1;
+      @include below(sm) {
+        content: "";
+        width: 0.5rem;
+        height: 0.5rem;
+        bottom: 2rem;
+        right: 0;
+        border-top: 1px solid #606161;
+      border-left: 1px solid #606161;
+       
+      }
+    }
+
+    @include below(sm) {
+      padding:0px 10px;
+    }
+
+    &:last-child {
+      display: block;
+    }
+    @include below(tb) {
+      display: block;
+    }
+    @include below(sm) {
+      display: block;
+    }
+    .revForm-control {
+      position: relative;
+      width: 100%;
+      &.col-3 {
+        width: 24.8%;
+        position: relative;
+        display: inline-flex;
+        padding: 28px 50px 28px 0px;
+        @include below(md2) {
+          padding: 28px 25px 28px 0px;
+        }
+        &:nth-child(2) {
+          @include between(tb, md) {
+            padding: 28px 0px 28px 0px;
+          }
+        }
+        @include below(lg2) {
+          width: 24.7%;
+        }
+        @include between(tb, md) {
+          width: 49.5%;
+        }
+        @include below(tb) {
+          width: 100%;
+          padding: 12px 0px 12px 0px;
+        }
+        &:last-child {
+          padding-right: 0;
+          &::after {
+            right: 0;
+          }
+        }
+        // &::after {
+        //     content: "";
+        //     display: block;
+        //     width: 0.7rem;
+        //     height: 0.7rem;
+        //     border-top: 2px solid $grey;
+        //     border-left: 2px solid $grey;
+        //     position: absolute;
+        //     bottom: 45px;
+        //     right: 48px;
+        //     transform: rotate(-135deg);
+        //     z-index: 1;
+        //     @include below(tb){
+        //         bottom: 39px;
+        //         right: 5px;
+        //     }
+        // }
+        .error-msg {
+          font-size: 0.9rem;
+          color: #ff0000;
+          display: none;
+          position: absolute;
+          left: 0;
+          top: 53px;
+          line-height: 100%;
+          z-index: 1;
+          @include below(sm) {
+            font-size: 0.7rem;
+          }
+        }
+        &.date-picker {
+          position: relative;
+          @include inputboxStyle();
+          &:after {
+            display: none;
+          }
+          .inputbox {
+            input {
+              // background: url(http://tridentrevamp.iabeta.in/images/tridenthotels/calender-icon-01.svg) no-repeat top 8px right 4px;
+              cursor: pointer;
+              @include below(md2){
+                font-size: 0.955rem;
+              }
+              @include below(sm) {
+                // background: url(http://tridentrevamp.iabeta.in/images/tridenthotels/calender-icon-01.svg) no-repeat top 2px right 4px;
+              }
+            }
+          }
+        }
+
+        @include inputboxStyle();
+      }
+      select {
+        width: 100%;
+        border: none;
+        font-size: 1.125rem;
+        color: $grey;
+        font-family: $vard;
+        border-bottom: $gray4 solid 1px;
+        padding: 13px 8px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+        @include below(md2) {
+          font-size: 0.955rem;
+        }
+        @include below(sm) {
+          font-size: 0.9rem;
+          padding: 13px 0px;
+        }
+      }
+      &.col-6 {
+        width: 49.8%;
+        position: relative;
+        display: inline-flex;
+        padding: 28px 50px 28px 0px;
+        @include below(lg2) {
+          width: 49.7%;
+        }
+        @include below(md2) {
+          padding: 28px 30px 28px 0px;
+        }
+        @include below(tb) {
+          width: 100%;
+          padding: 10px 0px 20px 0px;
+        }
+        &:last-child {
+          padding-right: 0;
+          &::after {
+            right: 0;
+          }
+        }
+
+        .error-msg {
+          font-size: 0.8rem;
+          color: #ff0000;
+          display: none;
+          position: absolute;
+          left: 0;
+          top: 53px;
+          line-height: 100%;
+          z-index: 1;
+          font-family: 'verdanaN';
+          @include below(sm) {
+            font-size: 0.7rem;
+            top: 47px;
+          }
+          @include below(xs){
+            top: 49px;
+          }
+        }
+        .title-box {
+          min-width: 10%;
+          display: flex;
+          font-family: $vard;
+          margin-right: 6%;
+          position: relative;
+          @include below(md2) {
+            min-width: 20%;
+          }
+          @include below(tb) {
+            min-width: 25%;
+          }
+          &::after {
+            content: "";
+            display: block;
+            width: 0.7rem;
+            height: 0.7rem;
+            border-top: 2px solid $grey;
+            border-left: 2px solid $grey;
+            position: absolute;
+            bottom: 20px;
+            right: 0px;
+            transform: rotate(-135deg);
+            z-index: 1;
+            @include below(sm){
+              border-top: 1px solid $grey;
+              border-left: 1px solid $grey;
+            }
+          }
+
+          .selectCountryCodeValDisplay {
+            position: absolute;
+            top: 5px;
+            height: 35px;
+            width: 100%;
+            padding: 11px 0px;
+            background: $white;
+            pointer-events: none;
+            z-index: 1;
+            font-size: 1.125rem;
+            color: $grey;
+            left: 0;
+            text-align: left;
+            @include below(md2){
+              font-size: 0.955rem;
+            }
+            @include below(sm) {
+              font-size: 0.9rem;
+            }
+          }
+          &.mob-country-codewrap {
+            &::after {
+              z-index: 1;
+              pointer-events: none;
+            }
+          }
+        }
+        @include inputboxStyle();
+        &.selectBox24,
+        &.selectBox2 {
+          .error-msg {
+            // top: 84px;
+            // @include below(sm) {
+            //   top: 63px;
+            // }
+          }
+        }
+       &.selectBox2, &.selectBox24{
+        .error-msg{
+          bottom:6px;
+          top:auto;
+        }
+       } 
+      }
+      &.disabledHotel{
+        &.selectBox2{
+          pointer-events:none;
+
+          &:after{
+            display:none;
+          }
+        }
+        
+      }
+      .revText-box {
+        width: 100%;
+        position: relative;
+        padding: 28px 0px 28px 0px;
+        @include below(lg2) {
+          width: 99.7%;
+        }
+        @include below(tb) {
+          width: 100%;
+        }
+        textarea {
+          width: 100%;
+          color: $grey;
+          font-family: $vard;
+          font-size: 1.125rem;
+          border: $gray4 solid 1px;
+          padding: 12px 15px;
+          resize: none;
+          @include below(md2){
+            font-size: 0.955rem;
+          }
+          @include below(sm) {
+            font-size: 0.9rem;
+          }
+        }
+        .error-msg {
+          font-size: 0.9rem;
+          color: #ff0000;
+          display: none;
+          position: absolute;
+          left: 0;
+          top: inherit;
+          bottom: 10px;
+          line-height: 100%;
+          z-index: 1;
+          font-family: 'verdanaN';
+          @include below(sm) {
+            font-size: 0.7rem;
+          }
+        }
+      }
+      &.col-9 {
+        display: inline-flex;
+        margin-right: 2%;
+        width: 68%;
+        @include below(sm) {
+          width: 100%;
+          margin-right: 0;
+        }
+        .request-captcha {
+          width: 220px;
+          text-align: left;
+          display: flex;
+          align-items: center;
+          @include below(sm) {
+            width: 100%;
+          }
+          .captcha-sec {
+            background: $white;
+            padding: 1px 14px;
+            color: $grey;
+            font-family: $vard;
+            font-size: 1.125rem;
+            background-image: linear-gradient(
+                to right,
+                $grey 60%,
+                transparent 50%
+              ),
+              linear-gradient(to right, $grey 60%, transparent 60%),
+              linear-gradient(to bottom, $grey 60%, transparent 60%),
+              linear-gradient(to bottom, $grey 60%, transparent 60%);
+            background-position: left top, left bottom, left top, right top;
+            background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+            background-size: 15px 1px, 15px 1px, 1px 15px, 1px 15px;
+            height: 42px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            @include below(sm) {
+              font-size: 0.9rem;
+              height: 36px;
+            }
+
+            img {
+              width: 100px;
+            }
+          }
+          .reload-captcha {
+            background: $white;
+            padding: 1px 14px;
+            color: $grey;
+            font-family: $vard;
+            font-size: 1.125rem;
+            background-image: linear-gradient(
+                to right,
+                $grey 60%,
+                transparent 50%
+              ),
+              linear-gradient(to right, $grey 60%, transparent 60%),
+              linear-gradient(to bottom, $grey 60%, transparent 60%),
+              linear-gradient(to bottom, $grey 60%, transparent 60%);
+            background-position: left top, left bottom, left top, right top;
+            background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+            background-size: 15px 1px, 15px 1px, 1px 15px, 1px 15px;
+            height: 42px;
+            width: auto;
+            display: flex;
+            margin-left: 5px;
+            justify-content: center;
+            align-items: center;
+            @include below(sm) {
+              font-size: 0.9rem;
+              height: 36px;
+            }
+            cursor: pointer;
+            img {
+              width: 25px;
+            }
+          }
+        }
+        .captcha-main {
+          display: inline-block;
+          margin: 0px 0 0px 46px;
+          position: relative;
+
+          input {
+            width: 100%;
+            font-family: $vard;
+            border: $gray4 solid 1px;
+            padding: 10px 2px;
+            font-size: 1.125rem;
+            color: $grey;
+            text-align: center;
+            @include below(md2){
+              font-size: 0.955rem;
+            }
+            @include below(sm) {
+              font-size: 0.9rem;
+            }
+          }
+          .error-msg {
+            font-size: 0.9rem;
+            color: #ff0000;
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 53px;
+            line-height: 100%;
+            z-index: 1;
+            font-family: 'verdanaN';
+            @include below(sm) {
+              font-size: 0.7rem;
+              top: 42px;
+            }
+            @include below(xs){
+              top: 44px;
+            }
+          }
+        }
+      }
+      &.col-30 {
+        display: inline-flex;
+        width: 30%;
+        justify-content: end;
+        align-items: center;
+        @include below(sm) {
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          margin-top: 30px;
+        }
+        .subsBtn {
+          display: inline-block;
+          margin-top: 1%;
+          @include below(sm) {
+            width: 100%;
+            text-align: center;
+          }
+          a {
+            padding: 11px 25px;
+            display: block;
+            font-weight: 300;
+            font-size: 0.88em;
+            text-decoration: none;
+            font-family: $vard;
+            -webkit-transition: 0.5s all ease-in-out;
+            -ms-transition: 0.5s all ease-in-out;
+            -o-transition: 0.5s all ease-in-out;
+            transition: 0.5s all ease-in-out;
+            border-radius: 5px;
+            &.style2 {
+              background: #d8741b;
+              border: 1px solid #d8741b;
+              color: $white;
+              // &:hover {
+              //     background: #fff;
+              //     border: 1px solid #828282;
+              //     color: #828282;
+              // }
+            }
+          }
+        }
+      }
+    }
+    .Reqstfrom-bottom-sec {
+      display: flex;
+      justify-content: space-between;
+      @include below(sm) {
+        flex-wrap: wrap;
+      }
+    }
+  }
+  .ReqFormclose-icon {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    border: solid 1px $grey;
+    right: 20px;
+    top: 10px;
+    text-align: center;
+    color: $grey;
+    line-height: 25px;
+    cursor: pointer;
+    @include below(md2) {
+      right: 8px;
+    }
+    @include below(tb) {
+      right: 5px;
+      top: 5px;
+      font-size: 12px;
+      line-height: 100%;
+      height: 20px;
+      width: 20px;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    }
+  }
+  .dropdown-arrow {
+    &::after {
+      content: "";
+      display: block;
+      width: 0.7rem;
+      height: 0.7rem;
+      border-top: 2px solid $grey;
+      border-left: 2px solid $grey;
+      position: absolute;
+      bottom: 20px;
+      right: 0px;
+      transform: rotate(-135deg);
+      z-index: 1;
+      pointer-events: none;
+      @include below(sm){
+        border-top: 1px solid $grey;
+        border-left: 1px solid $grey;
+      }
+    }
+  }
+  #requestForm-box {
+    border: 1px solid $gray4;
+    form {
+      padding: 0 25px 25px 25px;
+    }
+  }
+  .select-box-wrap {
+    display: flex;
+    position: relative;
+    select:focus + label,
+    select.has-value + label {
+      color: $grey;
+      transform: translate(0px, -16px);
+      font-size: 0.8rem;
+    }
+    label {
+      position: absolute;
+      left: 0px;
+      pointer-events: none;
+      transition: 0.5s;
+      top: 12px;
+      font-family: $vard;
+      font-size: 1.125rem;
+      color: $grey;
+      z-index: 91;
+      @include below(md2) {
+        font-size: 1rem;
+      }
+      @include below(sm) {
+        font-size: 0.9rem;
+      }
+    }
+    .selectCountryCodeValDisplay {
+      position: absolute;
+      top: 5px;
+      height: 35px;
+      width: 100%;
+      padding: 11px 0px;
+      background: $white;
+      pointer-events: none;
+      z-index: 1;
+      font-size: 1.125rem;
+      color: $grey;
+      left: 0;
+      text-align: left;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space:nowrap;
+      padding-right:15px;
+      @include below(md2) {
+        font-size: 0.955rem;
+      }
+    }
+    &.w100 {
+      width: 100%;
+    }
+  }
+
+  .registered-at-reservaion-time {
+    color: #606161;
+    text-align: center;
+    font-size: 0.8rem;
+    font-family: $vard;
+    position: absolute;
+    left: 50%;
+    width: 100%;
+    top: 0;
+    transform: translate(-50%, 0);
+
+    @include below(tb) {
+      //font-size: 0.9rem;
+      margin-top: 0px;
+      margin-bottom: 10px;
+    }
+    @include below(sm) {
+      position: static;
+      margin-top: 20px;
+      transform: translate(0);
+    }
+  }
+}
+
+.ui-datepicker {
+  z-index: 91 !important;
+}
+
+.ui-datepicker .ui-datepicker-title {
+  font-size: 1.125rem;
+  @include below(sm) {
+    font-size: 0.9rem;
+  }
+  @include below(xs) {
+    font-size: 0.75rem;
+  }
+}
+.ui-widget-header {
+  border: 1px solid #dddddd;
+  background: #e9e9e9;
+  color: #333333;
+  font-weight: bold;
+  font-family: $vard;
+}
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next {
+  width: 1.5em;
+  height: 1.5em;
+  top: 8px;
+  @include below(tb) {
+    top: 2px;
+  }
+}
+.ui-datepicker th {
+  font-size: 1.125rem;
+  font-family: $vard;
+  @include below(sm) {
+    font-size: 0.9rem;
+  }
+  @include below(xs) {
+    font-size: 0.75rem;
+  }
+}
+.ui-datepicker td span,
+.ui-datepicker td a {
+  text-align: center;
+  padding: 1rem 1rem;
+  font-size: 1.125rem;
+  @include below(lg) {
+    padding: 0.5rem 0.8rem;
+    font-size: 1rem;
+  }
+  @include below(sm) {
+    font-size: 0.9rem;
+    padding: 0.7rem 0.7rem;
+  }
+  @include below(xs) {
+    font-size: 0.75rem;
+  }
+}
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+  border: 1px solid #c5c5c5;
+  background: #f6f6f6;
+}
+
+.ui-datepicker-current-day.ui-datepicker-today
+  .ui-state-highlight.ui-state-default
+  a {
+  border: 1px solid #d8741b;
+  background: #d8741b !important;
+  color: #ffffff;
+}
+
+.ui-datepicker-days-cell-over.ui-datepicker-today
+  .ui-state-highlight.ui-state-default {
+  border: 1px solid #d8741b;
+  background: #d8741b !important;
+  color: #ffffff;
+}
+
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover {
+  border: 1px solid #d8741b!important;
+  background: #d8741b!important;
+  color: #ffffff!important;
+}
+
+.ui-datepicker {
+  width: auto;
+  @include below(tb) {
+    width: 92%;
+  }
+  @include below(xs) {
+    width: 84%;
+  }
+}
+
+.ui-datepicker .ui-datepicker-next span {
+  border-top: 2px solid #606161;
+  border-left: 2px solid #606161;
+  transform: rotate(-228deg);
+  background: transparent;
+  
+}
+
+.ui-datepicker .ui-datepicker-next span {
+  border-top: 2px solid #606161;
+  border-left: 2px solid #606161;
+  transform: rotate(-228deg);
+  background: transparent;
+}
+.ui-datepicker .ui-datepicker-prev span {
+  border-top: 2px solid #606161;
+  border-left: 2px solid #606161;
+  transform: rotate(-404deg);
+  background: transparent;
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover {
+  border: 1px solid transparent;
+  background: transparent;
+  right: 2px;
+}
+
+.ui-state-hover.ui-datepicker-prev-hover,
+.ui-widget-content .ui-state-hover.ui-datepicker-prev-hover,
+.ui-widget-header .ui-state-hover.ui-datepicker-prev-hover {
+  left: 2px;
+}
+.weddingForm-writeus {
+  display: none;
+  &.active {
+    display: block !important;
+  }
+  .requestForm-box {
+    border: 1px solid #b7b7b7 !important;
+    margin-top: 25px;
+  }
+}
+.request-a-proposal-form {
+  &.hideForm {
+    display: none !important;
+  }
+}
+.globalDiningDate .inputbox input {
+  background: url(../../dist/images/calender-icon-01.svg) right 0px top
+    no-repeat;
+  padding-bottom: 12px;
+}
+.requestProposalContactForm {
+  .countryCode {
+    select:focus + label,
+    select.has-value + label {
+      color: $grey;
+      transform: translate(0px, -16px);
+      font-size: 0.8rem;
+    }
+    .selectCountryCodeValDisplay {
+      position: absolute;
+      top: 5px;
+      height: 35px;
+      width: 100%;
+      padding: 11px 0px;
+      background: #fff;
+      pointer-events: none;
+      z-index: 1;
+      font-size: 1.125rem;
+      color: #606161;
+      left: 0;
+      text-align: left;
+      border-bottom: #b7b7b7 solid 1px;
+    }
+    .country_code {
+      cursor: pointer;
+      width: 100%;
+      border: none;
+      font-size: 1.125rem;
+      color: #606161;
+      font-family: Verdana;
+      border-bottom: #b7b7b7 solid 1px;
+      /* padding: 13px 8px; */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+      height: 100%;
+    }
+    label {
+      position: absolute;
+      left: 0px;
+      pointer-events: none;
+      transition: 0.5s;
+      top: 12px;
+      font-family: "optimanormal";
+      font-size: 1.125rem;
+      color: #606161;
+      z-index: 91;
+      @include below(lgMid) {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+.request-a-proposal-form-wrap {
+  margin-top: 60px;
+  .t-arrow-top {
+    display: none !important;
+  }
+}
+
+/*.mac-safari{
+  .revForm-control{
+    &.col-3{
+      &.date-picker{
+        position:relative;
+        top:18px;
+      }
+    }
+    &.col-6{
+      position:relative;
+      top:18px;
+    }
+  }
+}*/
+#formRequestAProposal1 {
+  .requestProposalContactForm {
+    .countryCode {
+      .selectCountryCodeValDisplay {
+        border-bottom: 0;
+      }
+    }
+  }
+}

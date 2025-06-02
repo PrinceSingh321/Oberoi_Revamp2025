@@ -1,0 +1,405 @@
+.Com_marketassetComp{
+  width: 100%;
+.common-makret-assets-wrapper {
+	display: flex;
+	align-items: center;
+	border: 1px solid #999;
+	width: 100%;
+  @include below(sm){
+    display: block;
+    width: 100%;
+    float: left;
+    margin-bottom: 60px;
+  }
+	.imageBox {
+		width: 35%;
+		float: left;
+		background: #1b1649;
+		padding: 80px;
+    @include below(sm){
+      width: 100%;
+      float: left;
+      padding: 60px 80px;
+    }
+		img {
+			max-width: 100%;
+		}
+	}
+	.contentBox {
+		width: 65%;
+		float: left;
+		text-align: center;
+		background: #fff;
+    @include below(sm){
+      width: 100%;
+    }
+		h2 {
+			font-family: $opt;
+			font-weight: normal;
+      font-size: 2.563em;
+      line-height: 100%;
+      margin-bottom: 10px;
+      font-weight: 400;
+      color: #ae8b35;
+      @include below(lg){
+        font-size: 1.875em;
+      }
+      @include below(tb){
+        font-size: 1.1em;
+      }
+      @include below(sm){
+        margin-top: 20px;
+      }
+		}
+		p {
+      font-family: "verdanaN";
+      font-size: 1.188em;
+      color: #606161;
+      line-height: 150%;
+      @include below(lg){
+        font-size: 0.937em !important;
+      }
+		}
+	}
+	.know-more-ctabox-os {
+		width: 100%;
+		float: left;
+		text-align: center;
+		margin-top: 30px;
+    @include below(sm){
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+		img {
+			max-width: 200px;
+		}
+	}
+}
+}
+
+.Com_bookdirect_marketasset{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  .global-marketing-assets-box-wrapper {
+    width: 100%;
+    float: left;
+    margin: 20px 0 50px 0;
+    box-shadow: 1px 4px 13px #ccc;
+    padding: 30px 25px 20px 25px;
+  }
+  .oberoi-book-direct-marketing-assets-box {
+    width: 20%;
+    float: left;
+    @include below(tb){
+      width: 60%;
+    }
+    @include below(sm){
+      width: 100%;
+    }
+    p {
+      a {
+        color: #606161;
+        text-decoration: none;
+        font-size: 15px;
+      }
+      font-size: 15px;
+      margin-top: 20px;
+    }
+    img {
+      width: 100%;
+    }
+  }
+  .oberoi-best-rate-guarantee-marketing-assets-box {
+    width: 16%;
+    float: left;
+    text-align: center;
+    margin: 0 2%;
+    border-left: 1px solid #e7d497;
+    border-right: 1px solid #e7d497;
+    @include below(tb){
+      width: 36%;
+    }
+    @include below(sm){
+      width: 100%;
+      border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid #e7d497;
+    border-bottom: 1px solid #e7d497;
+    }
+    p {
+      font-size: 15px;
+      margin: 18px 0;
+    }
+  }
+  .oberoi-one-marketing-assets-box {
+    width: 60%;
+    float: left;
+    @include below(tb){
+      width: 100%;
+      margin-top: 20px;
+    }
+    .oberoi-one-offer-details-markting-assets {
+      width: 100%;
+      float: left;
+      ul {
+        width: 100%;
+        float: left;
+        list-style: none;
+        li {
+          width: 32.33%;
+          float: left;
+          display: flex;
+          margin-bottom: 20px;
+          align-items: center;
+          margin-right: 1%;
+          @include below(sm){
+            width: 100%;
+            display: block;
+            text-align: center;
+            margin-right: 0;
+            margin-bottom: 20px;
+          }
+          img {
+            width: 13%;
+            @include below(sm){
+              display: inline-block;
+            }
+          }
+          p {
+            font-size: 14px;
+            margin-left: 10px;
+            @include below(sm){
+              font-size: 15px !important;
+              line-height: 180% !important;
+            }
+          }
+        }
+        button{
+         &.slick-next{
+          &.slick-arrow{
+            position: absolute;
+            content: "";
+            right: 0px;
+            height: 40px;
+            background: transparent !important;
+            z-index: 999;
+            width: 40px;
+            top:50%!important;
+            &:before {
+              content: "";
+              position: absolute;
+              width: 10px;
+              height: 10px;
+              border-top: 2px solid #000;
+              border-right: 2px solid #000;
+              top: 50%!important;
+              right: 45%;
+              transform: rotate(45deg) translate(-50%, -50%);
+              border-left: none;
+          }
+          }
+         }
+         &.slick-prev{
+          &.slick-arrow{
+            position: absolute;
+            content: "";
+            left: 5px;
+            height: 40px;
+            background: transparent !important;
+            z-index: 999;
+            width: 40px;
+            top:50%!important;
+            &:before {
+              content: "";
+              position: absolute;
+              width: 10px;
+              height: 10px;
+              border-top: 2px solid #000;
+              border-left: 2px solid #000;
+              top: 50%!important;
+              left: 45%;
+              transform: translate(-50%, -50%) rotate(-45deg);
+              border-right: none;
+          }
+          }
+         }
+        }
+      }
+      .oberoi-one-cta-wrapper {
+        width: 100%;
+        float: left;
+      }
+    }
+  }
+  .know-more-button-markeeting-assets-cta {
+    width: 100%;
+    float: left;
+    text-align: center;
+    a {
+      background: #d8741b;
+      color: #fff;
+      font-size: 13px;
+      position: relative;
+      text-align: center;
+      font-family: "Verdana", sans-serif;
+      font-weight: 300;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 5px;
+      padding: 11px 28px;
+      &:after {
+        position: absolute;
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-top: 1px solid #fff;
+        border-right: 1px solid #fff;
+        top: 53%;
+        right: 10px;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+    }
+  }
+  
+}
+
+.Com_marketassetOfferComp{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  .marketing-asset-offer-section {
+    width: 100%;
+    display: table;
+    padding: 30px 24px;
+    margin-bottom: 50px;
+    box-shadow: #cccccc 0px 0px 10px;
+    -webkit-box-shadow: #cccccc 0px 0px 10px;
+    -moz-box-shadow: #cccccc 0px 0px 10px;
+    o-box-shadow: #cccccc 0px 0px 10px;
+    -ms-box-shadow: #cccccc 0px 0px 10px;
+    clear: both;
+    float: left;
+    .only-text-fullwidth {
+      text-align: center;
+      p {
+        font-family: $vardana;
+        font-size: 1.17em;
+        text-align: center;
+        font-weight: 400;
+        padding: 10px 0;
+      }
+    }
+    .marketing-asset-limited-preiod-offer {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: left;
+      font-style: normal;
+      font-size: 2em;
+      width: 26%!important;
+      font-family: $opt;
+      color: #606161;
+      @include below(tb){
+        width: 100%!important;
+        display: block;
+        text-align: center;
+        font-size: 1.7em;
+        margin-bottom: 10px;
+      }
+      @include below(xs){
+        font-size: 1.2em;
+      }
+      span {
+        font-style: normal;
+      }
+    }
+    .marketing-asset-saving {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+      width: 60%!important;
+      
+      .m-saving {
+        font-family: $opt;
+        font-size: 1.875em!important;
+        padding: 0px 0px 15px;
+        position: relative;
+        color: #606161;
+        @include below(tb){
+          font-size: 1.4em!important;
+          margin-bottom: 10px;
+        }
+        @include below(xs){
+          font-size: 1.1em!important;
+        }
+        &:after {
+          content: "";
+          width: 163px;
+          height: 2px;
+          background: #d8741b;
+          position: absolute;
+          bottom: 7px;
+          display: table-cell;
+          vertical-align: middle;
+          text-align: center;
+          left: 50%!important;
+        }
+      }
+      p {
+        font-family: $vardana;
+        font-size: .938em;
+        font-weight: 400;
+      }
+      &#divHomePageAddClass{
+        @include below(tb){
+          width: 100%!important;
+          display: block;
+          text-align: center;
+        }
+      }
+    }
+    .explore-btn {
+      width: 18%;
+      display: table-cell;
+      vertical-align: middle;
+      text-align: right;
+      @include below(tb){
+        width: 100%;
+        display: block;
+        text-align: center;
+        margin-top: 40px;
+      }
+      a {
+        text-decoration: none;
+        color: #fff;
+        text-transform: uppercase;
+        background: #d8741b;
+        padding: 11px 20px;
+        font-family: $vard;
+        font-size: 14px;
+        border-radius: 5px;
+        &:hover {
+          background: #d8741b;
+        }
+      }
+    }
+  }
+  .marketing-asset-offer-section.marketing-asset-img {
+    padding: 0px 24px 0px 0px;
+    .marketing-asset-limited-preiod-offer {
+      img {
+        max-width: 100%;
+        display: block;
+      }
+    }
+    .marketing-asset-offer-section {
+      .marketing-asset-saving {
+        width: 40%;
+      }
+      .explore-btn {
+        width: 25%;
+      }
+    }
+  }
+  
+}

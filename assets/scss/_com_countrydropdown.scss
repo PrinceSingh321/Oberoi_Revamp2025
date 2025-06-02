@@ -1,0 +1,191 @@
+.countryscroll {
+  @include below(tb) {
+    width: 100%;
+    position: relative;
+    display: block;
+  }
+  @include below(sm) {
+    margin-top: 15px;
+    overflow-x: scroll;
+    overflow-y:hidden;
+  }
+  &.overFlowScroll{
+    @include below(sm) {
+      overflow-y: initial;
+    }
+  }
+}
+.dropdown-wrapper {
+  @include below(sm) {
+    // overflow: scroll;
+  }
+  width: 100%;
+  display: block;
+
+  &:after{
+    @include below(sm) {
+      background: #fff;
+      height: 20px;
+      left: 100%;
+      width: 6%;
+      content: "";
+      position: sticky;
+      top: 0px;
+  
+    }
+  }
+
+ 
+}
+ul {
+  &.country-dropdownMain {
+    @include below(tb) {
+      display: flex;
+    }
+    @include below(sm) {
+      width: 800px;
+    }
+    li {
+      padding: 0px 50px 30px 0;
+      position: relative;
+      @include below(tb){
+        padding: 0px 45px 30px 0;
+      }
+      &:last-child {
+        @include below(sm) {
+          padding-right: 0px;
+        }
+      }
+
+      &.hasdropdown {
+        &::after {
+          border: solid #606161;
+          border-width: 0 2px 2px 0;
+          display: inline-block;
+          padding: 4px;
+          position: absolute;
+          content: "";
+          transform: rotate(-45deg);
+          -webkit-transform: rotate(-45deg);
+          right: 35px;
+          top: 7px;
+          transition: all linear 0.3s;
+          @include below(md2){
+            border-width: 0 1.4px 1.4px 0;
+          }
+          @include below(lg) {
+            top:4px;
+          }
+          @include below(sm) {
+            padding: 3px;
+          }
+        }
+        &.hasdrop {
+          color: #d8751b;
+          text-shadow: 0 0 1px #d8751b, 0 0 1px #d8751b;
+          &::after {
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            top: 5px;
+            @include below(sm) {
+              padding: 3px;
+            }
+          }
+        }
+        &.highlight {
+          color: #d8751b;
+          text-shadow: 0 0 1px #d8751b, 0 0 1px #d8751b;
+          &::after {
+            border-color: #d8751b;
+          }
+        }
+        &.hasdrop {
+          &:after {
+            border-color: #d8751b;
+          }
+        }
+      }
+    }
+  }
+}
+.country-dropdown {
+  position: absolute;
+  background: #fff;
+  top: 50px;
+  z-index: 11;
+  padding: 30px 38px 30px;
+  box-shadow: 0px 3px 6px #00000029;
+  display: none;
+  min-width: 218px;
+  @include below(sm) {
+    min-width: 178px;
+    top: 30px;
+    padding: 15px 18px 10px;
+  }
+  &.countryWidth {
+    min-width: 440px;
+    @include below(sm) {
+      min-width: 178px;
+      top: 30px;
+      padding: 15px 18px 10px;
+    }
+  }
+  .country-dropdownColumn {
+    &.Col-width {
+      width: 48%;
+      display: inline-block;
+      vertical-align: top;
+      @include below(sm) {
+        width: 100%;
+        display: block;
+      }
+      // &:nth-child(2) {
+      //   margin-top: 12px;
+      // }
+    }
+    ul {
+      flex-direction: column;
+      display: block;
+      li {
+        white-space: nowrap;
+        color: #606161;
+        font-size: 1.375rem;
+        padding: 0 0 20px;
+        text-shadow: none;
+        font-family: $opt !important;
+        display: block;
+        &.active {
+          color: #d8751b;
+        }
+        @include below(sm) {
+          line-height: 1.4rem;
+          padding-bottom: 0;
+        }
+        &:last-child {
+          padding-bottom: 0px;
+          margin-bottom: 0px;
+          @include below(sm) {
+            padding-bottom: 0;
+          }
+        }
+
+        &:hover {
+          color: #d8751b;
+        }
+      }
+    }
+    @include below(sm){
+      &:nth-child(2){
+        margin-top: 7px;
+      }
+    }
+  }
+}
+
+// .templateAwardListPage{
+//   .dropdown-wrapper{
+//     @include below(sm) {
+//       overflow: scroll;
+//     }
+//   }
+// }

@@ -1,0 +1,379 @@
+/* Scss Document */
+/**/
+/* screen resolutio*/
+/* mixin start*/
+/*.slick-active .destination-slide .img-box:hover img {
+	@include transform(scale(1.1));
+}*/
+.map-popup .map-popup-img {
+  float: left;
+  width: auto;
+  margin-right: 15px; }
+.map-popup .map-popup-detail {
+  float: left;
+  width: 300px; }
+  .map-popup .map-popup-detail .map-popup-hdng {
+    font-size: 1.875em;
+    font-family: "EB Garamond", serif; }
+    .map-popup .map-popup-detail .map-popup-hdng a {
+      color: inherit;
+      text-decoration: none; }
+      .map-popup .map-popup-detail .map-popup-hdng a br {
+        display: none; }
+    .map-popup .map-popup-detail .map-popup-hdng span {
+      font-style: italic; }
+  .map-popup .map-popup-detail .map-popup-list {
+    margin-top: 15px;
+    margin-bottom: 30px; }
+    .map-popup .map-popup-detail .map-popup-list li {
+      list-style: none;
+      margin-bottom: 10px;
+      font-size: 0.9375em;
+      clear: both;
+      float: left; }
+      .map-popup .map-popup-detail .map-popup-list li span {
+        display: inline-block; }
+        .map-popup .map-popup-detail .map-popup-list li span a {
+          color: inherit;
+          text-decoration: none; }
+      .map-popup .map-popup-detail .map-popup-list li span:first-child {
+        width: 50px;
+        font-weight: 600;
+        margin-right: 30px; }
+      .map-popup .map-popup-detail .map-popup-list li span:last-child {
+        float: right;
+        width: 220px; }
+  .map-popup .map-popup-detail .map-popup-btn {
+    float: right;
+    clear: both;
+    position: absolute;
+    font-size: 1.1em;
+    background: url(/images/oberoihotels/common/arrow-right.png) no-repeat right center;
+    bottom: 10px;
+    font-weight: 400;
+    padding-right: 15px;
+    right: 15px;
+    color: #66b6d8;
+    font-family: "Roboto",sans-serif;
+    text-decoration: none;
+    text-transform: uppercase; }
+
+.destination {
+  margin: 40px 0 0 0;
+  /* 	padding-bottom: 30px; */ }
+  .destination .left-section {
+    margin: 0 0 10px 20px;
+    float: left; }
+    .destination .left-section .title {
+      font-family: "EB Garamond", serif;
+      font-size: 2.188em;
+      color: #000;
+      line-height: 80%;
+      margin-bottom: 10px;
+      font-style: italic; }
+      .destination .left-section .title span {
+        /*font-size: 38%;
+        font-family: $secondery-font-family;
+        display: block;
+        margin-top:10px;*/
+        font-style: normal; }
+      .destination .left-section .title i {
+        font-style: italic; }
+    .destination .left-section p {
+      font-size: 0.9375em;
+      font-family: "Roboto", sans-serif; }
+  .destination .right-section {
+    margin: 10px 0px 0 0;
+    float: right;
+    position: relative; }
+    .destination .right-section a {
+      color: #6ab8d9;
+      font-family: "Roboto", sans-serif;
+      font-size: 0.938em;
+      letter-spacing: 1px;
+      text-decoration: none;
+      padding-right: 12px;
+      line-height: 100%;
+      font-weight: 500; }
+      .destination .right-section a:before {
+        content: " ";
+        border-bottom: 2px solid #6ab8d9;
+        border-right: 2px solid #6ab8d9;
+        top: 50%;
+        margin-top: -4px;
+        height: 7px;
+        right: 0px;
+        position: absolute;
+        -webkit-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        width: 7px;
+        z-index: 2; }
+  .destination .destinationContentSec {
+    margin: 0 auto;
+    padding: 0 4%; }
+  .destination .destination-slider .slick-prev {
+    width: 45px;
+    height: 45px;
+    left: 13.5%;
+    top: 40%;
+    z-index: 9;
+    background: url(/images/oberoihotels/sprites-icons.png) no-repeat left center;
+    background-position: -10px -183px; }
+    .destination .destination-slider .slick-prev:before {
+      display: none; }
+  .destination .destination-slider .slick-next {
+    width: 45px;
+    height: 45px;
+    right: 13.5%;
+    top: 40%;
+    z-index: 9;
+    background: url(/images/oberoihotels/sprites-icons.png) no-repeat right center;
+    background-position: -55px -183px; }
+    .destination .destination-slider .slick-next:before {
+      display: none; }
+  .destination .destination-slide {
+    width: 33.33%;
+    float: left;
+    padding: 0 10px;
+    /* .slick-active {
+    	.destination-slide {
+    	.img-box {
+    		&:hover
+    		{
+    			img{
+    				 @include transform(scale(1.1));
+    			}
+    		}
+    	}
+    }
+    } */ }
+    .destination .destination-slide .img-box {
+      overflow: hidden;
+      margin-bottom: 15px; }
+      .destination .destination-slide .img-box img {
+        max-width: 100%;
+        -webkit-transition: all linear 0.5s;
+        -ms-transition: all linear 0.5s;
+        -o-transition: all linear 0.5s;
+        transition: all linear 0.5s; }
+    .destination .destination-slide .slidesBtn.singleLine {
+      top: 0px; }
+    .destination .destination-slide .slidesText p {
+      width: 100%;
+      float: left;
+      font-size: 0.9375em;
+      font-family: "Roboto", sans-serif;
+      color: #000;
+      line-height: 140%;
+      margin-bottom: 3px; }
+      .destination .destination-slide .slidesText p strong {
+        font-family: "EB Garamond", serif;
+        font-weight: 500; }
+        .destination .destination-slide .slidesText p strong i {
+          font-style: italic;
+          font-size: 1.25em; }
+        .destination .destination-slide .slidesText p strong em {
+          font-size: 1.25em; }
+    .destination .destination-slide .slidesBtn {
+      width: auto;
+      position: relative;
+      float: right;
+      top: -22px; }
+    .destination .destination-slide .img-box img {
+      opacity: 0.5 !important; }
+  .destination .destination-slider .text-container {
+    opacity: 0; }
+  .destination .destination-slider .slick-active .text-container, .destination .destination-slider .slick-active .img-box img {
+    opacity: 1 !important; }
+  .destination .ev .destination-slide .img-box {
+    display: block !important; }
+  .destination .noMarginRight {
+    margin-right: 0px !important; }
+  .destination .cta-box {
+    margin-top: 0px; }
+    .destination .cta-box a {
+      padding: 0px 15px 0px 0px;
+      margin-right: 15px;
+      text-decoration: none;
+      text-transform: uppercase;
+      position: relative;
+      font-family: "Roboto", sans-serif;
+      font-weight: 400;
+      line-height: 100%;
+      font-size: 0.9375em;
+      -webkit-transition: 0.5s all ease-in-out;
+      -ms-transition: 0.5s all ease-in-out;
+      -o-transition: 0.5s all ease-in-out;
+      transition: 0.5s all ease-in-out; }
+      .destination .cta-box a.style1 {
+        color: #6ab8d9;
+        display: inline-block; }
+        .destination .cta-box a.style1:after {
+          content: " ";
+          border-bottom: 2px solid #6ab8d9;
+          border-right: 2px solid #6ab8d9;
+          top: 50%;
+          margin-top: -4px;
+          height: 7px;
+          right: 0px;
+          position: absolute;
+          -webkit-transform: rotate(-45deg);
+          -ms-transform: rotate(-45deg);
+          -o-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+          width: 7px;
+          z-index: 2; }
+      .destination .cta-box a.style2 {
+        color: #da7b26; }
+        .destination .cta-box a.style2:after {
+          content: " ";
+          border-bottom: 2px solid #da7b26;
+          border-right: 2px solid #da7b26;
+          top: 50%;
+          margin-top: -4px;
+          height: 7px;
+          right: 0px;
+          position: absolute;
+          -webkit-transform: rotate(-45deg);
+          -ms-transform: rotate(-45deg);
+          -o-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+          width: 7px;
+          z-index: 2; }
+  .destination .destinationTab {
+    width: 80%;
+    float: left; }
+    .destination .destinationTab ul {
+      list-style: none; }
+      .destination .destinationTab ul li {
+        float: left;
+        padding: 10px 20px 10px 0px;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-size: 0.9375em;
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        color: #000; }
+  .destination .destinationTab li.active {
+    color: #e09049; }
+  .destination .destinationTab li.activec {
+    color: #e09049; }
+  .destination .slick-slide {
+    margin: 0px 10px; }
+  .destination .destinationTabWrap {
+    margin: 0 auto;
+    width: 74%; }
+  .destination .selectedCountry {
+    display: none; }
+
+@media only screen and (max-width: 1366px) {
+  .destination .destinationTabWrap {
+    width: 72%; }
+  .destination .destination-slider .slick-prev {
+    left: 13%; }
+  .destination .destination-slider .slick-prev {
+    right: 13%; } }
+@media only screen and (max-width: 1199px) {
+  .destination .destinationTabWrap {
+    position: relative; }
+  .destination .right-section {
+    margin: 17px 0px 12px; } }
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .destination .destination-slide .slidesBtn {
+    top: 0; } }
+@media only screen and (max-width: 991px) {
+  .destination .destinationTab {
+    width: 100%; }
+
+  .destination .cta-box a {
+    font-size: 13px; } }
+@media only screen and (max-width: 767px) {
+  .destination {
+    padding: 20px 15px 15px; }
+    .destination p br {
+      display: none; }
+    .destination .left-section {
+      margin: 0px; }
+    .destination .left-section .title {
+      line-height: 100%; }
+      .destination .left-section .title span {
+        line-height: 20px; }
+    .destination .destination-slider {
+      padding: 0px; }
+      .destination .destination-slider .destination-slide {
+        padding: 0; }
+      .destination .destination-slider .slidesText {
+        width: 100%;
+        color: #000; }
+      .destination .destination-slider .slidesBtn {
+        width: 100%;
+        float: left;
+        margin-top: 15px; }
+      .destination .destination-slider .slick-prev {
+        top: 20%;
+        left: 0px; }
+      .destination .destination-slider .slick-next {
+        top: 20%;
+        right: 0px; }
+    .destination .cta-box {
+      margin-top: 15px; }
+      .destination .cta-box a {
+        font-size: 15px;
+        /* padding:8px 20px; */ }
+    .destination .destinationTabWrap {
+      width: 100%;
+      height: 45px;
+      margin: 15px 0px; }
+    .destination .slick-slide {
+      margin: 0px 15px 0px 0px; }
+    .destination .destinationTab {
+      width: 135px; }
+    .destination .destinationContentSec {
+      padding: 0; }
+    .destination .slick-list {
+      padding: 0 10% 0 0; } }
+@media only screen and (max-width: 767px) {
+  .destination .selectedCountry {
+    padding: 10px 15px 10px 15px;
+    color: #da7b26;
+    font-size: 0.9375em;
+    background: url(/images/oberoihotels/destination/drop-down-arrow.png) 92% center no-repeat;
+    cursor: default;
+    width: 100%;
+    border: 1px solid #828282;
+    display: block;
+    text-transform: uppercase;
+    color: #000;
+    font-family: "Roboto",sans-serif; }
+  .destination .destinationTab {
+    width: 150px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 99; }
+    .destination .destinationTab ul {
+      display: none;
+      float: left;
+      background: #fff;
+      padding: 10px 0px; }
+      .destination .destinationTab ul li {
+        cursor: default;
+        width: 100%;
+        color: #505050;
+        padding: 10px 0px;
+        border-bottom: 1px solid #505050; }
+      .destination .destinationTab ul li:last-child {
+        border-bottom: none; }
+  .destination .destinationTab li.active {
+    color: #505050; }
+  .destination .left-section .title {
+    font-size: 1.5em; }
+  .destination .right-section {
+    margin: 15px 0 12px; }
+
+  .destination .destination-slide .slidesText {
+    padding-right: 0px; } }
+
+/*# sourceMappingURL=destination.css.map */

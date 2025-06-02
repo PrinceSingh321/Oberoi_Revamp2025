@@ -1,0 +1,281 @@
+@import "_var.scss";
+@import "_mixin.scss";
+
+.com_imageWithTextTwoColComponent {
+  .descriptionSecRev {
+    .descriptionSec-wraperRev {
+      display: flex;
+      align-items: center;
+      @include below(tb) {
+        display: block;
+      }
+    }
+    .text-containerRev {
+      padding: 0px 2% 0px 3.75rem;
+      width: 44%;
+      @include below(tb) {
+        margin-top: 60px;
+        width: 100%;
+        padding: 0px 0px;
+      }
+      @include below(sm) {
+        margin-top: 25px;
+      }
+    }
+
+    .descriptionImageSliderRev {
+      width: 56%;
+      padding-bottom: 50px;
+     
+      @include below(tb) {
+        width: 100%;
+        margin-bottom: 45px;
+        padding-bottom: 0px;
+      }
+      picture {
+        display: block;
+        overflow: hidden;
+        img {
+          transition: 3s ease;
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+      }
+      .slick-next {
+        right: 12px;
+        width: 40px;
+        height: 40px;
+        margin-top: -20px;
+        z-index: 2;
+        &::before{
+          content: "";
+          display: block;
+          width: 20px;
+          height: 20px;
+          border-top: 2px solid #fff;
+          border-left: 2px solid #fff;
+          position: absolute;
+          top: 10px;
+          left: 15px;
+          transform: rotate(140deg);
+          -webkit-transform: rotate(140deg);
+          -moz-transform: rotate(140deg);
+        }
+    }
+    .slick-prev {
+      left: 12px;
+      z-index: 9;
+      width: 40px;
+      height: 40px;
+      margin-top: -20px;
+      &::before{
+      content: "";
+      display: block;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      }
+  }
+       .swiper-button-next{
+        width: 20px;
+        height: 40px;
+        top: calc(50% - 25px);
+        @include below(tb){
+          top: calc(50% - 0px);
+        }
+        &::after{
+          color: #fff;
+          font-size: 1.7rem;
+          @include below(md3){
+            font-size: 1.4rem;
+          }
+        }
+       }
+       .swiper-button-prev{
+        width: 20px;
+        height: 40px;
+        top: calc(50% - 25px);
+        @include below(tb){
+          top: calc(50% - 0px);
+        }
+        &::after{
+          color: #fff;
+          font-size: 1.7rem;
+          @include below(md2){
+            font-size: 1.4rem;
+          }
+        }
+       }
+       .swiper-pagination{
+          bottom:-4px;
+         .swiper-pagination-bullet{
+          width: 40px;
+          height: 6px;
+          border-radius: 20px;
+          background: transparent;
+          border:#878888 solid 1px!important;
+          position: relative;
+          z-index: 2;
+          background: transparent;
+          opacity: 1;
+          &::before{
+          content: "";
+          position: absolute;
+          width: 0%;
+          bottom: 0;
+          left: 0;
+          transition: width 1.9s ease;
+          }
+          @include below(tb){
+            display: none;
+          }
+          &.swiper-pagination-bullet-active{
+              background: none!important;
+              border-color: #878888;
+              &::before{
+                width: 100%;
+                background: #606161; /* Change color as needed */
+                height: 5px;
+              }
+          }
+         }
+       }
+    }
+  }
+  .descriptionTxtBottomBox {
+    margin-top: 20px;
+    @include below(sm){
+      margin-top: 10px;
+    }
+    p {
+      margin-bottom: 0px;
+      strong {
+        font-family: Verdana;
+      }
+    }
+    &.rev_overview_description_wrap{
+      p{
+        margin-bottom: 5px;
+      }
+      .mapsDestBtnRev{
+        a{
+          padding: 0 25px 0px 25px;
+          @include below(lg2){
+            padding: 0 15px 0px 15px;
+          }
+          @include below(md3){
+            padding: 0 10px 0px 10px;
+            margin-right: 0;
+          }
+          @include below(sm){
+            padding: 0 8px;
+          }
+          &:first-child{
+            padding-left: 0;
+          }
+          
+          &#showsustain{
+            padding-left: 25px;
+            @include below(md3){
+              padding-left: 10px;
+            }
+            @include below(md){
+              padding-left: 10px;
+              margin-top: 8px;
+              display: inline-block;
+            }
+            @include below(sm){
+              padding-left: 0px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .mapsDestBtnRev {
+    a {
+      color: #606161;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 0px 15px 0px 0px;
+      font-size: $button-font-size;
+      transition: all 0.5s;
+      letter-spacing: 1px;
+      font-family: $vard;
+      font-weight: bold;
+      position: relative;
+      transition: all 0.5s;
+      @include below(sm) {
+        padding: 0px 10px 0px 0px;
+      }
+
+      &:after {
+        content: " ";
+        border-bottom: 1px solid $grey;
+        border-right: 1px solid $grey;
+        top: 59% !important;
+        margin-top: -0.21em;
+        height: 0.4em;
+        right: 0;
+        position: absolute;
+        -webkit-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        width: 0.4em;
+        z-index: 2;
+      }
+      &.map-opened {
+        color: $colorOrange;
+        &:after {
+          top: 10px !important;
+          right: -3px;
+          transform: rotate(45deg);
+          border-bottom: 1px solid $colorOrange;
+          border-right: 1px solid $colorOrange;
+        }
+      }
+      @include below(lg) {
+        font-size: 0.937em;
+      }
+      // &:hover {
+      //   color: $colorOrange;
+      //   &:after {
+      //     border-bottom: 1px solid $colorOrange;
+      //     border-right: 1px solid $colorOrange;
+      //   }
+      // }
+    }
+  }
+  .slick-slider {
+    .slick-dots {
+      bottom: -40px;
+      li {
+        button {
+          border-color: #606161;
+        }
+        &.slick-active {
+          button {
+            background: #606161;
+          }
+        }
+      }
+      @include below(sm) {
+        bottom: -40px;
+      }
+    }
+  }
+  .mapAreaWrapRev {
+    @include below(sm) {
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,29 @@
+.box-col2 .contact-details-box{margin-top:25px}.contact-details-box{font-family:"verdanaN";font-size:.938em}.contact-details-box .contact-heading{line-height:100%;padding:10px 15px;background:#ebebeb}.contact-details-box .contact-details-info table{width:100%;margin-top:10px}.contact-details-box .contact-details-info table tr th,.contact-details-box .contact-details-info table tr td{text-align:left;padding:6px 15px;font-size:1.188em;vertical-align:top}.contact-details-box .contact-details-info table tr th a,.contact-details-box .contact-details-info table tr td a{color:#606161;text-decoration:none}.contact-details-box .contact-details-info table tr th{font-weight:500}.contact-details-box .contact-details-info table tr th span{font-weight:300;font-size:80%}@media only screen and (max-width: 991px){.contact-details-box .contact-details-info table tr th,.contact-details-box .contact-details-info table tr td{white-space:nowrap;font-size:13px;padding:6px 10px}}@media only screen and (max-width: 767px){.contact-details-box .contact-heading{padding:10px 5px}.contact-details-box .contact-details-info table{margin-top:10px}.contact-details-box .contact-details-info table tr th,.contact-details-box .contact-details-info table tr td{padding:6px 5px;font-size:13px}}.box-col2 .contact-details-box{margin-top:25px}
+/*# sourceMappingURL=contact-details-box.css.map */
+
+.contact-details-box .contact-details-info table tr th, .contact-details-box .contact-details-info table tr td{
+    color:#606161 !important;
+
+}
+.contact-details-box .contact-details-info table tr th, .contact-details-box .contact-details-info table tr td select{
+  font-size:1.188em;
+  color:#606161;
+}
+.contact-details-box .contact-heading{
+    font-size:1.188em;
+}
+.contact-us-toll-free .contact-info select {
+    min-width:150px;
+    vertical-align: top;
+    display: inline-block;
+    font-size: 15px;
+    border: 1px solid #ebebeb;
+    padding: 5px 10px;
+    font-family: "Roboto", sans-serif;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(https://www.oberoihotels.com/images/contact-us-form/select-arrow.png) right 10px center no-repeat;
+    margin-right: 10px;
+    padding-right: 22px;
+}

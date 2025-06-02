@@ -1,0 +1,126 @@
+.descriptionSec {
+  .contact-details {
+    .map-area {
+      .map-colm {
+        position: relative;
+      }
+      .share-component {
+        .share-list {
+          li {
+            @include below(sm) {
+              width: 100%;
+            }
+          }
+          &:before {
+            right: 12px;
+            top: -8px;
+            left: auto;
+          }
+        }
+      }
+    }
+  }
+}
+.share-component {
+  position: absolute;
+  right: 0px;
+  top: -23px;
+  .share-toggle {
+    color: #d8751b;
+    cursor: pointer;
+    display: block !important;
+    font-family: Verdana;
+    font-size: 0.9375em;
+    margin-right: 5px;
+    & > span {
+      margin-right: 5px;
+    }
+    .fa {
+      margin-right: 5px;
+    }
+  }
+}
+.share-list {
+  background-color: #f2f2f2;
+  display: none;
+  left: 17px;
+  padding: 15px 14px;
+  position: absolute;
+  text-align: center;
+  top: 28px;
+  width: 46px;
+  z-index: 9;
+
+  & > li {
+    cursor: pointer;
+    display: block;
+    list-style: outside none none;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    display: flex;
+    justify-content: center;
+    &:hover {
+      i {
+        color: $colorOrange;
+      }
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &:first-child {
+      padding-top: 0px;
+    }
+    i {
+      color: #cacac6;
+      font-size: 18px;
+    }
+    @include below(sm) {
+      justify-content: flex-start;
+      float: left;
+      align-items: center;
+      width: 14%;
+      padding-top: 0;
+    }
+  }
+  &:before {
+    background-color: #f2f2f2;
+    content: "";
+    height: 10px;
+    position: absolute;
+    left: 50%;
+    top: -9px;
+    transform: rotate(-45deg) translateX(-50%);
+    width: 10px;
+    @include below(sm) {
+      right: -9px;
+      top: 10px;
+      left: auto;
+    }
+  }
+}
+.fa-link {
+  position: relative;
+  span {
+    position: absolute;
+    top: 0;
+    right: 40px;
+    visibility: hidden;
+    width: 110px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 6px 0;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.75em;
+    font-family: "verdanaNormal";
+  }
+  &:hover {
+    span {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}

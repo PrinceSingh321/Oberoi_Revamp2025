@@ -1,0 +1,208 @@
+@import "_var.scss";
+@import "_mixin.scss";
+
+.com_imageWithBottomTextCompRev {
+  width: 100%;
+  position: relative;
+  @include commonTabCompRev();
+  .com_ImageWithBottomTextContent {
+    width: 100%;
+    position: relative; 
+    .com_TwoImageWithTextWrapper {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      @include below(sm) {
+        display: block;
+      }
+      .com_TwoImageSlider-img-sec {
+        width: 50%;
+        float: left;
+        margin-bottom: 100px;
+        picture {
+          display: block;
+          overflow: hidden;
+          img {
+            transition: 3s ease;
+            width: 100%;
+            vertical-align: middle;
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+        }
+        &:nth-child(2n-1) {
+          padding-right: 32.5px;
+        }
+        &:nth-child(2n) {
+          padding-left: 32.5px;
+        }
+        @include below(tb) {
+          width: 100%;
+          padding: 0px !important;
+          margin-bottom: 60px;
+        }
+      }
+      .full-width {
+        width: 100%;
+        padding-right: 0px !important;
+        margin-bottom: 0px;
+        @include below(sm) {
+          margin-bottom: 50px;
+        }
+        .slidesTextRev {
+          slideDesc {
+            min-height: 30px;
+          }
+        }
+        .twoColLayoutWrap {
+          display: flex;
+          align-items: center;
+
+          @include below(tb) {
+            display: block;
+          }
+
+          .imgBox {
+            width: 48.2%;
+
+            @include below(tb) {
+              width: 100%;
+            }
+          }
+          .twoColRightContentWrap {
+            width: 52%;
+            padding-left: 67px;
+
+            @include below(tb) {
+              width: 100%;
+              padding-left: 0px;
+            }
+          }
+        }
+
+        &.offerPageTwoImageSlider-img-sec {
+          .twoColLayoutWrap {
+            display: flex;
+            align-items: center;
+            @include below(tb) {
+              display: block;
+            }
+
+            .imgBox {
+              width: 48%;
+              @include below(tb) {
+                width: 100%;
+              }
+            }
+            .twoColRightContentWrap {
+              width: 52%;
+              padding-left: 67px;
+              @include below(tb) {
+                width: 100%;
+                padding-left: 0px;
+              }
+            }
+          }
+        }
+      }
+      .full-width-singleItem{
+        width: 100%;
+        padding-right: 0px !important;
+        margin-bottom: 0px;
+        @include below(sm) {
+          margin-bottom: 50px;
+        }
+        .slidesTextRev {
+          slideDesc {
+            min-height: 30px;
+          }
+        }
+        .twoColLayoutWrap{
+              display: flex;
+              align-items: center;
+              @include below(tb) {
+                display: block;
+              }
+          .imgBox{
+            width: 55%;
+            @include below(tb) {
+              width: 100%;
+            }
+          }
+          .twoColRightContentWrap{
+            width: 40%;
+            margin-left: 65px;
+            @include below(tb) {
+              width: 100%;
+              margin-left: 0px;
+            }
+            .slidesTextRev{
+              @include below(tb){
+                padding: 23px 0px 0px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .slidesTextRev {
+    .slideDesc {
+      @include below(md2) {
+        min-height: 70px;
+      }
+    }
+    .marginbottom {
+      @include below(sm) {
+        margin-bottom: 10px !important;
+      }
+    }
+  }
+}
+.offersPage {
+  .slidesTextRev {
+    p {
+      &:first-child {
+        text-transform: uppercase;
+      }
+    }
+  }
+  .full-width {
+    margin-bottom: 100px !important;
+    .slideDesc {
+      min-height: 10px;
+    }
+  }
+}
+.com_TwoImageSlider-img-sec {
+  &.full-width {
+    &.overPageTwoImageSlider-img-sec {
+      .twoColLayoutWrap {
+        display: flex;
+        align-items: center;
+
+        @include below(tb) {
+          display: block;
+        }
+
+        .imgBox {
+          width: 55%;
+
+          @include below(tb) {
+            width: 100%;
+          }
+        }
+        .twoColRightContentWrap {
+          width: 45%;
+          padding-left: 67px;
+
+          @include below(tb) {
+            width: 100%;
+            padding-left: 0px;
+          }
+        }
+      }
+    }
+  }
+}

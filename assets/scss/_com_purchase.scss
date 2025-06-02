@@ -1,0 +1,316 @@
+.purchase-intro {
+  p {
+    padding-bottom: 0;
+  }
+  p.storng {
+    font-weight: 600;
+    padding-bottom: 60px;
+  }
+}
+.purchase-facilities {
+  padding: 60px 0;
+  display: flex;
+  float: left;
+  width: 100%;
+  position: relative;
+  .facilitiesInner {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    @include below(sm) {
+      display: block;
+      text-align: center;
+    }
+    img {
+      max-width: 78px;
+      width: auto;
+      @include below(sm) {
+        display: inline-block;
+        margin-bottom: 15px;
+      }
+    }
+    p {
+      margin-bottom: 0;
+    }
+  }
+  .com_PurchaseSlider {
+    @include below(md3) {
+      padding-left: 120px;
+      padding-right: 120px;
+    }
+    @include below(md) {
+      padding-left: 60px;
+      padding-right: 60px;
+    }
+    @include below(sm) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .slick-slide {
+      display: flex;
+      justify-content: space-around;
+    }
+    .slick-track {
+      display: flex;
+    }
+    .slick-prev {
+      top: 45% !important;
+      margin-left: 30px;
+      &::before {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-top: 1px solid #000;
+        border-left: 1px solid #000;
+        position: absolute;
+        top: 6px;
+        right: 0px;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+      }
+    }
+
+    .slick-next {
+      top: 45% !important;
+      margin-right: 30px;
+      &::before {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-top: 1px solid #000;
+        border-left: 1px solid #000;
+        position: absolute;
+        top: 6px;
+        right: 0px;
+        transform: rotate(136deg);
+        -webkit-transform: rotate(136deg);
+        -moz-transform: rotate(136deg);
+      }
+    }
+  }
+}
+.purchaseFormSec {
+  padding: 60px 0;
+  position: relative;
+  display: flex;
+  width: 100%;
+  position: relative;
+  .titleRev h3 {
+    color: #8d691f;
+  }
+  .purchaseFormTab {
+    list-style: none;
+    margin-bottom: 30px;
+    li {
+      display: inline-flex;
+      margin: 0;
+      a {
+        text-decoration: none;
+        color: #606161;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 43px 10px 0px;
+      }
+      &.active a {
+        color: #d9751a;
+      }
+    }
+  }
+  .textWrappRev {
+    .requestReservationForm-container {
+      display: block;
+      padding: 0;
+      .requestFormWrap {
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        .revForm-control.col-6 {
+          padding: 28px 30px 28px 0px;
+          width: 49.7%;
+          .title-box {
+            min-width: 20%;
+            .selectCountryCodeValDisplay {
+              position: absolute;
+              top: 5px;
+              height: 35px;
+              width: 100%;
+              padding: 11px 0px;
+              background: #fff;
+              pointer-events: none;
+              z-index: 1;
+              font-size: 1.125rem;
+              color: #606161;
+              left: 0;
+              text-align: left;
+            }
+          }
+          .error-msg {
+            font-size: 0.8rem;
+            color: #ff0000;
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 53px;
+            line-height: 100%;
+            z-index: 1;
+          }
+          .title-box::after {
+            content: "";
+            display: block;
+            width: 0.7rem;
+            height: 0.7rem;
+            border-top: 2px solid #606161;
+            border-left: 2px solid #606161;
+            position: absolute;
+            bottom: 20px;
+            right: 0px;
+            transform: rotate(-135deg);
+            z-index: 1;
+
+            pointer-events: none;
+          }
+          .inputbox {
+            position: relative;
+            width: 100%;
+            display: flex;
+            input {
+              width: 100%;
+              border: none;
+              font-family: Verdana;
+              border-bottom: #b7b7b7 solid 1px;
+              padding: 12px 2px;
+              font-size: 1.125rem;
+              color: #606161;
+              &:focus + label {
+                color: #606161;
+                transform: translate(0px, -16px);
+                font-size: 0.8rem;
+              }
+            }
+            label {
+              position: absolute;
+              left: 0px;
+              pointer-events: none;
+              transition: 0.5s;
+              top: 12px;
+              font-family: Verdana;
+              font-size: 1.125rem;
+              color: #606161;
+            }
+            &.w100 {
+              width: 100%;
+            }
+          }
+        }
+        .revForm-control select {
+          width: 100%;
+          border: none;
+          font-size: 1.125rem;
+          color: #606161;
+          font-family: Verdana;
+          border-bottom: #b7b7b7 solid 1px;
+          padding: 13px 8px;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+          background: transparent;
+          cursor: pointer;
+        }
+        .select-box-wrap label {
+          position: absolute;
+          left: 0px;
+          pointer-events: none;
+          transition: 0.5s;
+          top: 12px;
+          font-family: Verdana;
+          font-size: 1.125rem;
+          color: #606161;
+          z-index: 91;
+        }
+      }
+    }
+  }
+}
+.com_imageWithrightTextCompRev {
+  .com_container {
+    .imageWithRightTextWrappRev {
+      .imageWithRightTextWrapp {
+        &.global-purchase-section {
+          .imageWrappRev {
+            width: 48%;
+            @include below(md) {
+              width: 100%;
+            }
+            img {
+              width: 100%;
+            }
+          }
+          .textWrappRev {
+            width: 50%;
+            margin-left: 2%;
+            @include below(md) {
+              width: 100%;
+              margin-left: 0;
+            }
+            .requestForm-box {
+              .revForm-control {
+                .title-box {
+                  min-width: 20%;
+                }
+              }
+            }
+            .request-a-proposal-form-wrap {
+              margin-top: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.requestReservationForm-container {
+  .requestFormWrapper {
+    .revForm-control {
+      &.col-6 {
+        &.col-12 {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+.global-purchase-section {
+  .requestReservationForm-container {
+    .requestFormWrapper {
+      &:last-child {
+        display: flex;
+      }
+      .revForm-control {
+        &.col-30 {
+          &.globalButton {
+            justify-content: normal !important;
+            margin-top: 20px;
+          }
+        }
+      }
+      .tncBox {
+        color: #606161;
+        margin: 20px 0;
+        font-size: 1.125rem;
+        font-family: Verdana;
+        @include below(sm) {
+          font-size: 0.9rem;
+        }
+        a {
+          color: #4eadd0;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

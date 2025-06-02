@@ -1,0 +1,733 @@
+.com_contactusComponent {
+  width: 100%;
+  .toll-free-section {
+    padding-bottom: 15px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    .contactus-wrapper {
+      width: 100%;
+      padding-bottom: 65px;
+      @include between(tb, md) {
+        flex-direction: column;
+      }
+      @include below(tb) {
+        flex-direction: column;
+        padding-bottom: 40px;
+        margin-top: 13px;
+      }
+      .contact-us-toll-free {
+        display: inline-flex;
+        width: 100%;
+        margin-bottom: 30px;
+        &:last-child {
+          margin-bottom: 0px;
+        }
+        @include between(tb, md) {
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: 30px;
+        }
+        @include below(tb) {
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
+        }
+        .contact-info {
+          @include below(tb) {
+            width: 100%;
+          }
+          span {
+            font-size: 1.188rem;
+            font-family: $vardanaNormal;
+            color: $black3;
+            padding-right: 55px;
+            text-transform: uppercase;
+            position: relative;
+            font-weight: 600;
+            @include below(tb) {
+              margin-bottom: 15px;
+              font-size: 0.937rem;
+              display: block;
+            }
+            &.p-right {
+              padding-right: 0;
+              font-family: $vardanaNormal;
+              font-weight: 600;
+            }
+            .selectCountryCodeValDisplay {
+              font-family: $vardana;
+            }
+          }
+          .tollfreeCountry-box {
+            .selectCountryCodeValDisplay {
+              position: relative;
+              padding-right: 0;
+              position: absolute;
+              top: -15px;
+              height: 38px;
+              width: 75%;
+              padding: 11px 0px;
+              background: #fff;
+              pointer-events: none;
+              z-index: 1;
+              font-size: 1.125rem;
+              color: $colorOrange;
+              left: 0;
+              text-align: left;
+              @include below(tb) {
+                font-size: 0.937rem;
+              }
+            }
+            select {
+              //width: 100%;
+              border: none;
+              font-size: 1.188rem;
+              color: $black3;
+              font-family: $vard;
+              border-bottom: #b7b7b7 solid 1px;
+              padding: 5px 47px 2px 2px;
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              appearance: none;
+              background: transparent;
+              cursor: pointer;
+              text-transform: capitalize;
+              &:checked {
+                color: $colorOrange;
+              }
+              @include below(tb) {
+                width: 100%;
+                font-size: 0.937rem;
+              }
+            }
+            &::after {
+              content: "";
+              display: block;
+              width: 0.7rem;
+              height: 0.7rem;
+              border-top: 2px solid $colorOrange;
+              border-left: 2px solid $colorOrange;
+              position: absolute;
+              bottom: 9px;
+              right: 62px;
+              transform: rotate(-135deg);
+              z-index: 1;
+              pointer-events: none;
+              @include below(tb) {
+                bottom: 14px;
+              }
+            }
+          }
+          .toll-free-no {
+            position: relative;
+            //padding-left: 43px;
+            padding-right: 0;
+            @include below(tb) {
+              padding-left: 0;
+            }
+            a {
+              font-size: 1.188rem !important;
+              font-family: $vardanaNormal;
+              color: $black3;
+              text-decoration: none;
+              @include below(tb) {
+                font-size: 0.937rem !important;
+              }
+            }
+          }
+          a {
+            color: $colorOrange;
+            font-size: 1.188rem;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.com_writetousComponent {
+  width: 100%;
+  .write-to-us-tab,
+  .ourOffices-tabs {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      @include below(tb) {
+        display: none;
+      }
+      &.openListItem {
+        @include below(tb) {
+          display: block;
+          padding: 15px 10px 0px;
+          min-width: 220px;
+          position: absolute;
+          background: #fff;
+          z-index: 99;
+          top: 45px;
+          width: auto;
+          box-shadow: 0px 0px 10px 0px #ccc;
+        }
+        li {
+          display: block;
+          padding: 0;
+          a {
+            @include below(tb) {
+              padding-bottom: 8px;
+              border-bottom: 0px;
+              display: block;
+              font-size: 0.937em;
+              padding: 0px 10px 15px 0;
+              line-height: 150%;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      li {
+        display: inline-flex;
+        margin: 0;
+        a {
+          text-decoration: none;
+          padding: 15px 85px 10px 0px;
+          font-family: $vard;
+          font-size: 1.188rem;
+          color: $black3;
+          @include between(tb, lg2) {
+            padding: 10px 43px 10px 0px;
+            font-size: 1rem;
+          }
+        }
+        &.active {
+          a {
+            color: $colorOrange;
+            text-shadow: 0 0 1px #d8751b, 0 0 1px #d8751b;
+          }
+        }
+      }
+    }
+    .filterWrapp {
+      padding-right: 0;
+      @include below(sm) {
+        margin-top: 20px;
+      }
+      .getDropdownValue {
+        @include below(tb) {
+          display: block;
+        }
+      }
+    }
+  }
+  .writeUs-content-box {
+    width: 100%;
+    .requestReservationForm-container {
+      padding: 0px 0;
+      z-index: 9;
+      .requestForm-box {
+        border: none;
+        form {
+          padding: 0 25px 25px 25px;
+          @include below(sm){
+            padding: 0 2px 25px 2px;
+          }
+        }
+        .subsBtn {
+          &.resetbtn {
+            margin-right: 55px;
+            @include below(sm) {
+              margin-right: 0;
+              margin-bottom: 30px;
+            }
+            .style2 {
+              color: $colorOrange;
+              border: solid 1px $colorOrange;
+              background: $white;
+            }
+          }
+        }
+      }
+      .requestFormWrapper {
+        .revForm-control {
+          &.col-6 {
+            .title-box {
+              &.w17 {
+                width: 17%;
+              }
+            }
+            &.col-4 {
+              width: 33.1%;
+              @include between(tb, md) {
+                width: 33%;
+                padding: 28px 20px 28px 0px;
+              }
+              @include below(tb) {
+                width: 100%;
+              }
+            }
+          }
+          .uploadFile {
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            //padding: 50px 0;
+            margin: 50px 0;
+            @include below(sm) {
+              //padding: 25px 0;
+              margin: 25px 0;
+            }
+            .c-file-container {
+              width: 100%;
+              float: left;
+              box-shadow: none;
+              margin-top: 0;
+              padding: 15px 0px 7px 0;
+              border: solid 1px #b7b7b7;
+              .choose-file-wrapper {
+                width: 80%;
+                display: flex;
+                align-items: center;
+                margin: 0 auto;
+                @include below(sm) {
+                  width: 100%;
+                }
+                .camera-wrapp {
+                  margin-right: 6%;
+                  text-align: center;
+                  @include below(sm) {
+                    margin-right: 5%;
+                    margin-left: 2%;
+                  }
+
+                  p {
+                    font-size: 1.125rem;
+                    color: $black3;
+                    @include below(sm) {
+                      font-size: 13px !important;
+                    }
+                  }
+                }
+                .pick-photo {
+                  margin-left: 7%;
+                  text-align: center;
+                  .choose-file-bt-div {
+                    width: 120px;
+                    background: none;
+                    color: #d9741c;
+                    cursor: pointer;
+                    padding: 10px 0px;
+                    //font-weight: bold;
+                    font-size: 1.125rem;
+                    font-family: $vard;
+                    @include below(sm) {
+                      font-size: 13px;
+                    }
+                  }
+                  input {
+                    opacity: 0;
+                    width: 100%;
+                    position: absolute;
+                    top: 0;
+                    height: 100%;
+                    left: 0px;
+                  }
+                }
+              }
+            }
+            .filter-component {
+              position: relative;
+              .filter-results-list {
+                margin: 0 !important;
+                padding: 5px;
+                li {
+                  float: left;
+                  list-style: outside none none;
+                  margin-bottom: 32px;
+                  margin-right: 1.5%;
+                  margin-left: 1.5%;
+                  width: 30.33%;
+                  min-height: auto;
+                  @include below(sm) {
+                    width: 96%;
+                  }
+                  .image-block {
+                    margin-bottom: 15px;
+                    position: relative;
+                    img {
+                      max-width: 100%;
+                      width: 100%;
+                      vertical-align: middle;
+                    }
+                  }
+                  .text-block {
+                    padding: 0px 20px;
+                    .text-block-hdng-style1 {
+                      font-family: $vard;
+                      font-size: 1.125rem;
+                      line-height: 100%;
+                      margin-bottom: 10px;
+                      font-style: normal;
+                    }
+                    @include below(sm) {
+                      padding: 0px 5px;
+                      font-size: 13px;
+                    }
+                  }
+                }
+              }
+            }
+            .upload-file {
+              font-size: 1.125rem;
+              font-family: $vard;
+              color: $black3;
+              padding: 0 0 12px 2px;
+              @include below(sm) {
+                font-size: 0.9rem;
+              }
+            }
+          }
+        }
+      }
+      .RequestFromThanks-box {
+        display: none;
+        margin-top: 30px;
+      }
+    }
+    .ourOffices-container {
+      width: 100%;
+      display: none;
+      &.activeTab {
+        display: block;
+      }
+    }
+    .ourOffices-wrapper {
+      width: 100%;
+      position: relative;
+      margin-top: 28px;
+      @include below(tb) {
+        margin-top: 0;
+      }
+      ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        @include below(tb) {
+          flex-direction: column;
+        }
+        li {
+          width: 26%;
+          padding: 0 0 0 30px;
+          border-right: 1px solid #d8d8d8;
+          display: inline-block;
+          @include between(md, lg2) {
+            width: 24%;
+          }
+          @include between(tb, md) {
+            width: 48.7%;
+            margin-bottom: 30px;
+            &:nth-child(3) {
+              padding: 0;
+            }
+            &:nth-child(2) {
+              border-right: 0;
+            }
+          }
+          @include below(tb) {
+            width: 100%;
+            border-bottom: 1px solid #d8d8d8;
+            border-right: none;
+            padding: 0;
+            margin-bottom: 30px;
+          }
+          &:first-child {
+            padding: 0 0 0px 0px;
+          }
+          &:last-child {
+            border-right: none;
+            @include below(tb) {
+              border-bottom: none;
+            }
+          }
+          .our-offices-wrap-box {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 23px;
+            padding: 0 17px 0 0;
+            .hotel-info-heading {
+              font-size: 1.188rem;
+              color: $black3;
+              font-family: $vardanaBold;
+              width: 100%;
+              margin-bottom: 5px;
+              @include between(tb, lg2) {
+                font-size: 1rem;
+              }
+              &.mr-bottm {
+                margin-bottom: 23px;
+              }
+              @include below(sm) {
+                font-size: 0.973rem;
+              }
+            }
+            .hotle-info-text {
+              width: 100%;
+              font-family: $vard;
+              font-size: 1.188rem;
+              color: $black3;
+              @include between(tb, lg2) {
+                font-size: 1rem;
+              }
+              @include between(md, md3){
+                font-size: 0.93rem;
+              }
+              @include below(sm) {
+                font-size: 0.973rem;
+              }
+              a {
+                text-decoration: none;
+                color: $black3;
+              }
+            }
+          }
+        }
+      }
+      .distance-and-flying-time {
+        max-width: 1000px;
+        overflow: auto;
+        table {
+          background: #f1f1f1;
+          border: 1px solid #f1f1f1;
+          width: 100%;
+          tr th {
+            font-weight: 500;
+            padding: 8px 6px;
+            background: #f1f1f1;
+            text-align: left;
+            font-size: 1.125rem;
+            font-family: $vardanaBold;
+            color: $black3;
+            @include below(sm) {
+              font-size: 0.9375em;
+            }
+          }
+          tr td {
+            background: #f1f1f1;
+            padding: 8px 6px;
+            font-size: 1.125rem;
+            font-family: $vard;
+            color: $black3;
+            @include below(sm) {
+              font-size: 0.9375em;
+              min-width: 170px;
+            }
+          }
+          tr:nth-child(2n) td {
+            background: #fff;
+          }
+          tr td a {
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+.two-imageWithHalfSlider {
+  &.imageWithRightTextSlide {
+    .imageWithHalfSlider-imgWrap {
+      width: 55%;
+      overflow: hidden;
+      img {
+        transition: 3s ease;
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+      @include below(tb) {
+        width: 100%;
+      }
+    }
+    .textWrappRev {
+      width: 45%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 0 0 0 3%;
+      @include below(tb) {
+        width: 100%;
+        padding: 5% 0 0 0%;
+      }
+      h2 {
+        margin-bottom: 20px;
+        color: #606060;
+        font-family: Verdana;
+        @include below(md3){
+          margin-bottom: 10px;
+        }
+    
+        @include below(md2) {
+         font-size:20px;
+        }
+
+      }
+      .textDiscription {
+        width: 100%;
+        h3 {
+          font-family: "optimanormal";
+          font-size: 2.563em;
+          //line-height: 100%;
+          line-height: normal;
+          margin-bottom: 20px;
+          font-weight: 400;
+          color: #606161;
+          color: #606161;
+          
+          @include between(tb, md) {
+            font-size: 1.9rem;
+          }
+          @include below(tb) {
+            font-size: 1.3em;
+          }
+        }
+        p {
+          margin-bottom: 20px;
+          @include below(md3){
+            margin-bottom: 7px;
+          }
+          a {
+            text-decoration: none;
+            color: #606161;
+          }
+        }
+       
+      }
+      .marginTop{
+        @include below(md3){
+          margin-top: 5px;
+        }
+      }
+    }
+    .slider-img-sec {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .viewMapData {
+      width: 100%;
+      padding: 40px 0;
+      display: none;
+      @include below(xs) {
+        padding: 10px 0;
+      }
+      iframe {
+        width: 100%;
+      }
+      .mapAreaWrapRev {
+        flex-wrap: wrap;
+        margin-top: 0;
+        .map-colm {
+          width: 100%;
+          .map-destination {
+            max-width: 100%;
+            @include below(xs) {
+              margin-top: 0;
+            }
+            .map-destination-wrap {
+              .destination-field {
+                @include below(xs) {
+                  width: 325px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .slidesBtnRev {
+      @include below(xs) {
+        margin-top: 0px;
+      }
+      .mapdirection {
+        &.active {
+          &:after {
+            top: 41%;
+            transform: rotate(45deg);
+            border-color: #d8751b;
+          }
+        }
+      }
+    }
+    .two-imageWithHalfSlider-img {
+      .slick-prev,
+      .slick-next {
+        transform: translate(0, 0%);
+        margin-top: -16px;
+      }
+      .slick-next {
+        right: -2%;
+        @include below(tb) {
+          right: 2%;
+        }
+        &::before {
+          content: "";
+          display: block;
+          width: 20px;
+          height: 20px;
+          border-top: 1px solid #000;
+          border-left: 1px solid #000;
+          position: absolute;
+          top: 6px;
+          right: 0px;
+          transform: rotate(136deg);
+          -webkit-transform: rotate(136deg);
+          -moz-transform: rotate(136deg);
+          @include below(tb) {
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            
+          }
+        }
+      }
+      .slick-prev {
+        left: -2%;
+        @include below(tb) {
+          left: 2%;
+          z-index: 1;
+        }
+        &::before {
+          content: "";
+          display: block;
+          width: 20px;
+          height: 20px;
+          border-top: 1px solid #000;
+          border-left: 1px solid #000;
+          position: absolute;
+          top: 6px;
+          right: 0px;
+          transform: rotate(-45deg);
+          -webkit-transform: rotate(-45deg);
+          -moz-transform: rotate(-45deg);
+
+          @include below(tb) {
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            
+          }
+        }
+      }
+    }
+  }
+  @include commonTabCompRev();
+}

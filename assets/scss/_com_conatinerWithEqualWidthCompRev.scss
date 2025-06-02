@@ -1,0 +1,112 @@
+.com_50widthSideComp {
+  .width100mainWrapp {
+    background-color: #000;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    .width50 {
+      width: 50%;
+      @include below(tb) {
+        width: 100%;
+      }
+      .imgHolder {
+        img {
+          display: block;
+        }
+      }
+      .imgWithcontent {
+        text-align: center;
+        @include below(tb) {
+          padding: 2rem 1rem;
+        }
+        h4 {
+          color: $gold;
+          font-family: $opt;
+          font-weight: normal;
+          font-size: 1.1rem;
+          @include below(md2) {
+            font-size: 0.9rem;
+          }
+        }
+        h3 {
+          color: $white;
+          font-family: $vardanaNormal;
+          font-weight: lighter;
+          font-size: 0.79rem;
+          margin-top: 15px;
+          @include below(md2) {
+            font-size: 0.66rem;
+            margin-top: 10px;
+          }
+        }
+        .innerImageWidth50 {
+          .innerImage {
+            margin-top: 15px;
+            width: 35%;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            img {
+              @include below(md2) {
+                max-width: 35%;
+              }
+              @include below(tb) {
+                max-width: 100%;
+              }
+            }
+            @include below(md2) {
+              margin-top: 20px;
+              width: 100%;
+            }
+          }
+        }
+        .oneButtons {
+          display: flex;
+          justify-content: center;
+          margin-top: 25px;
+          @include below(md2) {
+            margin-top: 15px;
+          }
+          .btnstyle3 {
+            margin: 0 1rem;
+            @include below(md2) {
+              margin: 0 0.5rem;
+            }
+            &.btnstyle3 {
+              .goldenBtn {
+                display: inline-block;
+                min-width: 140px;
+                background: transparent;
+                color: #c49f46;
+                text-decoration: none;
+                padding: 12px 0px;
+                text-transform: uppercase;
+                font-family: "verdanaBold";
+                font-size: 0.9rem;
+                border-radius: 5px;
+                border: solid 1px #c49f46;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.goldenBtn {
+  display: inline-block;
+  min-width: 140px;
+  background: $gold;
+  color: $black;
+  text-decoration: none;
+  padding: 12px 0px;
+  text-transform: uppercase;
+  font-family: $vardanaBold;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  @include below(md2) {
+    font-size: 0.77rem;
+    min-width: 100px;
+  }
+}

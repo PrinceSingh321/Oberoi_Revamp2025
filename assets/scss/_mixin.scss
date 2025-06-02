@@ -1,0 +1,537 @@
+@mixin button1($color) {
+  color: $color;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0px 10px 0px 0px;
+  font-size: $button-font-size;
+  transition: all 0.5s;
+  //letter-spacing: 1px;
+  font-family: $vard;
+  font-weight: bold;
+  position: relative;
+
+  @include below(lg) {
+  }
+}
+
+@mixin buttonArrow($color) {
+  content: " ";
+  border-bottom: 2.5px solid $colorOrange;
+  border-right: 2.5px solid $colorOrange;
+  top: 50%;
+  margin-top: -0.21em;
+  height: 0.4em;
+  right: -5px;
+  position: absolute;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  width: 0.4em;
+  z-index: 2;
+  @include below(tb) {
+    border-bottom: 1.5px solid $colorOrange;
+    border-right: 1.5px solid $colorOrange;
+    right: 0;
+  }
+}
+@mixin buttonHover($bgColor, $color) {
+  background: $bgColor;
+  color: $color;
+}
+
+@mixin imageScale($imageScale) {
+  -webkit-transform: scale($imageScale);
+  -moz-transform: scale($imageScale);
+  -o-transform: scale($imageScale);
+  transform: scale($imageScale);
+}
+
+@mixin transition($transitionVal) {
+  -webkit-transition: $transitionVal ease;
+  -moz-transition: $transitionVal ease;
+  -o-transition: $transitionVal ease;
+  transition: $transitionVal ease;
+}
+
+@mixin button2($fontSize, $color) {
+  font-family: $fb;
+  color: $color;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0px;
+  font-size: $fontSize;
+  text-transform: uppercase;
+  //letter-spacing: 3px;
+  margin-top: 8px;
+}
+
+@mixin bookNowBtnStyle($bgColor, $color) {
+  background: $bgColor;
+  color: $color;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 1.5rem 2rem;
+  font-size: 1.5rem;
+  transition: all 0.5s;
+  letter-spacing: 1px;
+  line-height: 100%;
+  display: inline-block;
+  letter-spacing: 2px;
+  min-width: 150px;
+  text-align: center;
+
+  @include below(lg) {
+    padding: 1.4rem 2rem;
+    min-width: 143px;
+  }
+
+  @include below(sm) {
+    padding: 0.9rem 1rem;
+  }
+}
+
+@mixin arrowUp($color, $size) {
+  content: "";
+  display: block;
+  width: $size;
+  height: $size;
+  border-top: 1px solid $color;
+  border-left: 1px solid $color;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  transform: rotate(-135deg);
+}
+
+@mixin dropDown {
+  .dropDown {
+    display: flex;
+    margin-top: 35px;
+    padding: 0px 10%;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    @include below(sm) {
+      padding: 0px;
+      margin-top: 22px;
+    }
+    .line {
+      height: 1px;
+      background: $gray4;
+      width: 100%;
+    }
+    .dropDownText {
+      white-space: nowrap;
+      padding: 0 40px;
+      position: relative;
+      font-family: $fl;
+      font-size: 1.8rem;
+      color: $gray4;
+      letter-spacing: 2px;
+
+      @include below(sm) {
+        padding: 0 20px;
+      }
+
+      @include below(lg) {
+        font-size: 1.6rem;
+      }
+
+      cursor: pointer;
+      &:after {
+        @include arrowUp($gray, 1.18rem);
+      }
+    }
+  }
+}
+
+@mixin left-section-heading {
+  display: inline-block;
+}
+
+@mixin right-section-btn {
+  display: inline-block;
+  text-align: right;
+  text-transform: uppercase;
+  .viewAll-btn {
+    color: $colorOrange;
+    font-size: 1.2rem;
+    text-decoration: none;
+    padding-bottom: 3px;
+    position: relative;
+    padding-right: 15px;
+    font-weight: 400;
+    position: relative;
+    &::after {
+      content: "";
+      display: block;
+      width: 0.6rem;
+      height: 0.6rem;
+      border-top: 1px solid $colorOrange;
+      border-left: 1px solid $colorOrange;
+      position: absolute;
+      top: 6px;
+      right: 0px;
+      transform: rotate(-224deg);
+      -webkit-transform: rotate(-224deg);
+      -moz-transform: rotate(-224deg);
+    }
+    @include below(sm) {
+      font-size: 1rem;
+    }
+  }
+
+  @include below(sm) {
+    margin: 0 1% 20px 0;
+  }
+  @include between(sm3, sm2) {
+    margin: 0 2% 20px 0;
+  }
+}
+
+@mixin commonTabtitle {
+  font-family: $opt;
+  color: $black3;
+  @include below(sm) {
+    font-size: 1.7rem;
+  }
+}
+
+@mixin slidesText() {
+  .slidesTextRev {
+    width: 100%;
+    display: block;
+    padding: 18px 0 0px 0;
+    @include below(sm) {
+      padding: 15px 0px 0px;
+    }
+    p {
+      font-size: 1.1875rem;
+      margin-bottom: 10px;
+      @include below(lg) {
+        font-size: 1rem;
+      }
+      @include below(lg) {
+        font-size: 0.937em;
+        margin-bottom: 10px;
+        padding: 0 3rem 0 0;
+      }
+      @include below(md3){
+        padding: 0 0.8rem 0 0;
+      }
+      @include below(sm) {
+        padding: 0 0rem 0 0;
+        margin-bottom: 0px;
+      }
+      span {
+        margin-right: 40px;
+        &:last-child{
+          @include below(md3){
+            margin-right: 0px;
+          }
+        }
+        @include below(sm) {
+          display: block;
+          margin: 0px;
+        }
+        &.box-sRev {
+          margin-right: 1.8rem;
+        }
+        a {
+          color: #606161;
+          text-decoration: none;
+        }
+      }
+      &:nth-child(2) {
+        @include below(sm) {
+          margin-top: 5px;
+        }
+      }
+      &.upper-text {
+        text-transform: uppercase;
+      }
+      // &.slide-text-box {
+      //   display: -webkit-box;
+      //   -webkit-line-clamp: 2;
+      //   -webkit-box-orient: vertical;
+      //   overflow: hidden;
+      // }
+    }
+    .slideDesc {
+      min-height: 35px;
+      @include below(lg) {
+        min-height: 45px;
+      }
+    }
+    &.w31 {
+      @include above(tb) {
+        width: calc(100% - 31%);
+        padding: 0;
+        margin-top: -8px;
+      }
+    }
+  }
+  .full-width {
+    .slidesTextRev {
+      .slideDesc {
+        min-height: auto !important;
+      }
+    }
+  }
+}
+
+@mixin slidesBtnRev {
+  .slidesBtnRev {
+    display: flex;
+    position: relative;
+    .cta-boxRev {
+      // width: 127px;
+      margin-right: 3rem;
+      @include between(tb, md) {
+        margin-right: 1.5rem;
+      }
+      @include below(xs) {
+        margin-right: 0.7rem;
+      }
+      
+      .buttonStyle2Rev {
+        font-size: 1.188em;
+        padding-right: 10px;
+        
+        &:hover {
+          text-shadow: 0 0 0.65px #d8751b, 0 0 0.65px #d8751b;
+        }
+        @include below(lg) {
+          font-size: 0.937em;
+        }
+        @include below(xs2){
+          font-size: 0.9em;
+        }
+        @include below(xs3){
+          font-size: 0.88em;
+        }
+        @include below(xs4){
+          font-size: 0.85em;
+        }
+        @include below(xs5){
+          font-size: 0.81em;
+        }
+        &.RequestFormBtn {
+          &.active {
+            &::after {
+              transform: rotate(45deg);
+              top: 42%;
+            }
+          }
+        }
+      }
+      .mr-10 {
+        margin: 0px;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+      @include below(sm) {
+        margin-bottom: 0.3rem;
+        float: left;
+      }
+    }
+    @include below(sm) {
+      margin-top: 10px;
+      display: block;
+    }
+  }
+  .slidesBtnRevOption2 {
+    @include below(sm) {
+      display: block;
+      .cta-boxRev {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+@mixin commonTabCompRev {
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    @include below(tb) {
+      display: none;
+    }
+    li {
+      display: inline-flex;
+      padding: 0px 50px 30px 0;
+      font-size: 1.188em;
+      color: $grey;
+      font-family: $vard;
+      line-height: 100%;
+      cursor: pointer;
+      &.active {
+        color: $colorOrange;
+        font-weight: normal;
+        line-height: 100%;
+        text-shadow: 0 0 1px #d8751b, 0 0 1px #d8751b;
+        a {
+          color: $colorOrange;
+        }
+        &::after {
+          border-color: #d8751b !important;
+        }
+      }
+      @include below(lg) {
+        font-size: 0.937em;
+        padding: 0px 47px 30px 0;
+      }
+      @include below(tb) {
+        padding: 0px 10px 30px 0px;
+      }
+      @include below(sm) {
+        padding: 0px 20px 30px 0;
+        font-size: 1rem;
+      }
+      a {
+        color: $grey;
+        font-family: $vard;
+        text-decoration: none;
+        font-weight: 300;
+      }
+    }
+    &.fixedtab {
+      position: fixed;
+      top: 120px;
+      width: 100%;
+      z-index: 999;
+      background: #fff;
+      padding: 14px 0 0;
+      left: 0;
+      padding-left: 3.5%;
+      @include below(md2) {
+        padding-left: 4%;
+      }
+      @include below(sm) {
+        top: 75px;
+        left: 0;
+        padding: 14px 15px 0;
+      }
+    }
+  }
+  .getDropdownValue {
+    display: none;
+    @include below(tb) {
+      display: inline-block;
+      margin-bottom: 15px;
+      text-align: left;
+      position: relative;
+      font-size: 0.937em;
+      font-family: $vardanaNormal;
+      color: $grey;
+      cursor: pointer;
+      //min-width:73px;
+      min-width:auto;
+      &:after {
+        content: " ";
+        border-bottom: 1.5px solid $grey;
+        border-right: 1.5px solid $grey;
+        top: 38%;
+        margin-top: -0.21em;
+        height: 0.5em;
+        right: -15px;
+        position: absolute;
+        transform: rotate(45deg);
+        width: 0.5em;
+        z-index: 2;
+      }
+    }
+  }
+  @include below(tb) {
+    .openListItem {
+      display: block;
+      padding: 10px;
+      min-width: 150px;
+      position: absolute;
+      background: $white;
+      z-index: 9;
+      top: 30px;
+      li {
+        padding-bottom: 0px;
+        border-bottom: 0px;
+        margin-bottom: 0px;
+        display: block;
+        font-size: 0.937em;
+        padding: 7px 4px 7px 4px;
+        line-height: 100%;
+      }
+    }
+  }
+}
+
+@mixin marginright {
+  margin-right: 30px;
+}
+
+@mixin slickaroows {
+  .slick-next,
+  .slick-prev {
+    //top: 30.8vh;
+    transform: translate(0, 0%);
+    margin-top: -16px;
+    @include below(tb) {
+      //background: rgba(230, 230, 230, 0.5);
+      width: 40px;
+      height: 40px;
+      margin-top: -20px;
+      z-index: 2;
+    }
+  }
+}
+@mixin inputboxStyle {
+  .inputbox {
+    position: relative;
+    width: 100%;
+    display: flex;
+    input {
+      width: 100%;
+      border: none;
+      font-family: $vard;
+      border-bottom: $gray4 solid 1px;
+      padding: 12px 2px;
+      font-size: 1.125rem;
+      color: $grey;
+      @include below(md2){
+        font-size: 0.955rem;
+      }
+      @include below(sm) {
+        font-size: 0.9rem;
+      }
+    }
+    input:focus + label,
+    input.has-value + label {
+      color: $grey;
+      transform: translate(0px, -16px);
+      font-size: 0.8rem;
+    }
+    label {
+      position: absolute;
+      left: 0px;
+      pointer-events: none;
+      transition: 0.5s;
+      top: 12px;
+      font-family: $vard;
+      font-size: 1.125rem;
+      color: $grey;
+      @include below(md2) {
+        font-size: 1rem;
+      }
+      @include below(sm) {
+        font-size: 0.9rem;
+      }
+    }
+    &.w100 {
+      width: 100%;
+    }
+  }
+}

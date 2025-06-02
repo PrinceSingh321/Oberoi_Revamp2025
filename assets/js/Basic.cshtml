@@ -1,0 +1,2285 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.Mvc.Analytics.Extensions
+@using System.Web.Optimization
+@using Sitecore.Mvc
+@using Sitecore.Mvc.Analytics.Extensions
+@using System.Web.Optimization
+@using Sitecore.Web.UI.WebControls;
+@using Sitecore.Web;
+@using Sitecore.Data.Items;
+@using Sitecore.Xml;
+@using System.Configuration;
+@using Sitecore.Data.Fields;
+@using Sitecore.Resources.Media;
+@using System.Collections;
+@using Oberoi.Foundation.Dictionary;
+@{
+
+    bool isMemberLoggedIn = false;
+    bool showOfferRequestForm = false;
+    Layout = null;
+    var ogImage = "";
+    var currentItem = Sitecore.Context.Item;
+    var currentItemTemplateName = currentItem.TemplateName;
+    var classCurrentItemTemplateName = "template" + currentItemTemplateName.Replace(" ", "");
+    string glblCurrentPageLanguageName = Html.Sitecore().CurrentItem.Uri.Language.Name.ToLower();
+    string currneHostName = HttpContext.Current.Request.Url.Host;
+    Sitecore.Data.Database currentDatabase = Sitecore.Context.Database;
+
+    Item bundleSettingItem = currentDatabase.GetItem("{1E1490F8-05E8-4F48-B12C-4172CEA1C5CF}");
+    Item cssBundleItem = currentDatabase.GetItem("{07F54427-39B4-4E63-B7A6-E4E0823238A9}");
+    Item jsBundleItem = currentDatabase.GetItem("{AE4C1CA8-A1B1-441E-89D2-CC25F5ECD9E6}");
+
+
+    Sitecore.Data.Items.Item global =
+    Sitecore.Context.Database.GetItem("/sitecore/content/OberoiHotels/Site Content/Components/Data/Global Scripts");
+
+    if (HttpContext.Current.Application["hotelDetailsJSON"] == null)
+    {
+        DLJSON.CreateHotelJSONAndStoreInApplication();
+    }
+    if (HttpContext.Current.Application["jsonDataBookingWidget"] == null || HttpContext.Current.Application["JsonDataBookingWidgetMarketingAssets"] == null)
+    {
+        DLJSON.CreateBookingWidgetJSONAndStoreInApplication();
+    }
+
+    DLJSONBwConfiguration.CreateJSONAndStoreInApplication();
+
+    if (HttpContext.Current.Application["arrBwPromoCodeConfiguration"] == null)
+    {
+        DLJSONBwPromoCodeConfiguration.CreateJSONAndStoreInApplication();
+    }
+    if (HttpContext.Current.Application["arrBwMasterConfiguration"] == null)
+    {
+        DLJSONBwMasterConfiguration.CreateJSONAndStoreInApplication();
+    }
+
+    //DLJSONCalendarSoldOutAndNoRoomData.CreateDLJSONCalendarSoldOutAndNoRoomData();
+
+    if (HttpContext.Current.Application["arrCalendarSoldOutDatesLoggedIn"] == null)
+    {
+        HttpContext.Current.Application["arrCalendarSoldOutDatesLoggedIn"] = DLJSON.getJsonFromDB("oberoiSoldOutDatesHotelSpecific");
+    }
+    if (HttpContext.Current.Application["arrCalendarSoldOutDatesNotLoggedIn"] == null)
+    {
+        HttpContext.Current.Application["arrCalendarSoldOutDatesNotLoggedIn"] = DLJSON.getJsonFromDB("oberoiSoldOutDatesHotelSpecificNotLoggedIn");
+    }
+
+
+    string scriptVersion = Convert.ToString(bundleSettingItem.Fields["File Version"]);
+    var domainname = Sitecore.Configuration.Settings.GetAppSetting("currentDomainUrl");
+    var webrawurl = Request.RawUrl.Split(new string[] { "?" }, StringSplitOptions.None)[0];
+    var webrawurlFornewYearMarketing = Request.RawUrl.Split(new string[] { "?" }, StringSplitOptions.None)[0];
+    var canonicalURL = domainname + webrawurl;
+    var bodyClass = "";
+    var bodySchema = "itemscope itemtype='https://schema.org/Hotel'";
+
+    //Marketing Assets Band
+    var MarketingcurrentItem = Sitecore.Context.Item;
+    var AwardMarketingcurrentItem = Sitecore.Context.Item;
+    string URl = webrawurl.ToString();
+    string URlCheckSpecialOffer = "";// this Url start from special offers
+    string URlCheck = "special-offers";
+    bool b = false;
+    bool hideband = false;
+    var siteItem = Sitecore.Context.Database.Items.GetItem("{1B99E3C6-E608-40AE-9021-8983DF5A54D6}");
+    bool isDubaiExist = webrawurl.Contains("dubai");
+    bool isDubaiExistOffer = webrawurl.Contains("/hotels-in-al-zorah-ajman/destinations/dubai/");
+    if(isDubaiExistOffer = webrawurl.Contains("/hotels-in-al-zorah-ajman/destinations/dubai/") || webrawurl.Contains("/hotels-in-al-zorah-ajman/experiences/dubai-retail-therapy/"))
+    { isDubaiExistOffer = true; }
+    if (isDubaiExist == true && isDubaiExistOffer == false)
+    { Response.Redirect("/hotels-in-al-zorah-ajman/"); }
+    bool iskeralaExist = webrawurl.Contains("kerala");
+    if (iskeralaExist == true)
+    { Response.Redirect("/"); }
+
+    if (URl.Length >= 14)
+    {
+        URlCheckSpecialOffer = URl.Substring(0, 14);// this Url start from special offers
+        URlCheck = "special-offers";
+        b = URlCheckSpecialOffer.Contains(URlCheck); //check special-offers contains or not
+    }
+    if (b == false && (webrawurl == "/" || webrawurl == "/experiences/" || webrawurl == "/exotic-vacations/" || webrawurl == "/special-offers/" || webrawurl == "/destinations/" || webrawurl == "/contact-us/" || webrawurl == "/immunity-building-dishes/" ||
+        webrawurl == "/omoalliance/" || webrawurl == "/meeting-and-events/" || webrawurl == "/irresistible-offers-by-oberoi/" || webrawurl == "/gallery/" || webrawurl == "/awards/" || webrawurl == "/in-the-news/" ||
+        webrawurl == "/about-us/" || webrawurl == "/sitemap/" || webrawurl == "/terms-and-conditions/" || webrawurl == "/privacy-policy/" || webrawurl == "/tariff/" || webrawurl == "/aviation/" || webrawurl == "/travel/" || webrawurl == "/spring-offers-by-oberoi/" || webrawurl == "/magazines/" ||
+        webrawurl == "/media-press-releases/" || webrawurl == "/online-food-delivery/" || webrawurl == "/oberoi-book-direct/" || webrawurl == "/oberoi-book-direct-claim-form/" || webrawurl == "/best-rate-guarantee/" || webrawurl == "/oberoi-select/" || webrawurl == "/news-letter/" || webrawurl == "/feedback-form/" || webrawurl == "/silent-night/" || webrawurl == "/christmas-and-new-year-2021/"))
+    {
+        URlCheck = "false";
+        MarketingcurrentItem = Sitecore.Context.Item;
+        hideband = true;
+        if (b == false && (webrawurl == "/"))
+        {
+            MarketingcurrentItem = Sitecore.Context.Item;
+        }
+        else
+        {
+            MarketingcurrentItem = Sitecore.Context.Item.Parent;
+        }
+    }
+    else if (b == true)
+    {
+        URlCheck = "true";
+        MarketingcurrentItem = currentDatabase.GetItem("{9CEE9C88-A2C8-4E19-BA0A-1AD947541753}"); // for global use only  
+        MarketingcurrentItem = Sitecore.Context.Item.Parent;
+    }
+    else
+    {
+        MarketingcurrentItem = Sitecore.Context.Item.Parent;
+        AwardMarketingcurrentItem = Sitecore.Context.Item.Parent;
+
+        foreach (Item Slideritem in MarketingcurrentItem.Children)
+        {
+            if (Convert.ToString(Slideritem.Name) == "Marketing-Assets-Slider")
+            {
+                MarketingcurrentItem = Sitecore.Context.Item.Parent;
+                hideband = false;
+            }
+            else
+            {
+                MarketingcurrentItem = Sitecore.Context.Item.Parent.Parent;
+                hideband = false;
+            }
+
+        }
+
+        foreach (Item Slideritem in MarketingcurrentItem.Children)
+        {
+
+            if (Convert.ToString(Slideritem.Name) == "Award-Marketing-Assets-Slider")
+            {
+                AwardMarketingcurrentItem = Sitecore.Context.Item.Parent;
+            }
+            else
+            {
+                AwardMarketingcurrentItem = Sitecore.Context.Item.Parent;
+            }
+
+        }
+    }
+
+    if (webrawurl.ToString().Contains("/tariff") || webrawurl.ToString().Contains("/special-offers/") || webrawurl.ToString().Contains("/india/agra/") || webrawurl.ToString().Contains("/india/jaipur/") || webrawurl.ToString().Contains("/india/mumbai/") || webrawurl.ToString().Contains("/india/kolkata/") || webrawurl.ToString().Contains("/india/bengaluru/") || webrawurl.ToString().Contains("/india/new-delhi/"))
+    {
+        bodySchema = "";
+    }
+
+    if (webrawurl == "/" || canonicalURL.ToLower().EndsWith("/film") || canonicalURL.ToLower().EndsWith("/film/"))
+    {
+        canonicalURL = domainname;
+    }
+
+    if (webrawurl == "/web-exclusive-rate" || webrawurl == "/web-exclusive-rate/")
+    {
+        bodyClass = "web-exclusive-rate";
+    }
+    else if (webrawurl == "/destinations" || webrawurl == "/destinations/")
+    {
+        bodyClass = "destinations";
+    }
+    else if (webrawurl == "/contact-us" || webrawurl == "/contact-us/")
+    {
+        bodyClass = "contact-us";
+    }
+
+
+
+
+    if (Sitecore.Context.Item.Fields["Show Offer Request Form"] != null && Sitecore.Context.Item.Fields["Show Offer Request Form"].ToString() != "")
+    {
+        CheckboxField chkShowOfferRequestForm = (CheckboxField)Sitecore.Context.Item.Fields["Show Offer Request Form"];
+        if (chkShowOfferRequestForm.Checked)
+        {
+            showOfferRequestForm = true;
+        }
+    }
+
+
+
+
+    try
+    {
+
+
+        if (Sitecore.Context.Item.Fields["Redirect Link"] != null && Sitecore.Context.Item.Fields["Redirect Link"].ToString() != "")
+        {
+
+            Sitecore.Data.Fields.LinkField linkfield = Sitecore.Context.Item.Fields["Redirect Link"];
+
+            var url = linkfield.GetFriendlyUrl();
+
+            if (Sitecore.Context.Item.Fields["Redirect Type"] != null)
+            {
+                if (Sitecore.Context.Item.Fields["Redirect Type"].ToString() != "")
+                {
+                    string redirectStatusCode = Sitecore.Context.Item.Fields["Redirect Type"].ToString();
+                    if (redirectStatusCode == "301")
+                    {
+
+                        if (url != webrawurl)
+                        {
+                            HttpContext.Current.Response.RedirectPermanent(url, true);
+                        }
+                    }
+                    else
+                    {
+                        if (url != webrawurl)
+                        {
+                            HttpContext.Current.Response.StatusCode = Convert.ToInt32(redirectStatusCode);
+                            HttpContext.Current.Response.Redirect(url);
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+        else if (Sitecore.Context.Item.Fields["Rewrite Link"] != null && Sitecore.Context.Item.Fields["Rewrite Link"].ToString() != "")
+        {
+            Sitecore.Data.Fields.LinkField linkfield = Sitecore.Context.Item.Fields["Rewrite Link"];
+
+            var url = linkfield.GetFriendlyUrl();
+
+            if (Sitecore.Context.Item.Fields["Redirect Type"] != null)
+            {
+                if (Sitecore.Context.Item.Fields["Redirect Type"].ToString() != "")
+                {
+                    string redirectStatusCode = Sitecore.Context.Item.Fields["Redirect Type"].ToString();
+                    if (redirectStatusCode == "301")
+                    {
+
+                        if (url != webrawurl)
+                        {
+                            HttpContext.Current.Response.RedirectPermanent(url, true);
+                        }
+                    }
+                    else
+                    {
+                        if (url != webrawurl)
+                        {
+                            HttpContext.Current.Response.StatusCode = Convert.ToInt32(redirectStatusCode);
+                            HttpContext.Current.Response.Redirect(url);
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+
+
+
+        if (webrawurl.ToString().Contains("oberoihotels.com"))
+        {
+            if (Sitecore.Context.Item.Fields["Redirect Page After Date"] != null)
+            {
+                if (Sitecore.Context.Item.Fields["Redirect Page After Date"].ToString() != "")
+                {
+                    var redirectPageAfter = (DateField)Sitecore.Context.Item.Fields["Redirect Page After Date"];
+                    var redirectPageAfterDate = Sitecore.DateUtil.ToServerTime(redirectPageAfter.DateTime);
+
+                    if (redirectPageAfterDate < Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                    {
+                        HttpContext.Current.Response.Redirect("/offer-expired/");
+                    }
+
+                }
+            }
+        }
+
+
+        //Check if user id logged  in or not
+        if (commonFunctions.isOberoiOneMemberLoggedIn())
+        {
+            isMemberLoggedIn = true;
+
+            if (webrawurl.ToString().Contains("/oberoi-one/login"))
+            {
+                HttpContext.Current.Response.Redirect("/oberoi-one/dashboard/");
+            }
+        }
+        else
+        {
+
+            if (webrawurl.ToString().Contains("/oberoi-one/"))
+            {
+                if (webrawurl.ToString().Contains("/oberoi-one/reset-password")
+                    || webrawurl.ToString().Contains("/oberoi-one/verify-email")
+                    || webrawurl.ToString().Contains("/oberoi-one/login")
+                    )
+                {
+                    //do something else
+                }
+                else
+                {
+                    HttpContext.Current.Response.Redirect("/oberoi-one/login/");
+                }
+            }
+        }
+
+        //og:image logic start
+        if (currentItem.Fields["Listing Image"] != null)
+        {
+            if (currentItem.Fields["Listing Image"].ToString() != "")
+            {
+                ogImage = MediaManager.GetMediaUrl(((FileField)currentItem.Fields["Listing Image"]).MediaItem);
+            }
+        }
+        else if (ogImage.ToString() == "")
+        {
+            foreach (Item item in currentItem.Children)
+            {
+                if (item.TemplateID.ToString() == "{F505C871-F72C-41DE-8DF9-6F451E8DB36A}")
+                {
+                    if (item.Fields["Big Banner Image"].ToString() != "")
+                    {
+                        ogImage = MediaManager.GetMediaUrl(((FileField)item.Fields["Big Banner Image"]).MediaItem).ToString();
+                    }
+
+                }
+            }
+        }
+
+
+
+        if (ogImage.ToString() == "")
+        {
+            if (currentItem.Fields["Banner Desktop"] != null && currentItem.Fields["Banner Desktop"].ToString() != "")
+            {
+                ogImage = MediaManager.GetMediaUrl(((FileField)currentItem.Fields["Banner Desktop"]).MediaItem);
+            }
+        }
+
+
+        if (ogImage.ToString() != "")
+        {
+            ogImage = domainname + ogImage;
+        }
+
+        //og:image logic end
+    }
+    catch (Exception exx)
+    {
+
+    }
+
+
+
+
+
+
+
+    if (Sitecore.Context.Item.ID.ToString() == "{4EC46722-49D1-49E2-8B90-60661C575D44}")
+    { Response.StatusCode = 404; }
+    else if (Sitecore.Context.Item.ID.ToString() == "{242FE12A-A23D-4AB6-87E5-DC8EB2F73400}")
+    { Response.StatusCode = 500; }
+    else if (Sitecore.Context.Item.ID.ToString() == "{F81BD5C0-8517-4EA4-A233-1BB2B6033946}")
+    { Response.StatusCode = 400; }
+    else if (Sitecore.Context.Item.ID.ToString() == "{E260BFAC-49D3-4780-A29B-673C5B56E664}")
+    { Response.StatusCode = 403; }
+
+    var ampURL = "";
+
+    if (canonicalURL.ToLower() == "https://www.oberoihotels.com") { ampURL = canonicalURL.ToLower() + "/amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-agra-amarvilas-resort/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-bengaluru/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-gurgaon/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-jaipur-rajvilas-resort/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-kolkata/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-mumbai/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-chandigarh-sukhvilas-resort/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-ranthambhore-vanyavilas-resort/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-shimla-cecil/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-shimla-wfh/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-udaipur-udaivilas-resort/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    //  else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/kerala-backwaters/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-bali/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-lombok/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-al-zorah-ajman/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    //else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-dubai/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-mauritius/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-sahl-hasheesh/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/nile-cruise-zahra/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/nile-cruise-philae/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-madina/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-delhi/") { ampURL = canonicalURL.ToLower() + "amp"; }
+    else if (canonicalURL.ToLower() == "https://www.oberoihotels.com/hotels-in-morocco-marrakech/") { ampURL = canonicalURL.ToLower() + "amp"; }
+
+    string SliderMarketingAssetsHeadingTemplate = @"<div class='information-label ggggggg' id='$$ItemName$$'>$$ItemHeading$$</div>";
+
+    string SliderMarketingAssetsDetailsTemplate = @"<div class='covid-update-info-wrapper $$itemName$$'>
+                    <div class='close-info-btn' id='close-info-btn'>&#x2715;</div>
+                    <div class='covid-update-info ffffff @URlCheck'>
+                        $$Details$$                      
+                            <div class='know-more-abt-covid'><a href='$$Url$$'>Know More</a></div>              
+                    </div>
+                </div>";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover " />
+
+
+
+    <title>@Html.Sitecore().Field("browser title")</title>
+    <meta name="description" content="@Html.Sitecore().Field("meta description")" />
+    <meta name="keywords" content="@Html.Sitecore().Field("meta keywords")" />
+
+    @{
+        if (ogImage.ToString() != "")
+        {
+            <meta property="og:image" content="@ogImage.ToLower()" />
+        }
+    }
+
+
+
+    @Html.Sitecore().Field("Custom Meta Data")
+
+    @Html.Sitecore().VisitorIdentification()
+
+    @{
+
+        if (webrawurl == "/fr-fr/")
+        {
+            <link rel="canonical" href="@canonicalURL.ToLower().Replace("/fr-fr/", "").Replace("/fr-fr", "")" />
+            <link rel="alternate" href="@canonicalURL.ToLower().Replace("/fr-fr/", "").Replace("/fr-fr", "")" hreflang="en" />
+            <link rel="alternate" href="@canonicalURL.ToLower().Replace("/fr-fr/", "").Replace("/fr-fr", "")" hreflang="en-in" />
+        }
+        else
+        {
+            <link rel="canonical" href="@canonicalURL.ToLower()" />
+            <link rel="alternate" href="@canonicalURL.ToLower()" hreflang="@glblCurrentPageLanguageName" />
+
+        }
+    }
+
+
+    @*@if (ampURL != "")
+        {
+            <link rel="amphtml" href="@ampURL/">
+        }*@
+    <link rel="icon" type="image/png" href="~/images/oberoihotels/common/favicon.png" />
+
+
+
+    <!-- component css start -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <!-- oberoi one css start-->
+    <link rel="stylesheet" href="/css/OberoiHotels/oone-dashboard.css?v=@scriptVersion" />
+
+    <!-- oberoi one css end-->
+
+    @{if (webrawurl == "/christmas-and-new-year" || webrawurl == "/christmas-and-new-year/")
+        {
+            <link rel="stylesheet" href="/css/OberoiHotels/christmas-eve-stye.css?v=@scriptVersion" />
+        }
+    }
+
+    @{
+        if (currentItemTemplateName.ToLower() == "wedding page") //Weddings
+        {
+            <link rel="stylesheet" href="/css/OberoiHotels/wedding-page.css?v=@scriptVersion" />
+        }
+        if (showOfferRequestForm)
+        {
+            <link rel="stylesheet" href="/css/OberoiHotels/send-request-booking-engine.css?v=@scriptVersion" />
+
+        }
+
+
+        <script type='text/javascript'>
+            function loadCSS(e, t, n) { "use strict"; var i = window.document.createElement("link"); var o = t || window.document.getElementsByTagName("script")[0]; i.rel = "stylesheet"; i.href = e; i.media = "only x"; o.parentNode.insertBefore(i, o); setTimeout(function () { i.media = n || "all" }) } loadCSS("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+        </script>
+
+        <script type="text/javascript">
+
+
+        /*FUNCTION TO CREATE COOKIE*/
+        function createCookie(cookiname, cookivalue, timeinminutes) {
+            var d = new Date();
+            d.setTime(d.getTime() + (timeinminutes * 60 * 1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cookiname + "=" + cookivalue + ";" + expires + ";path=/";
+        }
+
+         /*FUNCTION TO CREATE SESSION COOKIE*/
+        function createSessionCookie(cookiname, cookivalue) {
+            document.cookie = cookiname + "=" + cookivalue + ";" + "path=/";
+        }
+
+        /*FUNCTION TO READ COOKIE VALUE BY NAME */
+        function readCookie(cookiname) {
+            var name = cookiname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        /*FUNCTION TO DELETE  COOKIE BY NAME*/
+        function deleteCookie(cookiname) {
+            var d = new Date();
+            d.setDate(d.getDate() - 1);
+            var expires = ";expires=" + d;
+            var value = "";
+            document.cookie = cookiname + "=" + value + expires + "; path=/";
+        }
+
+        /*FUNCTION TO DELETE ALL CREATED COOKIES*/
+        function deleteAllCookie() {
+            var arrCookies = document.cookie.split(";");
+            for (var i = 0; i < arrCookies.length; i++) {
+                var c = arrCookies[i].split("=");
+                deleteCookie(c[0]); /*Calling the below delete function*/
+            }
+        }
+
+
+        /*FUNCTION TO DELETE DO COOKIE BY NAME AND DOMAIN*/
+        function deleteCookieByNameAndDomain(cookiname, domainname) {
+
+            document.cookie = cookiname+'=; path=/; domain='+domainname+'; expires=' + new Date(0).toUTCString();
+        }
+
+@*
+        var el = document.getElementById('loader');
+        if (readCookie("isUserSessionExist")) {
+            el.className = 'deactive';
+        }
+        else {
+            createCookie("isUserSessionExist", "1", 1440);
+            setTimeout(function () {
+                el.className = 'deactive';
+                console.log('dfds');
+            }, 6000);
+        }
+        *@
+        </script>
+
+
+
+        <script>
+
+            var glblCurrentPageLanguageName = "@glblCurrentPageLanguageName";
+
+
+            /*Common Object for Booking Widgets such as Main Booking Widget, Exotic Vacations and
+            Exotic Vacations Like Booking Widget */
+            var glblBookingWidgetCommonDictionaryArray = {
+            Room: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Room", "Room")",
+            Rooms: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Rooms", "Rooms")",
+            Adult: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Adult", "Adult")",
+            Adults: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Adults", "Adults")",
+            Guests: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Guests", "Guests")",
+            Children: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Children", "Children")",
+            Childrens: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Childrens", "Childrens")",
+            AgeOfChild: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Age of child", "Age of child")",
+            Edit: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Edit", "Edit")",
+            AddRoom: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Add Room", "Add Room")",
+            Done: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Done", "Done")",
+            CheckIn: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Check-In", "Check-In")",
+            CheckOut: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Check-Out", "Check-Out")",
+            SelectCheckInDate: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Select Check-In Date", "Select Check-In Date")",
+            SelectCheckOutDate: "@Html.Sitecore().DictionaryField("/Booking Widget Common/Select Check-Out Date", "Select Check-Out Date")"
+            };
+
+            var glblRequestAProposalCommonDictionaryArray = {
+            SelectEvent: "@Html.Sitecore().DictionaryField("/Request A Proposal/SelectEvent", "SelectEvent")",
+            SelectVenue: "@Html.Sitecore().DictionaryField("/Request A Proposal/SelectVenue", "SelectVenue")"
+            };
+
+
+            var glblBwEVDictionaryArray = {
+
+            };
+
+
+            /*Oberoi One User Data */
+            var glblOberoiOneUserBasicObj;
+            var glblOberoiOneUserDetailedObj;
+            var glblOberoiOneUserSsoToken;
+            @{
+
+                if (isMemberLoggedIn)
+                {
+                    string sessionMemberId = clsSecurity.Decrypt(commonFunctions.readCookieValue("oOneUserId"));
+
+                    tbl_oberoi_one_login_status objUpdateLoginSession = new tbl_oberoi_one_login_status();
+                    objUpdateLoginSession.id = System.Convert.ToInt32(sessionMemberId);
+                    objUpdateLoginSession.user_session_date_time = DateTime.Now;
+                    objUpdateLoginSession.update();
+
+                    string userData = oberoi_one_datalayer.GetUserDataById(sessionMemberId);
+                    if (userData != "")
+                    {
+                        @Html.Raw(oberoi_one_datalayer.GetUserDataById(sessionMemberId));
+                    }
+                }
+                }
+
+            if (typeof glblOberoiOneUserSsoToken != "undefined") {
+                console.log("glblOberoiOneUserSsoToken = " + glblOberoiOneUserSsoToken);
+                setTimeout(function () {
+                    createSessionCookie("SsoAccessToken", glblOberoiOneUserSsoToken);
+                }, 100);
+            }
+
+        </script>
+
+
+    }
+
+
+
+    <script>
+
+       @{
+           var jsonSailingData = "";
+           var sailingDataItem = currentDatabase.GetItem("{6965AE5C-C910-45AF-9918-C9D8A752F22A}");
+           if (sailingDataItem.Fields["JSON"] != null)
+           {
+               jsonSailingData = sailingDataItem.Fields["JSON"].ToString();
+           }
+       }
+
+        var jsonPhilaeZahra = [];
+        var jsonPhilaeZahra =  @Html.Raw(jsonSailingData);
+    var glblArrayOberoiOneImageData = {};
+
+        @{
+
+            if (webrawurl.ToString().ToLower().Contains("/oberoi-one/"))
+            {
+                //Create Oberoi One Images Data
+                DLJSONOberoiOneImages.CreateOberoiOneImagesJSONAndStoreInApplication();
+                @Html.Raw("glblArrayOberoiOneImageData = " + HttpContext.Current.Application["arrOberoiOneImagesData"])
+            }
+        }
+
+
+    </script>
+
+    @if (webrawurl == "/homepage-test1" || webrawurl == "/homepage-test1/")
+    {
+        <link rel="stylesheet" type="text/css" href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/bundles/homepageheadercss")">
+
+    }
+    else
+    {
+        <link rel="stylesheet" type="text/css" href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/bundles/headercss")">
+
+    }
+    <style>
+
+        #loader {
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 99999;
+            left: 0px;
+            top: 0px;
+            -webkit-transition: all 0.7s ease 0s;
+            -moz-transition: all 0.7s ease 0s;
+            transition: all 0.7s ease 0s;
+        }
+    </style>
+    <!-- component css ends -->
+
+
+
+    @Html.Raw(Sitecore.Context.Item.Fields["Header scripts"])
+    @Html.Raw(global.Fields["global header scripts"])
+
+    @{
+        if (glblCurrentPageLanguageName != "en")
+        {
+            var glblCurrentPageLanguageCSS = glblCurrentPageLanguageName + ".css?v=" + scriptVersion;
+            <link rel="stylesheet" href="/css/oberoihotels/languages/@glblCurrentPageLanguageCSS">
+        }
+    }
+
+    @{ if (webrawurl != "/feedback-form/" && webrawurl != "/photo-contest/dashboard/")
+        {
+
+            @Html.Sitecore().Rendering("/sitecore/layout/Renderings/Feature/Feedback Form/Slide Feedback form component") @*// for slide feedback*@
+        }
+    }
+
+    @*@Html.Sitecore().Rendering("/sitecore/layout/Renderings/Feature/Ratings/ratings component")*@ @*// for popup on home page*@
+
+    @{
+
+        if (webrawurl.ToString().Contains("/hotels-in-morocco-marrakech"))
+        {
+            <script type="application/ld+json">
+                {
+                "@@context": "https://schema.org",
+                "@@type": "Hotel",
+                "name": "The Oberoi Marrakech",
+                "url": "https://www.oberoihotels.com/hotels-in-morocco-marrakech/",
+                "description": "Enjoy your stay in The Oberoi's 5 star luxury hotel in Marrakech. Book Online now to get amazing offers along with the wide range of luxury facilities & comforts. Book now.",
+                "image": "https://www.oberoihotels.com/-/media/oberoi-hotels/website-images/the-oberoi-marrakech/rooms/home-new/2020/marrakech-royal-suite-with-private-pool-906x450.jpg?w=906&hash=6fcdaacf5202250ddde5eb47401c2549",
+                "address": {
+                "@@type": "PostalAddress",
+                "addressCountry": "Morocco",
+                "addressLocality": "Marrakech",
+                "addressRegion":"Marrakech-Tensift-El Haouz Region",
+                "postalCode": "40000",
+                "streetAddress": "Route de Ouarzazate,"},
+                "telephone": "+212 525-081515"}
+            </script>
+        }
+    }
+
+
+</head>
+<body class="bodyWrapMobile @bodyClass body-@glblCurrentPageLanguageName @classCurrentItemTemplateName" @Html.Raw(bodySchema)>
+
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MQ95MGC"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <!-- Marketing Asset Banner Award Widget Start -->
+    @{
+
+        try
+        {
+            CheckboxField showBannerAwardWidget = currentItem.Fields["Show Banner Award Widget"];
+            if (showBannerAwardWidget.Checked)
+            {
+                var dateFromField = (DateField)currentItem.Fields["Show Banner Award Widget From Date"];
+                var dateFrom = Sitecore.DateUtil.ToServerTime(dateFromField.DateTime);
+
+
+                var dateTillField = (DateField)currentItem.Fields["Show Banner Award Widget Till Date"];
+                var dateTill = Sitecore.DateUtil.ToServerTime(dateTillField.DateTime);
+
+                if (Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")) >= dateFrom && Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")) <= dateTill)
+                {
+
+                    string awardWidgetTitle = "";
+                    string awardWidgetYear = "";
+                    string awardWidgetDescription = "";
+
+
+                    if (currentItem.Fields["Banner Award Widget Title"] != null)
+                    {
+                        awardWidgetTitle = Convert.ToString(currentItem.Fields["Banner Award Widget Title"]);
+                    }
+
+                    if (currentItem.Fields["Banner Award Widget Year"] != null)
+                    {
+                        awardWidgetYear = Convert.ToString(currentItem.Fields["Banner Award Widget Year"]);
+                    }
+
+                    if (currentItem.Fields["Banner Award Widget Description"] != null)
+                    {
+                        awardWidgetDescription = Convert.ToString(currentItem.Fields["Banner Award Widget Description"]);
+                    }
+
+                    <div class="awards-marketing-assets-slidable-wrap">
+                        <div class="awards-marketing-assets-slidable-icon">
+                            <img src="/images/oberoiHotels/awards-marketing-assets-icon.png">
+                        </div>
+                        <div class="awards-marketing-assets-slidable-content-box-wrap">
+                            <div class="awards-marketing-assets-slidable-content-box">
+                                <div class="awards-year">@Html.Raw(awardWidgetYear)</div>
+                                <div class="awards-marketing-assets-head1">@Html.Raw(awardWidgetTitle)</div>
+                                <div class="awards-marketing-assets-head2">@Html.Raw(awardWidgetDescription)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            }
+
+        }
+        catch (Exception exx) { }
+    }
+    <!-- Marketing Asset Bannern Award Widget End -->
+    <!--  mo-pop-up starts -->
+    @if (webrawurl == "/")
+    {
+        @Html.Sitecore().Rendering("/sitecore/layout/Renderings/Feature/Christmas and new year/Christmas Global Popup Offer Page component")
+    }
+
+
+
+
+    <!--   covid-19- band  starts -->
+    @{if (hideband == false && !webrawurl.ToString().Contains("/oberoi-one/"))
+        {
+            <div class="safety-hygeine-box-default">
+                <img src="/images/safety-hygiene-icon.png">
+            </div>
+        } }
+
+
+    @{ if (hideband == false && !webrawurl.ToString().Contains("/oberoi-one/"))
+        {
+            <div class="covid-band-main-wrapper-box">
+                <div class="close-covid-band" style="display:block;"> ✕ </div>
+                <div class="covid-band new-info-slides cccccccccc active-band covid-band-active @siteItem.Name">
+                    @if (webrawurl != "/india/bengaluru/")
+                    {
+
+                        string htmTemplate = SliderMarketingAssetsHeadingTemplate;
+                        foreach (Item Slideritem in MarketingcurrentItem.Children)
+                        {
+
+                            if (Convert.ToString(Slideritem.Name) == "Marketing-Assets-Slider")
+                            {
+
+                                foreach (Item ChildSlideritem in Slideritem.Children)
+                                {
+                                    var itemName = ChildSlideritem.Name;
+                                    var itemHeading = ChildSlideritem.Fields["Heading"].ToString();
+                                    SliderMarketingAssetsHeadingTemplate = htmTemplate.Replace("$$ItemName$$", itemName.ToString()).Replace("$$ItemHeading$$", itemHeading.ToString());
+                                    @Html.Raw(SliderMarketingAssetsHeadingTemplate)
+                                }
+
+
+                            }
+                            else if (b == true)
+                            {
+                                var itemName = Slideritem.Name;
+                                var itemHeading = Slideritem.Fields["Heading"].ToString();
+                                SliderMarketingAssetsHeadingTemplate = htmTemplate.Replace("$$ItemName$$", itemName.ToString()).Replace("$$ItemHeading$$", itemHeading.ToString());
+                                @Html.Raw(SliderMarketingAssetsHeadingTemplate)
+                            }
+                        }
+                    }
+                    else
+                    {
+                        string htmTemplate = SliderMarketingAssetsHeadingTemplate;
+                        foreach (Item ChildSlideritem in Sitecore.Context.Database.GetItem(siteItem.ID).Children)
+                        {
+                            var itemName = ChildSlideritem.Name;
+                            var itemHeading = ChildSlideritem.Fields["Heading"].ToString();
+                            SliderMarketingAssetsHeadingTemplate = htmTemplate.Replace("$$ItemName$$", itemName.ToString()).Replace("$$ItemHeading$$", itemHeading.ToString());
+                            @Html.Raw(SliderMarketingAssetsHeadingTemplate)
+                        }
+
+
+                    }
+
+
+                </div>
+            </div>
+        }
+    }
+
+    @if (webrawurl != "/india/bengaluru/")
+    {
+        foreach (Item Slideritem in MarketingcurrentItem.Children)
+        {
+
+            if (b == false)
+            {
+                if (Convert.ToString(Slideritem.Name) == "Marketing-Assets-Slider")
+                {
+
+                    foreach (Item ChildSlideritem in Slideritem.Children)
+                    {
+                        string ItemDescription = "";
+                        if (ChildSlideritem.Fields["Description"] != null)
+                        {
+                            ItemDescription = Convert.ToString(ChildSlideritem.Fields["Description"]);
+                        }
+
+
+                        <div class="covid-update-info-wrapper @ChildSlideritem.Name activeInfo">
+                            <div class="close-info-btn" id="close-info-btn">&#x2715;</div>
+                            <div class="covid-update-info">
+                                @Html.Raw(ItemDescription)
+                                @if (Convert.ToString(ChildSlideritem.Fields["Url"]) != "" && Convert.ToString(ChildSlideritem.Fields["Url"]) != null)
+                                {
+                                    <div class="know-more-abt-covid"><a href="@Html.Raw(ChildSlideritem.Fields["Url"])">Know More</a></div>
+                                }
+
+                            </div>
+                        </div>
+                    }
+                }
+            }
+            else if (b == true)
+            {
+                string ItemDescription = "";
+                if (Slideritem.Fields["Description"] != null)
+                {
+                    ItemDescription = Convert.ToString(Slideritem.Fields["Description"]);
+                }
+                <div class="covid-update-info-wrapper @Slideritem.Name">
+                    <div class="close-info-btn" id="close-info-btn">&#x2715;</div>
+                    <div class="covid-update-info ffffff @URlCheck">
+                        @Html.Raw(ItemDescription)
+                        @if (Convert.ToString(Slideritem.Fields["Url"]) != "" && Convert.ToString(Slideritem.Fields["Url"]) != null)
+                        {
+                            <div class="know-more-abt-covid"><a href="@Html.Raw(Slideritem.Fields["Url"])">Know More</a></div>
+                        }
+
+                    </div>
+                </div>
+            }
+
+        }
+    }
+
+    <!--   covid-19- band  ends -->
+    @*}*@
+    @*@Html.Sitecore().Rendering("/sitecore/layout/Renderings/Feature/Christmas and new year/Christmas Global Popup Offer Page component")*@
+    <!--   covid-19- band  ends -->
+    <!--  mo-pop-up starts -->
+
+    <div class="mo-black-overlay" style="display: none;">
+        <div class="mo-pop-up-wrapper">
+
+            <div class="mo-pop-up-box">
+                <div class="mo-pop-up-close-btn">&#x2715;</div>
+                <div class="mo-pop-up-desc">
+                    <h3><span>Thank you</span> for visiting</h3>
+                    <h2>Oberoi Hotels &amp; Resorts</h2>
+                    <div class="mo-pop-up-message">
+                        "By clicking on this link, you will be redirected to the Mandarin Oriental website at
+                        <a href="https://www.mandarinoriental.com/" target="_blank">www.mandarinoriental.com</a> ("Mandarin Oriental website"). You will be subject to the Mandarin Oriental <strong>Privacy Policy</strong> and the <strong>Terms and Conditions</strong> applicable to and appearing on the Mandarin Oriental website."
+                    </div>
+                    <div class="mo-hotels-button"><a href="javascript:;" target="_blank">Proceed</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mo-black-overlay showHongKong" style="display: none;">
+        <div class="mo-pop-up-wrapper">
+
+            <div class="mo-pop-up-box">
+                <div class="mo-pop-up-close-btn">&#x2715;</div>
+                <div class="mo-pop-up-desc">
+                    <h3><span>Thank you</span> for visiting</h3>
+                    <h2>Oberoi Hotels &amp; Resorts</h2>
+                    <div class="mo-pop-up-message">
+                        "By clicking on this link, you will be redirected to the Mandarin Oriental website at
+                        <a href="https://www.mandarinoriental.com" target="_blank">www.mandarinoriental.com</a> ("Mandarin Oriental website"). You will be subject to the Mandarin Oriental <strong>Privacy Policy</strong> and the <strong>Terms and Conditions</strong> applicable to and appearing on the Mandarin Oriental website."
+                    </div>
+                    <div class="mo-hotels-button"><a href="https://www.mandarinoriental.com/hong-kong/victoria-harbour/luxury-hotel" target="_blank">Proceed</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mo-black-overlay showBeijing" style="display: none;">
+        <div class="mo-pop-up-wrapper">
+
+            <div class="mo-pop-up-box">
+                <div class="mo-pop-up-close-btn">&#x2715;</div>
+                <div class="mo-pop-up-desc">
+                    <h3><span>Thank you</span> for visiting</h3>
+                    <h2>Oberoi Hotels &amp; Resorts</h2>
+                    <div class="mo-pop-up-message">
+                        "By clicking on this link, you will be redirected to the Mandarin Oriental website at
+                        <a href="https://www.mandarinoriental.com/" target="_blank">www.mandarinoriental.com</a> ("Mandarin Oriental website"). You will be subject to the Mandarin Oriental <strong>Privacy Policy</strong> and the <strong>Terms and Conditions</strong> applicable to and appearing on the Mandarin Oriental website."
+                    </div>
+                    <div class="mo-hotels-button"><a href="https://www.mandarinoriental.com/beijing/wangfujing/luxury-hotel" target="_blank">Proceed</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mo-black-overlay showBarcelona" style="display: none;">
+        <div class="mo-pop-up-wrapper">
+
+            <div class="mo-pop-up-box">
+                <div class="mo-pop-up-close-btn">&#x2715;</div>
+                <div class="mo-pop-up-desc">
+                    <h3><span>Thank you</span> for visiting</h3>
+                    <h2>Oberoi Hotels &amp; Resorts</h2>
+                    <div class="mo-pop-up-message">
+                        "By clicking on this link, you will be redirected to the Mandarin Oriental website at
+                        <a href="https://www.mandarinoriental.com/" target="_blank">www.mandarinoriental.com</a> ("Mandarin Oriental website"). You will be subject to the Mandarin Oriental <strong>Privacy Policy</strong> and the <strong>Terms and Conditions</strong> applicable to and appearing on the Mandarin Oriental website."
+                    </div>
+                    <div class="mo-hotels-button"><a href="https://www.mandarinoriental.com/barcelona/passeig-de-gracia/luxury-hotel" target="_blank">Proceed</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mo-black-overlay showHome" style="display: none;">
+        <div class="mo-pop-up-wrapper">
+
+            <div class="mo-pop-up-box">
+                <div class="mo-pop-up-close-btn">&#x2715;</div>
+                <div class="mo-pop-up-desc">
+                    <h3><span>Thank you</span> for visiting</h3>
+                    <h2>Oberoi Hotels &amp; Resorts</h2>
+                    <div class="mo-pop-up-message">
+                        "By clicking on this link, you will be redirected to the Mandarin Oriental website at
+                        <a href="https://www.mandarinoriental.com/" target="_blank">www.mandarinoriental.com</a> ("Mandarin Oriental website"). You will be subject to the Mandarin Oriental <strong>Privacy Policy</strong> and the <strong>Terms and Conditions</strong> applicable to and appearing on the Mandarin Oriental website."
+                    </div>
+                    <div class="mo-hotels-button"><a href="https://www.mandarinoriental.com/en/spa/silent-night-2022" target="_blank">Proceed</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  mo-pop-up ends -->
+    <!-- loader html start -->
+    @* <div id="loader" class="loader">
+            <div class="loader-main">
+                <div class="logo-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 397.61 396.2" class="logo">
+                        <defs>
+                            <clipPath id="cut-off-bottom">
+                                <rect x="0" y="0" width="400" height="400" />
+                            </clipPath>
+                        </defs>
+                        <path d="M0,179.69a185.89,185.89,0,0,0,48.9,25.44,195.44,195.44,0,0,1,40.57-13.6,192.68,192.68,0,0,1,93.33,2.75A189,189,0,0,0,0,179.69"
+                              style="fill:#d8be61" class="leaf" id="leaf-1" clip-path="url(#cut-off-bottom)"></path>
+                        <path d="M61,258.88a194.58,194.58,0,0,1,32.92-27.34,192.57,192.57,0,0,1,88-31.17A189,189,0,0,0,6.2,252.82,186.21,186.21,0,0,0,61,258.88"
+                              style="fill:#d8be61" class="leaf" id="leaf-2"></path>
+                        <path d="M91.68,304.62a195.14,195.14,0,0,1,20.82-37.39,192.69,192.69,0,0,1,70.82-60.86A189,189,0,0,0,38.41,318.76a186,186,0,0,0,53.27-14.14"
+                              style="fill:#d8be61" class="leaf" id="leaf-3"></path>
+                        <path d="M121.26,274.43a187.81,187.81,0,0,0-29,94.19,186.13,186.13,0,0,0,44.57-32.44,195.87,195.87,0,0,1,5.9-42.38,192.56,192.56,0,0,1,44.05-82.33,187.87,187.87,0,0,0-65.52,63"
+                              style="fill:#d8be61" class="leaf" id="leaf-4"></path>
+                        <path d="M190.33,349.3a195.24,195.24,0,0,1-9.81-41.65A192.74,192.74,0,0,1,191.84,215a189,189,0,0,0-31.35,180.69,185.72,185.72,0,0,0,29.84-46.35"
+                              style="fill:#d8be61" class="leaf" id="leaf-5"></path>
+                        <path d="M220.76,306.91a192.75,192.75,0,0,1-22.93-90.52,189,189,0,0,0,36,179.81,186,186,0,0,0,11.08-54,194.28,194.28,0,0,1-24.2-35.29"
+                              style="fill:#d8be61" class="leaf" id="leaf-6"></path>
+                        <path d="M302.51,370.2a185.79,185.79,0,0,0-9.18-54.35A195.24,195.24,0,0,1,258,291.68a192.45,192.45,0,0,1-54.08-76.12A189,189,0,0,0,302.51,370.2"
+                              style="fill:#d8be61" class="leaf" id="leaf-7"></path>
+                        <path d="M357.11,321.16a185.63,185.63,0,0,0-28.2-47.36A195.07,195.07,0,0,1,287.25,264a192.69,192.69,0,0,1-77.93-51.43A189,189,0,0,0,357.11,321.16"
+                              style="fill:#d8be61" class="leaf" id="leaf-8"></path>
+                        <path d="M346.9,221.73a195.28,195.28,0,0,1-42.38,5.94,192.64,192.64,0,0,1-91.25-19.81,189,189,0,0,0,177,47.85,186.07,186.07,0,0,0-43.41-34"
+                              style="fill:#d8be61" class="leaf" id="leaf-9"></path>
+                        <path d="M397.61,182.68a186.28,186.28,0,0,0-52.75-16,195,195,0,0,1-37.37,20.85A192.67,192.67,0,0,1,215.25,202a189,189,0,0,0,182.36-19.35"
+                              style="fill:#d8be61" class="leaf" id="leaf-10"></path>
+                        <path d="M323.07,116.09A195.48,195.48,0,0,1,295.75,149,192.6,192.6,0,0,1,215,195.88a187.93,187.93,0,0,0,88.84-19.08A187.8,187.8,0,0,0,378,112a186,186,0,0,0-55,4.14"
+                              style="fill:#d8be61" class="leaf" id="leaf-11"></path>
+                        <path d="M270.9,117.37a192.57,192.57,0,0,1-58.39,72.87,187.88,187.88,0,0,0,75.95-49.9,187.68,187.68,0,0,0,45.77-87.27,186.05,186.05,0,0,0-49.76,23.72,194.57,194.57,0,0,1-13.57,40.58"
+                              style="fill:#d8be61" class="leaf" id="leaf-12"></path>
+                        <path d="M234.28,54.09a195.36,195.36,0,0,1,2,42.74,192.54,192.54,0,0,1-28.12,89,187.69,187.69,0,0,0,52.79-74A187.75,187.75,0,0,0,272.11,14a186,186,0,0,0-37.83,40.1"
+                              style="fill:#d8be61" class="leaf" id="leaf-13"></path>
+                        <path d="M202.57,183.37A189,189,0,0,0,200.27,0a186.35,186.35,0,0,0-20.84,51,195.23,195.23,0,0,1,17.28,39.15,192.7,192.7,0,0,1,5.86,93.19"
+                              style="fill:#d8be61" class="leaf" id="leaf-14"></path>
+                        <path d="M127,68a195,195,0,0,1,30.26,30.26,192.72,192.72,0,0,1,39.13,84.78A189,189,0,0,0,128,12.91,186.49,186.49,0,0,0,127,68"
+                              style="fill:#d8be61" class="leaf" id="leaf-15"></path>
+                        <path d="M65.32,51a186.26,186.26,0,0,0,19,51.75,194.88,194.88,0,0,1,39.14,17.29A192.6,192.6,0,0,1,190.57,185,187.89,187.89,0,0,0,148,104.74,187.63,187.63,0,0,0,65.32,51"
+                              style="fill:#d8be61" class="leaf" id="leaf-16"></path>
+                        <path d="M20.63,109.26A186,186,0,0,0,57,150.65a195.25,195.25,0,0,1,42.74,2,192.69,192.69,0,0,1,86,36.28,187.88,187.88,0,0,0-68.73-59.44,187.65,187.65,0,0,0-96.46-20.21"
+                              style="fill:#d8be61" class="leaf" id="leaf-17"></path>
+                    </svg>
+                </div>
+                <div class="copy">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.87 32.64">
+                        <g id="heart">
+                            <path d="M116.13,26.16a9.81,9.81,0,0,0-.63,2.45c0,.51.21,1.07.84,1.07,1.27,0,3.23-2.45,4-3.42.21-.36.74-1,1-1.38s.32-.61.58-.61a.41.41,0,0,1,.43.4c0,.57-1.27,2.25-1.59,2.66-1.32,1.74-4.6,5.31-7,5.31-1.49,0-2-1.53-2-2.7a15.8,15.8,0,0,1,1-4.4l5-15.94h-3c-.26,0-1.21.11-1.21-.41,0-1,.63-.92,1.42-.92h3.18l2.06-6.37c.31-.71,1.21-.56,1.85-.56.37,0,1.69-.21,1.69.46a5.28,5.28,0,0,1-.32,1.33L121.7,8.27h4c.11,0,1.17-.15,1.17.31a1.61,1.61,0,0,1-.21.72c-.16.35-.91.3-1.22.3h-4.08Z"
+                                  style="fill:#231f20" />
+                            <path d="M10.26,27a11,11,0,0,0-.63,2.51C9.63,31,11.11,31,12.22,31c.53,0,1.59-.11,1.59.66,0,.56-.53.61-1,.61-2.06,0-4.18-.15-6.24-.2-1.64,0-3.28.15-4.92.2-.42,0-1.64.26-1.64-.41s.74-.91,1.32-.86a4.44,4.44,0,0,0,2.81-.51c1-.77,1.48-2.41,1.85-3.53L12.75,5.47A10.41,10.41,0,0,0,13.43,3c0-1.54-1.48-1.48-3.27-1.48-.59.05-1.33-.11-1.33-.87S10.05.21,10.47.21c1.64.05,3.28.15,4.92.2,2.06,0,4.18-.15,6.24-.2.48,0,1,.05,1,.61,0,.77-1.06.67-1.59.67-2.91.1-3.23,1.53-4,4l-2.91,9.19h18l3-9.24A13.29,13.29,0,0,0,35.76,3c0-1.54-1.48-1.48-3.23-1.48-.58.05-1.32-.11-1.32-.87S32.42.21,32.85.21c1.64.05,3.28.15,4.92.2C39.83.36,42,.26,44,.21c.47,0,1,.05,1,.61,0,.77-1.06.67-1.58.67-2.91,0-3.28,1.53-4,4L32.58,27A11,11,0,0,0,32,29.48C32,31,33.43,31,34.59,31c.53,0,1.59-.11,1.59.66,0,.56-.53.61-1,.61-2.06,0-4.17-.15-6.24-.2-1.64,0-3.28.15-4.92.2-.42,0-1.64.26-1.64-.41s.75-.91,1.33-.86a4.48,4.48,0,0,0,2.8-.51c1-.77,1.43-2.41,1.8-3.53l3.44-10.83h-18Z"
+                                  style="fill:#231f20" />
+                            <path d="M43.7,23.35v1.17c0,3.37,1.86,5.87,5.61,5.87,3.07,0,6.56-2.24,8.31-4.64.15-.21.31-.41.58-.41s.37.1.37.36c0,.46-1.11,1.68-1.38,2-2.54,2.7-6.13,4.95-10,4.95-4.77,0-7.62-3.62-7.62-8,0-7.86,8-16,16.18-16,3,0,6.14,1.63,6.14,4.85,0,7.4-11.74,8.38-17.4,9l-.69.1Zm12.7-6.08a7.92,7.92,0,0,0,1.8-4.75c0-1.89-1.17-2.91-3.12-2.91-5.87,0-9.84,7.15-11.06,12C47.88,21.25,54,20.33,56.4,17.27Z"
+                                  style="fill:#231f20" />
+                            <path d="M84.71,10c.47-1.58.42-1.83,2.16-1.83.32,0,1.8-.26,1.8.46a6.34,6.34,0,0,1-.26,1L83,26.87a6.07,6.07,0,0,0-.42,1.69c0,.4.1.76.53.76,1.32,0,3.8-3.22,4.44-4.19.16-.25.53-.92.9-.92a.41.41,0,0,1,.37.41c0,.92-2.17,3.58-2.8,4.24-1.33,1.38-4.18,3.78-6.3,3.78a1.34,1.34,0,0,1-1.43-1.48,10.38,10.38,0,0,1,.58-2.86l3.23-10.11c-3,4.7-10,14.45-16.29,14.45-3,0-4.18-2.76-4.18-5.26,0-4.34,3.07-9.5,6.08-12.56,3.23-3.27,8-6.18,12.8-6.18a4.6,4.6,0,0,1,4.08,1.78Zm-4.34-.35c-3.86,0-7.62,3.57-9.84,6.38-2,2.45-4.81,7.61-4.81,10.83,0,1.43.74,3.12,2.43,3.12,3.23,0,7.93-5.47,9.79-7.72,1.48-1.79,5.81-7.61,5.81-10C83.75,10.37,82.17,9.61,80.37,9.61Z"
+                                  style="fill:#231f20" />
+                            <path d="M96.73,15.33a12.15,12.15,0,0,0,.63-3c0-.46-.1-1.08-.69-1.08-1.21,0-3.28,2.56-3.91,3.42l-.48.67c-.15.2-.47.76-.79.76a.35.35,0,0,1-.37-.35c0-.82,2.17-3.27,2.7-3.83,1.11-1.23,3.54-3.32,5.29-3.32,1.58,0,2,1.89,2,3a11,11,0,0,1-.74,3.47l-2.27,7.2c2-3.37,7.14-13.68,11.69-13.68a2.42,2.42,0,0,1,2.64,2.55c0,1.38-.84,3-2.43,3-2.64,0-1.16-2.5-2.59-2.5s-4.66,4.6-5.24,5.52c-2,3-5.39,9.24-6.4,12.51-.58,1.89-.42,2.3-2.54,2.3-.47,0-1.48.1-1.48-.67a11.78,11.78,0,0,1,.37-1.42Z"
+                                  style="fill:#231f20" />
+                            <path d="M124.57,32.64a1.73,1.73,0,0,1-2-1.84,2.89,2.89,0,0,1,2.87-2.91,2,2,0,0,1,2.15,1.84A3,3,0,0,1,124.57,32.64Z"
+                                  style="fill:#231f20" />
+                        </g>
+                        <g id="felt">
+                            <path d="M210.92,32.64A1.7,1.7,0,0,1,209,30.8a2.85,2.85,0,0,1,2.78-2.91,1.93,1.93,0,0,1,2.08,1.84A3,3,0,0,1,210.92,32.64Z"
+                                  style="fill:#231f20" />
+                            <path d="M145.12,26.87a10.69,10.69,0,0,0-.63,2.55c0,1.49,1.48,1.43,2.59,1.54.53,0,1.59-.11,1.59.66,0,.56-.53.61-1,.61-2.06,0-4.18-.15-6.24-.2-1.64,0-3.28.15-4.92.2-.42,0-1.64.26-1.64-.41s.74-.91,1.32-.86c.9-.11,2.12-.05,2.86-.62,1-.71,1.43-2.35,1.8-3.47l6.82-21.55a13.39,13.39,0,0,0,.64-2.51c0-1.53-1.48-1.48-2.65-1.48-.53-.05-1.59.1-1.59-.66,0-.56.53-.66,1-.66l2.8.2h19.94c.43,0,.74.15.74.51a6.85,6.85,0,0,1-.31,1.38L167,6c-.21.56-.32,1.53-1.06,1.53s-.63-.87-.63-1.33a4.68,4.68,0,0,0-1.48-3.78c-1.33-1.22-3.81-1.12-5.51-1.12h-2.69c-2.49,0-2.43.1-3.12,2.25l-3.44,11h6c3.38,0,4.49-.26,6.08-3.27.21-.41.42-.92.95-.92a.58.58,0,0,1,.58.56,2.73,2.73,0,0,1-.26.92,40.7,40.7,0,0,0-2.54,8.28c-.11.51-.21,1.53-.95,1.53-.43,0-.64-.2-.64-.61,0-.82.21-1.59.21-2.46,0-2.6-1.9-2.6-4.12-2.6h-5.77Z"
+                                  style="fill:#231f20" />
+                            <path d="M167.2,23.35v1.17c0,3.37,1.85,5.87,5.61,5.87,3.06,0,6.55-2.24,8.3-4.64.16-.21.32-.41.58-.41s.37.1.37.36c0,.46-1.11,1.68-1.37,2-2.54,2.7-6.14,4.95-10,4.95-4.76,0-7.62-3.62-7.62-8,0-7.86,8-16,16.19-16,3,0,6.13,1.63,6.13,4.85,0,7.4-11.74,8.38-17.4,9l-.69.1Zm12.69-6.08a7.92,7.92,0,0,0,1.8-4.75c0-1.89-1.16-2.91-3.12-2.91-5.87,0-9.84,7.15-11.06,12C171.38,21.25,177.46,20.33,179.89,17.27Z"
+                                  style="fill:#231f20" />
+                            <path d="M202.81,26.16a9.83,9.83,0,0,0-.64,2.45c0,.51.22,1.07.85,1.07,1.27,0,3.23-2.45,4-3.42.21-.36.74-1,.95-1.38s.32-.61.58-.61a.4.4,0,0,1,.42.4c0,.57-1.27,2.25-1.58,2.66-1.33,1.74-4.6,5.31-7,5.31-1.48,0-1.95-1.53-1.95-2.7a15.8,15.8,0,0,1,1-4.4l5-15.94h-3c-.26,0-1.22.11-1.22-.41,0-1,.64-.92,1.43-.92h3.18l2.05-6.37c.32-.71,1.22-.56,1.85-.56.37,0,1.7-.21,1.7.46a5.28,5.28,0,0,1-.32,1.33l-1.69,5.14h4c.1,0,1.16-.15,1.16.31a1.49,1.49,0,0,1-.21.72c-.16.35-.9.3-1.22.3H208Z"
+                                  style="fill:#231f20" />
+                            <path d="M192.38,6.69a10.68,10.68,0,0,0,.53-2.09c0-1.18-1.17-1.28-2.07-1.28l-.85.05a.56.56,0,0,1-.63-.56c0-.71,1.06-.66,1.59-.66A11.3,11.3,0,0,0,197,.2a1.39,1.39,0,0,1,.48-.2.42.42,0,0,1,.42.46,8.84,8.84,0,0,1-.32,1.23l-7.88,24.92a6.59,6.59,0,0,0-.53,2.05.77.77,0,0,0,.74.87c1.27,0,4-3.58,4.6-4.65.16-.26.37-.67.8-.67.21,0,.26.16.26.36,0,.92-1.69,3-2.22,3.63-1.22,1.48-4.23,4.44-6.45,4.44-1.38,0-1.64-.82-1.64-2a16.27,16.27,0,0,1,1-4.49Z"
+                                  style="fill:#231f20" />
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>*@
+    <div id="chat-btn" class="chat-btn"><img src="/images/oberoihotels/chat-synxis.jpg" alt /></div>
+
+
+
+    <!-- loader html End -->
+
+
+    @Html.Sitecore().Placeholder("oberoihotels_top")
+    @Html.Sitecore().Placeholder("oberoihotels_main")
+    @Html.Sitecore().Placeholder("oberoihotels_bottom")
+    <div id="scrollToTop"></div>
+
+    <script type="text/javascript">
+        // use for server scaled image set
+
+        var deviceSpecificImagesDefaultSizes = {
+            xs: "only screen and (max-width : 480px)",
+            s: "only screen and (min-width : 481px)",
+            m: "only screen and (min-width : 1280px)",
+            l: "only screen and (min-width : 1536px)",
+            xl: "only screen and (min-width : 1920px)"
+        };
+
+        function fnLoadDeviceSpecificImages() {
+
+            var images = document.querySelectorAll('[data-imageset][data-sizes]');//find all images tags we can use
+            var sizes, s, img, srcs, siz, matchFound = false;
+            for (var i = 0, l = images.length; i < l; i++) {
+                img = images[i];
+                srcs = img.dataset.imageset.split(",");
+                sizes = img.dataset.sizes.split(",");	//get the value of the data-sizes attribute
+                for (var ii = 0, ll = sizes.length; ii < ll; ii++) {
+                    siz = sizes[ii].trim();
+                    s = deviceSpecificImagesDefaultSizes[siz] || siz;	//either a predefined size is used a custom media query
+                    if (window.matchMedia(s).matches) {
+                        //first match wins
+                        matchFound = true;
+                        //check condition for lazyload
+                        if (img.dataset.lazy != undefined) {
+                            //img.attr("data-lazy", srcs[ii].trim());
+                            img.dataset.lazy = srcs[ii].trim();
+                        }
+                        else {
+                            //img.attr("src", srcs[ii].trim());
+                            img.src = srcs[ii].trim();
+                        }
+
+                        console.log(srcs[ii].trim());
+                        break;
+                    }
+                }
+                if (!matchFound) {
+                    //img.attr("src", srcs[sizes.length - 1].trim());
+                    //img.src=srcs[sizes.length - 1].trim();
+                    if (img.dataset.lazy != undefined) {
+                        //img.attr("data-lazy", srcs[ii].trim());
+                        img.dataset.lazy = srcs[sizes.length - 1].trim();
+
+                    }
+                    else {
+                        //img.attr("src", srcs[ii].trim());
+                        img.src = srcs[sizes.length - 1].trim();
+                    }
+                    console.log("no match - " + srcs[sizes.length - 1].trim());
+                }
+            }
+        }
+
+        fnLoadDeviceSpecificImages();
+
+        window.addEventListener('resize', function () {
+            fnLoadDeviceSpecificImages();
+        });
+
+    </script>
+
+
+    @Scripts.Render("~/Scripts/OberoiHotels/plugin/jquery-1.9.1.js")
+
+    @if (webrawurl == "/homepage-test1" || webrawurl == "/homepage-test1/")
+    {
+        @Scripts.Render("~/bundles/homepageheaderjs")
+    }
+    else
+    {
+        @Scripts.Render("~/bundles/headerjs")
+    }
+    @if (webrawurl != "/")
+    {
+        @Scripts.Render("~/Scripts/OberoiHotels/plugin/isotope.pkgd.min.js")
+    }
+    <script>
+    @Html.Raw(HttpContext.Current.Application["hotelDetailsJSON"])
+
+        @Html.Raw(HttpContext.Current.Application["jsonDataBookingWidget"])
+
+        var arrCalendarSoldOutDates = [];
+        var arrCalendarSoldOutDatesLoggedIn = [];
+        var arrCalendarSoldOutDatesNotLoggedIn = [];
+
+        @Html.Raw("arrCalendarSoldOutDatesLoggedIn = " + HttpContext.Current.Application["arrCalendarSoldOutDatesLoggedIn"])
+        @Html.Raw("arrCalendarSoldOutDatesNotLoggedIn = " + HttpContext.Current.Application["arrCalendarSoldOutDatesNotLoggedIn"])
+
+
+        $(function () {
+            fnBwSetSoldOutDatesBasedOnLoginStatus();
+        });
+
+        function fnBwSetSoldOutDatesBasedOnLoginStatus() {
+            if (readCookie("oOneUserId") != "") {
+                arrCalendarSoldOutDates = arrCalendarSoldOutDatesLoggedIn;
+            }
+            else {
+                arrCalendarSoldOutDates = arrCalendarSoldOutDatesNotLoggedIn;
+            }
+        }
+
+
+
+    var arrRoomSpecificCalendarSoldOutDates = [];
+    @*@Html.Raw(HttpContext.Current.Application["arrRoomSpecificCalendarSoldOutDates"])*@
+
+      /* Temporary code needs to move on some js file start */
+
+         @Html.Raw(HttpContext.Current.Application["JsonDataBookingWidgetMarketingAssets"])
+
+
+        var arrBwConfiguration = [];
+        var arrBwPromoCodeConfiguration = [];
+        var arrBwMasterConfiguration = [];
+
+
+      //glblBwDefaultHotelCode = "OB-HBBOMTR";/*for special offer pages*/
+
+    var glblCurrentPageHotelCode = "@Html.Raw(commonFunctions.getHotelCodeBasedOnURL())";
+
+
+
+
+
+     @{
+         var ConfigurationName = "";
+         var ConfigurationHotelCode = "";
+
+         if (Sitecore.Context.Item.Fields["Configuration Name"] != null)
+         {
+
+             Item configurationNameItem = currentDatabase.GetItem(Sitecore.Context.Item.Fields["Configuration Name"].ToString());
+
+             if (configurationNameItem != null)
+             {
+                 ConfigurationName = configurationNameItem["Configuration Name"].ToString();
+             }
+         }
+
+         if (Sitecore.Context.Item.Fields["Hotel Name"] != null)
+         {
+             Item hotelNameItem = currentDatabase.GetItem(Sitecore.Context.Item.Fields["Hotel Name"].ToString());
+
+             if (hotelNameItem != null)
+             {
+                 ConfigurationHotelCode = hotelNameItem["Hotel Code"].ToString();
+             }
+         }
+
+         @Html.Raw("var ConfigurationName = \"" + ConfigurationName + "\"; \n")
+         @Html.Raw("var ConfigurationHotelCode = \"" + ConfigurationHotelCode + "\"; \n")
+
+             }
+
+
+
+          @Html.Raw(HttpContext.Current.Application["arrBwConfiguration"])
+          @Html.Raw(HttpContext.Current.Application["arrBwPromoCodeConfiguration"])
+          @Html.Raw(HttpContext.Current.Application["arrBwMasterConfiguration"])
+
+     var glblBwDefaultHotelCode = "";
+    if (typeof glblCurrentPageHotelCode != "undefined") {
+        glblBwDefaultHotelCode = glblCurrentPageHotelCode;/*for non special offer pages*/
+    }
+
+    if (typeof ConfigurationHotelCode != "undefined") {
+        if (ConfigurationHotelCode != "") {
+            glblBwDefaultHotelCode = ConfigurationHotelCode;/*for non special offer pages*/
+        }
+    }
+
+
+
+       // if (glblBwDefaultHotelCode == "")
+        //glblBwDefaultHotelCode = "HBAGROB";
+        glblBwDisplayPrices = false; /*for special offers*/
+
+
+
+
+
+      var arrHotelNameCodesAndOtherDetails = [
+            { "hotelCode": "HBAGROB", "hotelName": "The Oberoi Amarvilas", "hotelCity": "Agra", "hotelCompleteName": "Agra - The Oberoi Amarvilas", "isCityHotel": false },
+            { "hotelCode": "HBBLROB", "hotelName": "The Oberoi, Bengaluru", "hotelCity": "Bengaluru", "hotelCompleteName": "Bengaluru - The Oberoi, Bengaluru", "isCityHotel": true },
+            { "hotelCode": "HBDELOG", "hotelName": "The Oberoi, Gurgaon", "hotelCity": "Gurgaon", "hotelCompleteName": "Gurgaon - The Oberoi, Gurgaon", "isCityHotel": true },
+            { "hotelCode": "HBJAIOB", "hotelName": "The Oberoi Rajvilas", "hotelCity": "Jaipur", "hotelCompleteName": "Jaipur - The Oberoi Rajvilas", "isCityHotel": false },
+            { "hotelCode": "HBCOKVR", "hotelName": "The Oberoi Vrinda, Luxury Kerala Cruiser", "hotelCity": "Kerala", "hotelCompleteName": "Kerala - The Oberoi Vrinda, Luxury Kerala Cruiser", "isCityHotel": false },
+            { "hotelCode": "HBCCUOB", "hotelName": "The Oberoi Grand", "hotelCity": "Kolkata", "hotelCompleteName": "Kolkata - The Oberoi Grand", "isCityHotel": true },
+            { "hotelCode": "HBBOMOB", "hotelName": "The Oberoi, Mumbai", "hotelCity": "Mumbai", "hotelCompleteName": "Mumbai - The Oberoi, Mumbai", "isCityHotel": true },
+            { "hotelCode": "HBIXCOB", "hotelName": "The Oberoi Sukhvilas Spa Resort", "hotelCity": "New Chandigarh", "hotelCompleteName": "New Chandigarh - The Oberoi Sukhvilas Spa Resort", "isCityHotel": false },
+            { "hotelCode": "HBDELOB", "hotelName": "The Oberoi, New Delhi", "hotelCity": "New Delhi", "hotelCompleteName": "New Delhi - The Oberoi, New Delhi", "isCityHotel": true },
+            { "hotelCode": "HBJAIVA", "hotelName": "The Oberoi Vanyavilas Wildlife Resort", "hotelCity": "Ranthambhore", "hotelCompleteName": "Ranthambhore - The Oberoi Vanyavilas Wildlife Resort", "isCityHotel": false },
+            { "hotelCode": "HBSLVWH", "hotelName": "Wildflower Hall, An Oberoi Resort", "hotelCity": "Shimla", "hotelCompleteName": "Shimla - Wildflower Hall, An Oberoi Resort", "isCityHotel": false },
+            { "hotelCode": "HBSLVOB", "hotelName": "The Oberoi Cecil", "hotelCity": "Shimla", "hotelCompleteName": "Shimla - The Oberoi Cecil", "isCityHotel": false },
+            { "hotelCode": "HBUDROB", "hotelName": "The Oberoi Udaivilas", "hotelCity": "Udaipur", "hotelCompleteName": "Udaipur - The Oberoi Udaivilas", "isCityHotel": false },
+            { "hotelCode": "HBHRGOB", "hotelName": "The Oberoi Beach Resort", "hotelCity": "Sahl Hasheesh", "hotelCompleteName": "Sahl Hasheesh - The Oberoi Beach Resort", "isCityHotel": false },
+            { "hotelCode": "HBASWZA", "hotelName": "The Oberoi Zahra", "hotelCity": "Nile Cruiser", "hotelCompleteName": "The Oberoi Zahra, Luxury Nile Cruiser", "isCityHotel": false },
+            { "hotelCode": "HBASWPH", "hotelName": "The Oberoi Philae", "hotelCity": "Nile Cruiser", "hotelCompleteName": "The Oberoi Philae, Luxury Nile Cruiser", "isCityHotel": false },
+            { "hotelCode": "HBDPSOB", "hotelName": "The Oberoi Beach Resort", "hotelCity": "Bali", "hotelCompleteName": "Bali - The Oberoi Beach Resort", "isCityHotel": false },
+            { "hotelCode": "HBAMIOB", "hotelName": "The Oberoi Beach Resort", "hotelCity": "Lombok", "hotelCompleteName": "Lombok - The Oberoi Beach Resort", "isCityHotel": false },
+            { "hotelCode": "HBMRUTO", "hotelName": "The Oberoi Beach Resort", "hotelCity": "Mauritius", "hotelCompleteName": "The Oberoi Beach Resort, Mauritius", "isCityHotel": false },
+            { "hotelCode": "HBMEDOB", "hotelName": "The Oberoi", "hotelCity": "Madina", "hotelCompleteName": "The Oberoi, Madina", "isCityHotel": false },
+            { "hotelCode": "HBDXBAZ", "hotelName": "The Oberoi Beach Resort", "hotelCity": "Al Zorah", "hotelCompleteName": "The Oberoi Beach Resort, Al Zorah", "isCityHotel": false },
+            { "hotelCode": "HBDXBOB", "hotelName": "The Oberoi", "hotelCity": "Dubai", "hotelCompleteName": "The Oberoi, Dubai", "isCityHotel": true },
+            { "hotelCode": "HTLMRCO", "hotelName": "The Oberoi, Marrakech", "hotelCity": "Morocco", "hotelCompleteName": "The Oberoi, Marrakech", "isCityHotel": false }
+        ];
+
+
+
+
+    @*    var arrCalendarSoldOutDates = [
+            { "hotelcode": "HBAGROB", "soldout_dates": ["2019-08-12", "2019-08-13", "2019-08-17", "2019-08-18", "2019-09-18"] },
+            { "hotelcode": "HBBLROB", "soldout_dates": ["2019-08-09", "2019-08-10", "2019-08-14", "2019-08-15", "2019-09-18", "2019-09-19"] }
+        ];
+        var arrRoomSpecificCalendarSoldOutDates = [];
+        *@
+        function fnSetHotelSoldOutDatesForSpecificRoom(_hotelCode, _roomCode) {
+            //var tempSoldOutDates = [];
+            //if (typeof arrRoomSpecificCalendarSoldOutDates != "undefined") {
+            //    for (var i = 0; i < arrRoomSpecificCalendarSoldOutDates.length; i++) {
+            //        if (arrRoomSpecificCalendarSoldOutDates[i].hotelcode.toLowerCase() == _hotelCode.toLowerCase()
+            //            && arrRoomSpecificCalendarSoldOutDates[i].roomTypeCode.toLowerCase() == _roomCode.toLowerCase()
+            //        ) {
+            //            tempSoldOutDates = arrRoomSpecificCalendarSoldOutDates[i].soldout_dates.slice(0);
+            //            break;
+            //        }
+            //    }
+            //}
+
+            //if (typeof arrCalendarSoldOutDates != "undefined") {
+            //    for (var i = 0; i < arrCalendarSoldOutDates.length; i++) {
+            //        if (arrCalendarSoldOutDates[i].hotelcode.toLowerCase() == _hotelCode.toLowerCase()) {
+            //            arrCalendarSoldOutDates[i].soldout_dates = tempSoldOutDates.slice(0);
+            //            break;
+            //        }
+            //    }
+            //}
+
+        }
+
+
+          /* Temporary code needs to move on some js file start */
+        function getSoldOutDateArrayByHotel(_hotelcode) {
+            var retSoldOutDates = [];
+
+            if (typeof arrCalendarSoldOutDates != "undefined" && typeof _hotelcode != "undefined") {
+                for (var i = 0; i < arrCalendarSoldOutDates.length; i++) {
+                    if (arrCalendarSoldOutDates[i].hotelcode.toLowerCase() == _hotelcode.toLowerCase()) {
+                        retSoldOutDates = arrCalendarSoldOutDates[i].soldout_dates.slice(0);
+                        break;
+                    }
+                }
+            }
+
+            return retSoldOutDates;
+        }
+
+        function getMarketingAssetsMessageByHotel(_hotelcode) {
+            var arrData = [];
+
+            if (typeof arrCalendarMarketingAssetsMessage != "undefined" && typeof _hotelcode != "undefined") {
+                for (var i = 0; i < arrCalendarMarketingAssetsMessage.length; i++) {
+                    if (arrCalendarMarketingAssetsMessage[i].hotelcode.toLowerCase() == _hotelcode.toLowerCase()
+                        && arrCalendarMarketingAssetsMessage[i].display_message != ""
+                    ) {
+                        arrData.push(arrCalendarMarketingAssetsMessage[i]);
+                        break;
+                    }
+                }
+            }
+
+            return arrData;
+        }
+
+
+           /* Temporary code needs to move on some js file end */
+    </script>
+    @{
+
+        if (HttpContext.Current.Request.Browser.Type.ToUpper().Contains("IE") || HttpContext.Current.Request.Browser.Type.ToUpper().Contains("INTERNETEXPLORER"))
+        {
+            scriptVersion = scriptVersion + DateTime.Now.ToString("yyyy-MM-dd");
+            <script type="text/javascript">
+                $(window).unload(function () {
+
+                    var currentLocation = window.location;
+                    window.location.href = currentLocation;
+
+                });</script>
+
+
+
+            //Create CSS bundle
+            foreach (Item childItem in jsBundleItem.Children)
+            {
+                if (childItem.Fields["File Names"].ToString() != "")
+                {
+                    string[] fileArray = childItem.Fields["File Names"].ToString().Replace("\"", "").Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+                    for (int i = 0; i < fileArray.Length; i++)
+                    {
+                        <script src="@fileArray[i].Replace(",", "").Replace("~", "").Trim().Replace(" ", "")?v=@scriptVersion" type="text/javascript"></script>
+                    }
+                }
+            }
+
+        }
+        else
+        {
+            if (webrawurl == "/homepage-test1" || webrawurl == "/homepage-test1/")
+            { @Scripts.Render("~/bundles/homepagefooterjs");
+        }
+        else
+        {
+            @Scripts.Render("~/bundles/footerjs");
+        }
+    }
+    }
+
+
+
+
+
+    @{
+        if (currentItemTemplateName.ToLower() == "wedding page") //Weddings
+        {
+            <script src="/Scripts/oberoihotels/wedding-page.js?v=@scriptVersion" type="text/javascript"></script>
+            @*<script src="/Scripts/OberoiHotels/common-wedding.js" type="text/javascript"></script>*@
+
+        }
+
+
+
+        @*if (webrawurl.Contains("best-of") || webrawurl.Contains("exotic-vacations") || webrawurl.Contains("villa-offer") || webrawurl.Contains("friends-family-getaways"))
+            {
+                <script src="/Scripts/OberoiHotels/ev-booking-engine-calendar.js?v=24" type="text/javascript"></script>
+                <script src="/Scripts/OberoiHotels/booking-engine-exotic-vacation.js?v=28" type="text/javascript"></script>
+            }*@
+        <script async defer src="/Scripts/OberoiHotels/booking-engine-exotic-vacation.js?v=@scriptVersion" type="text/javascript"></script>
+    }
+
+    @{if (webrawurl == "/christmas-and-new-year" || webrawurl == "/christmas-and-new-year/")
+        {
+            <script type="text/javascript" src="/scripts/oberoihotels/christmas-page.js?v=@scriptVersion"></script>
+
+
+        }
+    }
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=startGoogleAuth" async defer></script>
+    @if (webrawurl != "/")
+    {
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBq90h8svW_Q3GRKa6Q4Sp9QCSWUB7Ajvo"></script>
+    }
+    @*<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjIpRzTPaSq4Nyfw6Xx-fmPvGCcY1_Rrk"></script>*@
+    <!-- oberoi one script start  -->
+
+    <script type="text/javascript" src="/scripts/oberoihotels/dashboard.js?v=@scriptVersion"></script>
+    @if (webrawurl != "/")
+    {
+        <script type="text/javascript" src="/scripts/oberoihotels/christmas-page.js?v=@scriptVersion"></script>
+        <script type="text/javascript" src="/scripts/oberoihotels/book-direct-and-form.js?v=@scriptVersion"></script>
+    }
+
+    @{
+        if (showOfferRequestForm)
+        {
+            <script type="text/javascript" src="/scripts/oberoihotels/offer-request-form.js?v=@scriptVersion"></script>
+        }
+    }
+
+
+
+
+
+
+    <!-- Oberoi One script End  -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            headerScroll();
+            homePageBanner();
+            desinationCarousel();
+            moDesinationCarousel();
+            roomsCarousel();
+
+            offersCarousel();
+            experiencesBanner();
+            giftCardBanner();
+            eMagazineCarousel();
+            descriptionSlider();
+            instagramStudio();
+            // hotelsOption();
+            //checkInAndCheckOutdate();
+            awards();
+            menuAcoor();
+            $(".customScroll").mCustomScrollbar();
+            $(".t-datepicker-day").mCustomScrollbar();
+
+            function isArray(what) {
+                return Object.prototype.toString.call(what) === '[object Array]';
+            }
+
+            if (readCookie("OberoiOneLoggedMemberBasicInformation") != "") {
+                var basicObjectCookie = JSON.parse(readCookie('OberoiOneLoggedMemberBasicInformation'));
+
+                if (isArray(basicObjectCookie)) {
+                    $('.o-one-user-name-short').html(basicObjectCookie[0]["FirstName"][0].toUpperCase() + " " + basicObjectCookie[0]["LastName"][0].toUpperCase())
+                }
+                else {
+                    $('.o-one-user-name-short').html(basicObjectCookie["FirstName"][0].toUpperCase() + " " + basicObjectCookie["LastName"][0].toUpperCase())
+                }
+            }
+
+
+
+        });
+
+
+        $(window).load(function () {
+            FilterScroll();
+        });
+
+
+
+    </script>
+    @Html.Raw(Sitecore.Context.Item.Fields["Footer scripts"])
+
+    @{
+        if (Request["noTrackingCodes"] == null)
+        {
+            @Html.Raw(global.Fields["global footer scripts"])
+        }
+    }
+    <script>
+        // place this function inside the master page to track all JS errors at one place
+        window.onerror = function (msg, url, line) {
+            var windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            var windowHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+            var ErrorMsg = msg;
+            var ErrorPageURL = url;
+            var ErrorLineNo = line;
+
+            var params = "errorMsg=" + ErrorMsg + "&errorPageURL=" + ErrorPageURL + "&errorLineNo=" + ErrorLineNo + "&windowWidth=" + windowWidth + "&windowHeight=" + windowHeight;
+
+            $.ajax({
+                dataType: "jsonp",
+                url: "/handlers/js-error-reporting.ashx?" + params,
+                async: false,
+                success: function (result) {
+                },
+                error: function () {
+                }
+            });
+
+        };
+
+    </script>
+    <script>
+        @Html.Raw("var glblMasterCountryCodes=" + DLJSON.getJsonFromDB("glblMasterCountryCodes") + ";")
+    </script>
+    @*@{if (webrawurl == "/" || webrawurl == "")
+            {
+                <script src="/Scripts/OberoiHotels/cookie-comp-page.js?v=@scriptVersion"></script>
+            }
+
+        }*@
+    @*<script async defer src="/Scripts/OberoiHotels/rating-page.js?v=@scriptVersion"></script>*@
+    <div class="mo-overlay" style="display: none">
+        <div class="global-oberoi-one-pop-up" style="display: none;">
+
+            <div class="container-fluid oberoi-one-pop-up-wrapper" style="" id="popup">
+                <div class="pclose mo-oberoi-one-pop-up-close">+</div>
+
+
+
+                <div class="login-banner">
+                    <div class="container-1270px">
+                        <div class="dashboard">
+                            <div class="titles">
+                                <h2><span>Welcome</span> to Oberoi One. </h2>
+                                <h3>Allow us to enhance your stay experience with us. Even more. </h3>
+                            </div>
+                            <div class="cardBox">
+                                <img src="/images/OberoiHotels/Oberoi-one/cards-pop.jpg" alt="cards">
+                            </div>
+                            <div class="pop-box">
+                                <div>
+                                    <div class="members-benefits-form-wrapper">
+                                        <div class="form-container" id="oberoi-one-login-singn-up-form-container">
+
+
+                                            <div class="form-wrapper-box">
+
+                                                <div class="user-account-access-Oone">
+                                                    <div class="existing-member-text">Already a member?</div>
+                                                    <div class="loginBox loginAccount" id="loginAccount">Login</div>
+                                                    <span class="loginBox-seperator">or</span>
+                                                    <div class="loginBox enrolAccount activeUserTab" id="enrolAccount">Enrol Now</div>
+
+                                                    <div class="login-with-social-medium global-pop-up-box-header">
+                                                        <div id="googleSignInButtonPopupMO" class="social-medium-type login-via-gmail-popup">
+                                                            <a href="javascript:;"><img src="/images/login-with-gmail.jpg"></a>
+                                                        </div>
+                                                        <div id="fbSignInButtonPopupMO" class="social-medium-type login-via-fb-popup mo-fb-login">
+                                                            <a href="javascript:;"><img src="/images/login-with-fb.jpg"></a>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="signupGPSection">
+                                                    <div class="enroll-user-global-popup">
+                                                        <form name="frmOberoiOneSignUpUserGP" onsubmit="return false;">
+                                                            <!--                    <h3><span>Enrol</span> Now</h3>-->
+
+                                                            <div class="new-user-signup-form" id="new-user-signup-form" style="display:block;">
+
+                                                                <div class="form-fields">
+                                                                    <div class="title name-title">
+                                                                        <select name="ddlSalutation" id="ddlSalutation">
+
+                                                                            <option value="Mr." selected="">Mr.</option>
+                                                                            <option value="Ms.">Ms.</option>
+                                                                            <option value="Dr.">Dr.</option>
+                                                                            <option value="Prof.">Prof.</option>
+                                                                        </select>
+                                                                        <span class="err-txt ddlSalutation"></span>
+                                                                    </div>
+                                                                    <div class="inputbox first-name"><input type="text" onblur="fnOberoiOneBlur(this)" name="txtFirstName" id="txtFirstName"><label class="o-one-form-label">First Name*</label><span class="err-txt txtFirstName"></span></div>
+                                                                    <div class="inputbox last-name"><input type="text" onblur="fnOberoiOneBlur(this)" name="txtLastName" id="txtLastName"><label class="o-one-form-label">Last Name*</label><span class="err-txt txtLastName"></span></div>
+
+                                                                </div>
+
+
+                                                                <div class="form-fields">
+                                                                    <div class="inputbox email-id txt-box"><input type="text" onblur="fnOberoiOneBlur(this)" name="txtEmailId" id="txtEmailId"><label class="o-one-form-label">Email Id*</label><span class="err-txt txtEmailId"></span></div>
+                                                                    <div class="inputbox phone-no txt-box">
+                                                                        <input type="tel" onblur="fnOberoiOneBlur(this)" name="txtMobileNumber" id="txtMobileNumber" maxlength="15"><label class="o-one-form-label">Mobile Number*</label><span class="err-txt txtMobileNumber omo-page"></span>
+                                                                        <span class="countryCodeWrap">
+                                                                            <div class="selectBoxValDisplay" display="none">Country Code</div>
+                                                                            <select name="ddlCountryCode" class="selectBox" id="ddlCountryCode">
+                                                                                <option selected="">Country Code*</option>
+                                                                                <option value="+91">India          +91</option>
+                                                                                <option value="+1">United States of America     +1</option>
+                                                                                <option value="+44">United Kingdom   +44</option>
+
+                                                                                <option value="+93">Afghanistan            +93</option>
+                                                                                <option value="+355">Albania  +355</option>
+                                                                                <option value="+213">Algeria   +213</option>
+                                                                                <option value="+1-684">American Samoa            +1-684</option>
+                                                                                <option value="+376">Andorra +376</option>
+                                                                                <option value="+244">Angola   +244</option>
+                                                                                <option value="+1-264">Anguilla             +1-264</option>
+                                                                                <option value="+1-268">Antigua &amp; Barbuda        +1-268</option>
+                                                                                <option value="+54">Argentina +54</option>
+                                                                                <option value="+374">Armenia +374</option>
+                                                                                <option value="+297">Aruba     +297</option>
+                                                                                <option value="+61">Australia  +61</option>
+                                                                                <option value="+43">Austria     +43</option>
+                                                                                <option value="+994">Azerbaijan            +994</option>
+                                                                                <option value="+1-242">Bahamas           +1-242</option>
+                                                                                <option value="+973">Bahrain  +973</option>
+                                                                                <option value="+880">Bangladesh          +880</option>
+                                                                                <option value="+1-246">Barbados          +1-246</option>
+                                                                                <option value="+375">Belarus  +375</option>
+                                                                                <option value="+32">Belgium   +32</option>
+                                                                                <option value="+501">Belize     +501</option>
+                                                                                <option value="+229">Benin      +229</option>
+                                                                                <option value="+1-441">Bermuda           +1-441</option>
+                                                                                <option value="+975">Bhutan   +975</option>
+                                                                                <option value="+591">Bolivia    +591</option>
+                                                                                <option value="+599">Bonaire  +599</option>
+                                                                                <option value="+387">Bosnia &amp; Herzegovina      +387</option>
+                                                                                <option value="+267">Botswana             +267</option>
+                                                                                <option value="+55">Brazil         +55</option>
+                                                                                <option value="+246">British Indian Ocean Ter  +246</option>
+                                                                                <option value="+673">Brunei    +673</option>
+                                                                                <option value="+359">Bulgaria +359</option>
+                                                                                <option value="+226">Burkina Faso        +226</option>
+                                                                                <option value="+257">Burundi +257</option>
+                                                                                <option value="+855">Cambodia             +855</option>
+                                                                                <option value="+237">Cameroon            +237</option>
+                                                                                <option value="+1">Canada       +1</option>
+                                                                                <option value="+34">Canary Islands       +34</option>
+                                                                                <option value="+238">Cape Verde          +238</option>
+                                                                                <option value="+1-345">Cayman Islands              +1-345</option>
+                                                                                <option value="+236">Central African Republic  +236</option>
+                                                                                <option value="+235">Chad       +235</option>
+                                                                                <option value="+44">Channel Islands     +44</option>
+                                                                                <option value="+56">Chile          +56</option>
+                                                                                <option value="+86">China        +86</option>
+                                                                                <option value="+53">Christmas Island   +53</option>
+                                                                                <option value="+61">Cocos Island           +61</option>
+                                                                                <option value="+57">Colombia +57</option>
+                                                                                <option value="+269">Comoros +269</option>
+                                                                                <option value="+243">Congo    +243</option>
+                                                                                <option value="+682">Cook Islands        +682</option>
+                                                                                <option value="+506">Costa Rica             +506</option>
+                                                                                <option value="+225">Cote DIvoire        +225</option>
+                                                                                <option value="+385">Croatia   +385</option>
+                                                                                <option value="+53">Cuba         +53</option>
+                                                                                <option value="+599">Curacao +599</option>
+                                                                                <option value="+357">Cyprus   +357</option>
+                                                                                <option value="+420">Czech Republic   +420</option>
+                                                                                <option value="+45">Denmark +45</option>
+                                                                                <option value="+253">Djibouti +253</option>
+                                                                                <option value="+1-767">Dominica           +1-767</option>
+                                                                                <!-- <option value="+1-809 and +1-829">Dominican Republic               +1-809 and +1-829</option> -->
+                                                                                <option value="+1-809">Dominican Republic +1-809</option>
+                                                                                <option value="+1-829">Dominican Republic +1-829</option>
+                                                                                <option value="+670">East Timor             +670</option>
+                                                                                <option value="+593 ">Ecuador +593 </option>
+                                                                                <option value="+20">Egypt        +20</option>
+                                                                                <option value="+503">El Salvador            +503</option>
+                                                                                <option value="+240">Equatorial Guinea              +240</option>
+                                                                                <option value="+291">Eritrea    +291</option>
+                                                                                <option value="+372">Estonia   +372</option>
+                                                                                <option value="+251">Ethiopia +251</option>
+                                                                                <option value="+500">Falkland Islands  +500</option>
+                                                                                <option value="+298">Faroe Islands       +298</option>
+                                                                                <option value="+679">Fiji            +679</option>
+                                                                                <option value="+358">Finland   +358</option>
+                                                                                <option value="+33">France      +33</option>
+                                                                                <option value="+594">French Guiana    +594</option>
+                                                                                <option value="+689">French Polynesia +689</option>
+                                                                                <option value=" 0">French Southern Ter 0</option>
+                                                                                <option value="+241">Gabon    +241</option>
+                                                                                <option value="+220">Gambia  +220</option>
+                                                                                <option value="+995">Georgia  +995</option>
+                                                                                <option value="+49">Germany +49</option>
+                                                                                <option value="+233">Ghana    +233</option>
+                                                                                <option value="+350">Gibraltar +350</option>
+                                                                                <option value="+44">Great Britain           +44</option>
+                                                                                <option value="+30">Greece     +30</option>
+                                                                                <option value="+299">Greenland            +299</option>
+                                                                                <option value="+1-473">Grenada            +1-473</option>
+                                                                                <option value="+590">Guadeloupe         +590</option>
+                                                                                <option value="+1-671">Guam +1-671</option>
+                                                                                <option value="+502">Guatemala           +502</option>
+                                                                                <option value="+224">Guinea   +224</option>
+                                                                                <option value="+592">Guyana  +592</option>
+                                                                                <option value="+509">Haiti        +509</option>
+                                                                                <option value="+1">Hawaii         +1</option>
+                                                                                <option value="+504">Honduras              +504</option>
+                                                                                <option value="+852">Hong Kong            +852</option>
+                                                                                <option value="+36">Hungary   +36</option>
+                                                                                <option value="+354">Iceland   +354</option>
+                                                                                <option value="+62">Indonesia +62</option>
+
+                                                                                <option value="+98">Iran            +98</option>
+                                                                                <option value="+964">Iraq         +964</option>
+                                                                                <option value="+353">Ireland   +353</option>
+                                                                                <option value="+44">Isle of Man              +44</option>
+                                                                                <option value="+972">Israel      +972</option>
+                                                                                <option value="+39">Italy           +39</option>
+                                                                                <option value="+1-876">Jamaica              +1-876</option>
+                                                                                <option value="+81">Japan        +81</option>
+                                                                                <option value="+962">Jordan    +962</option>
+                                                                                <option value="+7">Kazakhstan +7</option>
+                                                                                <option value="+254">Kenya     +254</option>
+                                                                                <option value="+686">Kiribati   +686</option>
+                                                                                <option value="+850">Korea North         +850</option>
+                                                                                <option value="+82">Korea South           +82</option>
+                                                                                <option value="+965">Kuwait   +965</option>
+                                                                                <option value="+996">Kyrgyzstan            +996</option>
+                                                                                <option value="+856">Laos        +856</option>
+                                                                                <option value="+371">Latvia      +371</option>
+                                                                                <option value="+961">Lebanon +961</option>
+                                                                                <option value="+266">Lesotho +266</option>
+                                                                                <option value="+231">Liberia    +231</option>
+                                                                                <option value="+218">Libya       +218</option>
+                                                                                <option value="+423">Liechtenstein      +423</option>
+                                                                                <option value="+370">Lithuania               +370</option>
+                                                                                <option value="+352">Luxembourg        +352</option>
+                                                                                <option value="+853">Macau    +853</option>
+                                                                                <option value="+389">Macedonia           +389</option>
+                                                                                <option value="+261">Madagascar         +261</option>
+                                                                                <option value="+60">Malaysia  +60</option>
+                                                                                <option value="+265">Malawi   +265</option>
+                                                                                <option value="+960">Maldives +960</option>
+                                                                                <option value="+223">Mali         +223</option>
+                                                                                <option value="+356">Malta      +356</option>
+                                                                                <option value="+692">Marshall Islands +692</option>
+                                                                                <option value="+596">Martinique           +596</option>
+                                                                                <option value="+222">Mauritania           +222</option>
+                                                                                <option value="+230">Mauritius              +230</option>
+                                                                                <option value="+269">Mayotte +269</option>
+                                                                                <option value="+52">Mexico     +52</option>
+                                                                                <option value=" 0">Midway Islands          0</option>
+                                                                                <option value="+373">Moldova +373</option>
+                                                                                <option value="+377">Monaco +377</option>
+                                                                                <option value="+976">Mongolia              +976</option>
+                                                                                <option value="+1-664">Montserrat      +1-664</option>
+                                                                                <option value="+212">Morocco +212</option>
+                                                                                <option value="+258">Mozambique       +258</option>
+                                                                                <option value="+95">Myanmar +95</option>
+                                                                                <option value="+264">Nambia  +264</option>
+                                                                                <option value="+674">Nauru     +674</option>
+                                                                                <option value="+977">Nepal     +977</option>
+                                                                                <option value="+599">Netherland Antilles           +599</option>
+                                                                                <option value="+31">Netherlands (Holland, Europe)       +31</option>
+                                                                                <option value="+1-869">Nevis  +1-869</option>
+                                                                                <option value="+687">New Caledonia   +687</option>
+                                                                                <option value="+64">New Zealand          +64</option>
+                                                                                <option value="+505">Nicaragua             +505</option>
+                                                                                <option value="+227">Niger      +227</option>
+                                                                                <option value="+234">Nigeria   +234</option>
+                                                                                <option value="+683">Niue        +683</option>
+                                                                                <option value="+672">Norfolk Island     +672</option>
+                                                                                <option value="+47">Norway    +47</option>
+                                                                                <option value="+968">Oman     +968</option>
+                                                                                <option value="+92">Pakistan   +92</option>
+                                                                                <option value="+680">Palau Island          +680</option>
+                                                                                <option value="+970">Palestine               +970</option>
+                                                                                <option value="+507">Panama +507</option>
+                                                                                <option value="+675">Papua New Guinea           +675</option>
+                                                                                <option value="+595">Paraguay               +595</option>
+                                                                                <option value="+51">Peru          +51</option>
+                                                                                <option value="+63">Philippines              +63</option>
+                                                                                <option value="+64">Pitcairn Island        +64</option>
+                                                                                <option value="+48">Poland      +48</option>
+                                                                                <option value="+351">Portugal +351</option>
+                                                                                <!-- <option value="+1-787 or +1-939">Puerto Rico   +1-787 or +1-939</option> -->
+                                                                                <option value="+1-787">Puerto Rico   +1-787</option>
+                                                                                <option value="+1-939">Puerto Rico +1-939</option>
+                                                                                <option value="+974 ">Qatar     +974 </option>
+                                                                                <option value="+382">Republic of Montenegro +382</option>
+                                                                                <option value="+381">Republic of Serbia              +381</option>
+                                                                                <option value="+262">Reunion +262</option>
+                                                                                <option value="+40">Romania  +40</option>
+                                                                                <option value="+7">Russia          +7</option>
+                                                                                <option value="+250">Rwanda +250</option>
+                                                                                <option value="+590">St Barthelemy     +590</option>
+                                                                                <option value="+599">St Eustatius          +599</option>
+                                                                                <option value="+290">St Helena              +290</option>
+                                                                                <option value="+1-869">St Kitts-Nevis   +1-869</option>
+                                                                                <option value="+1-758">St Lucia               +1-758</option>
+                                                                                <option value="+1-721">St Maarten       +1-721</option>
+                                                                                <option value="+508">St Pierre &amp; Miquelon        +508</option>
+                                                                                <option value="+1-784">St Vincent &amp; Grenadines             +1-784</option>
+                                                                                <option value="+1-670">Saipan +1-670</option>
+                                                                                <option value="+685">Samoa    +685</option>
+                                                                                <option value="+1-684">Samoa American            +1-684</option>
+                                                                                <option value="+378">San Marino           +378</option>
+                                                                                <option value="+239">Sao Tome &amp; Principe        +239</option>
+                                                                                <option value="+966">Saudi Arabia         +966</option>
+                                                                                <option value="+221">Senegal  +221</option>
+                                                                                <option value="+248">Seychelles            +248</option>
+                                                                                <option value="+232">Sierra Leone        +232</option>
+                                                                                <option value="+65">Singapore +65</option>
+                                                                                <option value="+421">Slovakia +421</option>
+                                                                                <option value="+386">Slovenia +386</option>
+                                                                                <option value="+677">Solomon Islands +677</option>
+                                                                                <option value="+252">Somalia  +252</option>
+                                                                                <option value="+27">South Africa           +27</option>
+                                                                                <option value="+34">Spain         +34</option>
+                                                                                <option value="+94">Sri Lanka  +94</option>
+                                                                                <option value="+249">Sudan     +249</option>
+                                                                                <option value="+597">Suriname              +597</option>
+                                                                                <option value="+268">Swaziland             +268</option>
+                                                                                <option value="+46">Sweden    +46</option>
+                                                                                <option value="+41">Switzerland            +41</option>
+                                                                                <option value="+963">Syria        +963</option>
+                                                                                <option value="+689">Tahiti      +689</option>
+                                                                                <option value="+886">Taiwan   +886</option>
+                                                                                <option value="+992">Tajikistan              +992</option>
+                                                                                <option value="+255">Tanzania +255</option>
+                                                                                <option value="+66">Thailand   +66</option>
+                                                                                <option value=" #REF!">Togo      #REF!</option>
+                                                                                <option value="+690">Tokelau +690</option>
+                                                                                <option value="+676">Tonga     +676</option>
+                                                                                <option value="+1-868">Trinidad &amp; Tobago         +1-868</option>
+                                                                                <option value="+216">Tunisia   +216</option>
+                                                                                <option value="+90">Turkey      +90</option>
+                                                                                <option value="+993">Turkmenistan      +993</option>
+                                                                                <option value="+1-649">Turks &amp; Caicos Is             +1-649</option>
+                                                                                <option value="+688">Tuvalu    +688</option>
+                                                                                <option value="+256">Uganda  +256</option>
+
+                                                                                <option value="+380">Ukraine +380</option>
+                                                                                <option value="+971">United Arab Emirates       +971</option>
+
+                                                                                <option value="+598">Uruguay +598</option>
+                                                                                <option value="+998">Uzbekistan           +998</option>
+                                                                                <option value="+678">Vanuatu +678</option>
+                                                                                <option value="+418">Vatican City State               +418</option>
+                                                                                <option value="+58">Venezuela               +58</option>
+                                                                                <option value="+84">Vietnam   +84</option>
+                                                                                <option value="+1-284">Virgin Islands (Brit)        +1-284</option>
+                                                                                <option value="+1-340">Virgin Islands (USA)      +1-340</option>
+                                                                                <option value="+1-872">Wake Island     +1-872</option>
+                                                                                <option value="+681">Wallis &amp; Futana Is              +681</option>
+                                                                                <option value="+967">Yemen   +967</option>
+                                                                                <option value=" #REF!">Zaire      #REF!</option>
+                                                                                <option value="+260">Zambia   +260</option>
+                                                                                <option value="+263">Zimbabwe            +263</option>
+
+                                                                            </select>
+                                                                        </span>
+                                                                        <span class="err-txt txtCountryCode omo-page"></span>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <div class="form-fields">
+                                                                    <div class="inputbox pass txt-box"><input onblur="fnOberoiOneBlur(this)" type="password" name="txtPassword" id="txtPassword"><label class="o-one-form-label">Password*</label><span class="err-txt txtPassword"></span></div>
+                                                                    <div class="inputbox pass txt-box"><input onblur="fnOberoiOneBlur(this)" type="password" name="txtConfirmPassword" id="txtConfirmPassword"><label class="o-one-form-label">Confirm Password*</label><span class="err-txt txtConfirmPassword"></span></div>
+                                                                </div>
+
+
+                                                                <div class="form-fields">
+                                                                    <div class="user-conformation">
+                                                                        <input type="checkbox" class="chkbox" id="chkAcknowledgement" name="chkAcknowledgement"><label for="chkAcknowledgement">I agree to receive special promotions and offers from Oberoi Hotels &amp; Resorts.</label>
+                                                                        <span class="err-txt chkAcknowledgement"></span>
+                                                                    </div>
+                                                                    <div class="user-conformation">
+                                                                        <input type="checkbox" class="chkbox" id="chkTnCAgreement" name="chkTnCAgreement"><label for="chkTnCAgreement">I have understood and agree to the <a href="https://www.oberoihotels.com/terms-and-conditions/" target="_blank">Terms &amp; Conditions</a> and the <a href="https://www.oberoihotels.com/privacy-policy/" target="_blank">Privacy Policy</a>. *</label>
+                                                                        <span class="err-txt chkTnCAgreement"></span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-fields sign-in-space">
+                                                                    <input type="Submit" class="sbmt-btn" id="login-form-sbmt-btn" value="Submit" onclick="fnOberoiOneSignUpUserGP()">
+                                                                    <div class="clr"></div>
+                                                                    <span class="err-txt common-error"> </span>
+                                                                    <div class="clr"></div>
+                                                                    <!--                        <div class="member-sign-in">Already a member? Please <a id="sign-btn" href="javascript:;" onclick="fnOberoiOneShowLoginScreen()">login</a></div>-->
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                    <div id="newUserRegisteredMessage" class="submit-btn-txt ">
+                                                        <div class="otp-txt">"Dear User, We have sent a verification email to email ID <span>vik*******il.com</span>. You can click on the verification link in that email or enter the verification code given in that email in below verification code box."</div>
+                                                        <div class="otp-box form-wrapper-box">
+                                                            <form id="signUpCaseOtpVerification" name="frmOberoiOnesignUpCaseOtpVerificationGP" onsubmit="return false;">
+                                                                <div class="otp-txt-box form-fields">
+                                                                    <div class="otp-input-box">
+                                                                        <input type="tel" class="digit-1" name="digit-1" data-next="digit-2" maxlength="1">
+                                                                        <input type="tel" class="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" maxlength="1">
+                                                                        <input type="tel" class="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" maxlength="1">
+                                                                        <input type="tel" class="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" maxlength="1">
+                                                                    </div>
+                                                                    <!-- <input type="tel" name="otpNumber" class="otp-input-field" id="otpNumber" placeholder="Enter Verification code"> -->
+
+                                                                    <input type="Submit" class="validate-otp" onclick="fnOberoiOneVerifyOtpGP('frmOberoiOnesignUpCaseOtpVerificationGP')" value="Validate">
+
+                                                                    <input type="hidden" name="emailId">
+                                                                    <div class="clr"></div>
+                                                                    <span class="err-txt txtotpNumber"></span>
+                                                                    <div class="resend-otp"><a href="javascript:;" onclick="fnOberoiOneResendOtpAndEmailGP(glblOberoiOneUserEmail,'signup')" class="otp-resened-btn">Resend verification mail</a><span class="resendLoader" style="display: none; margin-left: 20px;"><img src="/images/OberoiHotels/oberoi-one/resend-loader.gif"></span></div>
+                                                                </div>
+
+                                                            </form>
+
+
+                                                            <div class="clr"></div>
+                                                            <span class="resendOtpMessage err-txt"></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="signinGPSection">
+
+                                                    <div class="sign-in-wrapper existing-user-global-popup" id="existing-user-global-popup">
+                                                        <form name="frmOberoiOneLogInUserGP" onsubmit="return false;">
+                                                            <div class="form-fields sign-in-box">
+                                                                <!--                        <h3><span>Sign</span> In</h3>-->
+                                                            </div>
+
+                                                            <div class="form-fields email-pass-login">
+                                                                <div class="inputbox sign-in-mail txt-box "><input type="text" onblur="fnOberoiOneBlur(this)" name="txtSignInEmailId" id="txtSignInEmailId"><label class="o-one-form-label">Email Id</label><span class="err-txt txtSignInEmailId" style="display: none;"></span></div>
+                                                                <div class="inputbox sign-in-mail-pass txt-box"><input type="password" name="txtSignInPassword" id="txtSignInPassword"><label class="o-one-form-label">Password</label><span class="err-txt txtSignInPassword"></span></div>
+                                                                <input type="Submit" class="sbmt-btn sign-in-submit" value="Sign in" onclick="fnOberoiOneLogInUserGP()">
+                                                                <div class="clr"></div>
+                                                                <span class="err-txt common-error"> </span>
+                                                                <div class="clr"></div>
+                                                                <div class="frgt-pass"><a href="javascript:;" onclick="fnOberoiOneShowPasswordRecoveryScreenGP()">Forgot password?</a></div>
+
+                                                                <!--                        <div class="register-user">Don't have an account yet? <a href="javascript:;" onclick="fnOberoiOneEnrollformScreen()" class="register-link">Register</a></div>-->
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="password-recovery">
+                                                        <form name="frmOberoiOneRecoverYourPasswordGP" onsubmit="return false;">
+                                                            <div class="form-fields email-pass-login">
+                                                                <h3><span>Recover</span> Your Password</h3>
+                                                                <div class="inputbox sign-in-mail recover-pass txt-box"><input type="text" onblur="fnOberoiOneBlur(this)" name="txtforgetpasswordemail" id="txtforgetpasswordemail"><label class="o-one-form-label">Email Id</label><span class="err-txt txtforgetpasswordemail"></span></div>
+                                                                <input class="sbmt-btn sign-in-submit" onclick="fnOberoiOneRecoverYourPasswordGP()" type="Submit" value="Submit">
+                                                                <div class="backbtn" onclick="fnOberoiOneShowLoginScreenGP()"> Back </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div id="UserEmailVerificationPending" class="submit-btn-txt ">
+                                                        <div class="otp-txt">Dear User, We have sent a verification email to email ID <span>vik*******il.com</span>. You can click on the verification link in that email or enter the verification code given in that email in below verification code box.</div>
+                                                        <div class="otp-box form-wrapper-box">
+                                                            <form id="loginCaseOtpVerification" name="UserEmailVerificationPendingGP" onsubmit="return false;">
+                                                                <div class="otp-txt-box form-fields">
+                                                                    <div class="otp-input-box">
+                                                                        <input type="tel" class="digit-1" name="digit-1" data-next="digit-2" maxlength="1">
+                                                                        <input type="tel" class="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" maxlength="1">
+                                                                        <input type="tel" class="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" maxlength="1">
+                                                                        <input type="tel" class="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" maxlength="1">
+                                                                    </div>
+                                                                    <!-- <input type="tel" name="otpNumber" id="otpNumber" class="otp-input-field" placeholder="Enter verification code"> -->
+
+                                                                    <input type="Submit" class="validate-otp" onclick="fnOberoiOneVerifyOtpGP('UserEmailVerificationPendingGP')" value="Validate">
+                                                                    <input type="hidden" name="emailId">
+                                                                    <div class="clr"></div>
+                                                                    <span class="err-txt txtotpNumber"></span>
+                                                                    <div class="resend-otp"><a href="javascript:;" onclick="fnOberoiOneResendOtpAndEmailGP(glblOberoiOneUserEmail,'login')" class="otp-resened-btn">Resend verification mail</a><span class="resendLoader" style="display: none"><img src="/images/OberoiHotels/oberoi-one/resend-loader.gif"></span></div>
+                                                                </div>
+                                                            </form>
+
+
+
+                                                            <div class="clr"></div>
+                                                            <span class="resendOtpMessage err-txt"></span>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div id="UserPasswordRecoveryMessage" class="submit-btn-txt ">
+                                                        <div class="otp-txt"></div>
+                                                        <span class="resendOtpMessage green"></span>
+                                                    </div>
+                                                </div>
+
+
+
+
+
+                                            </div>
+
+
+
+
+                                            <!--<div id="verifiedUserMessageByOtp" class="submit-btn-txt">
+                                                <div class="otp-txt" style="text-align:center;">You have sucessfully logged in.</div>
+                                            </div> -->
+
+                                        </div>
+                                        <div class="members-benefits">
+                                            <h3><span>Membership</span> Benefits </h3>
+                                            <div class="benefits-list memberListSlider">
+                                                <div class="benefits-box">
+                                                    <img src="/images/OberoiHotels/Oberoi-one/member-only-rates-blue-tier.png" alt="icon">
+                                                    <h5>Exclusive member rates on oberoihotels.com</h5>
+                                                </div>
+
+                                                <div class="benefits-box">
+                                                    <img src="/images/OberoiHotels/Oberoi-one/late-checkout-blue-tier.png" alt="icon">
+                                                    <h5>Late check-out</h5>
+                                                </div>
+
+                                                <div class="benefits-box">
+                                                    <img src="/images/OberoiHotels/Oberoi-one/blue-tier-saving-dining.png" alt="icon">
+                                                    <h5>10% savings on dining</h5>
+                                                </div>
+
+
+
+                                                <div class="benefits-box">
+                                                    <img src="/images/OberoiHotels/Oberoi-one/premium-wifi-blue-tier.png" alt="icon">
+                                                    <h5>Premium WiFi for unlimited devices</h5>
+                                                </div>
+
+                                                <div class="benefits-box lastRowCentre-0">
+                                                    <img src="/images/OberoiHotels/Oberoi-one/dedicated-service-blue-tier.png" alt="icon">
+                                                    <h5>24x7 dedicated guest assistance</h5>
+                                                </div>
+
+                                                <div class="benefits-box">
+                                                    <img src="/images/oberoihotels/oberoi-one/blue-night.png" alt="icon">
+                                                    <h5>Complimentary stays and upgrades at frequent intervals</h5>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- popup code end -->
+
+            </div>
+
+        </div>
+    </div>
+    @if (webrawurlFornewYearMarketing == "/"
+        || webrawurlFornewYearMarketing == "/hotels-in-bengaluru/" || webrawurlFornewYearMarketing == "/hotels-in-kolkata/" || webrawurlFornewYearMarketing == "/" || webrawurlFornewYearMarketing == "hotels-in-delhi/" || webrawurlFornewYearMarketing == "/hotels-in-dubai/christmas-and-new-year/"
+         || webrawurlFornewYearMarketing == "/hotels-in-gurgaon/" || webrawurlFornewYearMarketing == "/hotels-in-mumbai/" || webrawurlFornewYearMarketing == "/hotels-in-sahl-hasheesh/christmas-and-new-year/" || webrawurlFornewYearMarketing == "/hotels-in-shimla-cecil/christmas-and-new-year/"
+          || webrawurlFornewYearMarketing == "/hotels-in-chandigarh-sukhvilas-resort/christmas-and-new-year/" || webrawurlFornewYearMarketing == "/hotels-in-bengaluru/christmas-and-new-year/" || webrawurlFornewYearMarketing == "/hotels-in-gurgaon/christmas-and-new-year/" || webrawurlFornewYearMarketing == "/hotels-in-ranthambhore-vanyavilas-resort/christmas-and-new-year/"
+           || webrawurlFornewYearMarketing == "/hotels-in-udaipur-udaivilas-resort/christmas-and-new-year/" || webrawurlFornewYearMarketing == "/hotels-in-kolkata/christmas-and-new-year/" || webrawurlFornewYearMarketing == "/hotels-in-mumbai/christmas-and-new-year/" || webrawurlFornewYearMarketing == "/hotels-in-delhi/christmas-and-new-year/" || webrawurlFornewYearMarketing == "/"
+           || webrawurlFornewYearMarketing == "/special-offers/" || webrawurlFornewYearMarketing == "/hotels-in-delhi/" || webrawurlFornewYearMarketing == "/hotels-in-agra-amarvilas-resort/christmas-and-new-year/"
+
+)
+    {
+
+
+    }
+
+
+    <div class="hotelChooseChildInfoWrapOverlay" style="display:none;"></div>
+
+    <div class="hotelChooseChildInfoWrap" style="display:none;">
+        <div class="hotelChooseChildInfoCloseBtn">X</div>
+        <div class="hotelChooseChildInfoDetails">
+            <p>Second child until maximum age of 12 years will be accommodated in the same room at additional supplement.  The additional amount is not included in the room price mentioned and shall be payable at the hotel during check-out.</p>
+            <div class="hotelChooseChildInfoDetailsRow">
+                <div class="hotelChooseChildInfoDetailsCol hotelChooseChildInfoDetailsColLeft">
+                    <ul>
+                        <li>16th November, 2021 - 4th December, 2021</li>
+                        <li>20th December, 2021 - 10th January, 2022</li>
+                        <li>1st February, 2022 - 15th May, 2022</li>
+                        <li>20th October, 2022 – 4th December, 2022</li>
+                    </ul>
+                </div>
+                <div class="hotelChooseChildInfoDetailsCol hotelChooseChildInfoDetailsColRight">
+                    <p>400 AED (including tax)</p>
+                </div>
+            </div>
+            <div class="hotelChooseChildInfoDetailsRow">
+                <div class="hotelChooseChildInfoDetailsCol hotelChooseChildInfoDetailsColLeft">
+                    <ul>
+
+                        <li>5th December, 2021 to 19th December, 2021</li>
+                        <li>11th January, 2022 to 31st January, 2022</li>
+                        <li>16th May, 2022 to 30th September, 2022</li>
+                        <li>1st October, 2022 to 19th October, 2022</li>
+                        <li>5th December, 2022 to 19th December, 2022</li>
+                        <li>20th December, 2022 - 10th January, 2023</li>
+                    </ul>
+                </div>
+                <div class="hotelChooseChildInfoDetailsCol hotelChooseChildInfoDetailsColRight">
+                    <p>200 AED (including tax)</p>
+                </div>
+            </div>
+
+            <div class="hotelChooseChildInfoCheckBox"><input type="checkbox"> <span>I have understood and agree to the Child Policy.*</span></div>
+            <div class="hotelChooseChildInfoErrorMsg">Please check the box to verify that you agree with the Child Policy.</div>
+        </div>
+    </div>
+
+
+
+
+    @if (webrawurl == "/hotels-in-gurgaon/" || webrawurl == "/hotels-in-sahl-hasheesh/")
+    {
+        <div class="new-awards-box-wrapper">
+            <div class="awards-band-box">
+                <img src="/images/OberoiHotels/award-icon-02.png">
+            </div>
+
+
+            @foreach (Item Slideritem in AwardMarketingcurrentItem.Children)
+            {
+                if (Convert.ToString(Slideritem.Name) == "Award-Marketing-Assets-Slider")
+                {
+                    foreach (Item ChildSlideritem in Slideritem.Children)
+                    {
+                        string ItemDescription = "";
+                        if (ChildSlideritem.Fields["Description"] != null)
+                        {
+                            ItemDescription = Convert.ToString(ChildSlideritem.Fields["Description"]);
+                        }
+                        string ItemHeading = "";
+                        if (ChildSlideritem.Fields["Heading"] != null)
+                        {
+                            ItemHeading = Convert.ToString(ChildSlideritem.Fields["Heading"]);
+                        }
+                        string ItemSubHeading = "";
+                        if (ChildSlideritem.Fields["Sub Heading"] != null)
+                        {
+                            ItemSubHeading = Convert.ToString(ChildSlideritem.Fields["Sub Heading"]);
+                        }
+                        var awardImage = "";
+
+                        if (ChildSlideritem.Fields["Image"].ToString() != "")
+                        {
+                            awardImage = MediaManager.GetMediaUrl(((FileField)ChildSlideritem.Fields["Image"]).MediaItem);
+                        }
+                        <div class="awards-wrapper-box">
+                            <div class="close-awards-band" style="display: none;"> &#x2715; </div>
+                            <div class="awards-new-info-slides">
+                                <div class="awards-information-label">@ItemHeading</div>
+
+                            </div>
+                        </div>
+                        <div class="awards-update-info-wrapper">
+                            <div class="awards-update-info">
+                                @*<span class="award-year">@ItemSubHeading</span> <br />
+                                    @ItemDescription*@
+
+                                <img src="@awardImage" alt="">
+                            </div>
+
+
+                        </div>
+                    }
+                }
+            }
+        </div>
+    }
+
+
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setTimeout(function () {
+                if ($(".christmasBox").length > 0) {
+                    $(".christmasBox").click();
+                }
+            }, 200);
+            $(".christmasBox").click(function () {
+                $(".christmasBoxWrapper").addClass("openXmas");
+                $(".safety-hygeine-box-default").addClass("noClick");
+            });
+            $(".close-info-btn").click(function () {
+                $(".christmasBoxWrapper").removeClass("openXmas");
+                $(".safety-hygeine-box-default").removeClass("noClick");
+            });
+        });
+    </script>
+    @if (webrawurl != "/")
+    {
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+        <link rel="stylesheet" href="/css/OberoiHotels/book-direct-and-form.css?v=@scriptVersion" />
+
+    }
+    @{
+        if (webrawurl.Contains("hotels-in-morocco-marrakech") || webrawurl.Contains("hotels-au-maroc-marrakech"))
+        {
+            <link rel="stylesheet" href="/css/OberoiHotels/marrakech-pop-up.css?v=@scriptVersion" />
+            @Html.Sitecore().Rendering("/sitecore/layout/Renderings/Feature/Overview/Overview booking request")
+        }
+    }
+
+
+    <link rel="stylesheet" type="text/css" href="/css/OberoiHotels/slide-pop-form.css?v=@scriptVersion">
+    <link rel="stylesheet" href="/css/oberoihotels/covid-new-page.css?v=@scriptVersion" />
+    <link rel="stylesheet" href="/css/oberoihotels/author-post-page.css?v=@scriptVersion" />
+</body>
+</html>

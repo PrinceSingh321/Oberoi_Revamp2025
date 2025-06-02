@@ -1,0 +1,190 @@
+@import "_media-queries.scss";
+
+.com_imageWithTextwholeSlideRev {
+  .write-to-us-tab{
+    .contact-us-tab{
+      &.openListItem{
+        @include below(tb){
+          top: 47px;
+        }
+      }
+    }
+  }
+  .com_container {
+    @include below(tb) {
+      //padding: 0px;
+    }
+    @include below(sm) {
+      //padding: 0;
+    }
+    .headWrappRev {
+      @include below(tb) {
+        // padding: 0 2.5%;
+        padding: 0 .5%;
+      }
+      @include below(sm) {
+        padding: 0 0;
+      }
+      @include below(sm2) {
+        padding: 0 2%;
+      }
+      @include below(xs) {
+        padding: 0 0;
+      }
+    }
+    .imageWithTextWrappRev {
+      width: 100%;
+      .imageWithTextSlideRev {
+        display: flex;
+        align-items: center;
+        padding: 1px;
+        @include below(tb) {
+          display: block;
+          padding: 0;
+          margin: 0px 0px;
+        }
+        @include below(sm) {
+          margin: 0px 0px;
+        }
+        .imageWrappRev {
+          width: 55%;
+          @include below(tb) {
+            width: 100%;
+          }
+          picture {
+            display: block;
+            overflow: hidden;
+            img {
+              max-width: 100%;
+              transition: 3s ease;
+              &:hover {
+                transform: scale(1.1);
+              }
+            }
+          }
+        }
+        .textWrappRev {
+          margin-left: 3.5rem;
+          width: 40%;
+          @include below(tb) {
+            width: 100%;
+            margin: 5% 0;
+          }
+          .titleRev {
+            h3 {
+              margin-bottom: 10px;
+              @include below(tb) {
+                // margin-bottom: 0px;
+              }
+            }
+          }
+        }
+        .buttonStyle1Rev {
+          margin-top: 1.5rem;
+        }
+        .textDiscription {
+          p {
+            margin-bottom: 10px;
+          }
+          ul {
+            li {
+              font-family: "verdanaN";
+              margin-bottom: 20px;
+              font-size: 0.937em !important;
+              color: #606161;
+            }
+          }
+        }
+      }
+    }
+    .slick-prev {
+      left: -1.9%;
+      @include above(md) {
+        //left: -35px;
+      }
+      @include below(tb) {
+        left: 0;
+        width: 40px;
+        height: 40px;
+        //background: rgba(230, 230, 230, 0.5);
+      }
+      &:before {
+        transform: rotate(134deg);
+        @include below(tb) {
+          left: 15px;
+          position: relative;
+        }
+      }
+    }
+    .slick-next {
+      right: -1.9%;
+      @include below(tb) {
+        right: 0;
+        width: 40px;
+        height: 40px;
+        //background: rgba(230, 230, 230, 0.5);
+      }
+      &:before {
+        transform: rotate(-45deg);
+        @include below(tb) {
+          right: -3px;
+          position: relative;
+        }
+      }
+    }
+    .slick-prev,
+    .slick-next {
+      top: 50%;
+      transform: translate(0, -50%);
+      @include below(sm) {
+        top: 24vh;
+        width: 40px;
+        height: 40px;
+        //background: rgba(230, 230, 230, 0.5);
+        transform: translate(0, -50%);
+        z-index: 9;
+      }
+      &:before {
+        border: 1px solid $black;
+        width: 20px;
+        display: block;
+        height: 20px;
+        border-top: none;
+        border-left: none;
+        @include below(tb) {
+          border: 2px solid $white;
+          border-top: none;
+          border-left: none;
+        }
+      }
+    }
+    .slick-next {
+      @include below(tb) {
+        right: 3%;
+      }
+      @include below(sm) {
+        right: 0;
+      }
+    }
+    .slick-prev {
+      @include below(tb) {
+        left: 3%;
+        z-index: 9;
+      }
+      @include below(sm) {
+        left: 0;
+      }
+    }
+    &.ourStoryTabsContainer {
+      .imageWithTextWrappRev {
+        .slick-slide {
+          &.imageWithTextSlideRev {
+            margin: 0px;
+          }
+        }
+      }
+    }
+  }
+  
+  
+}

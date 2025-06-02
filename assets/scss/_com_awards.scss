@@ -1,0 +1,139 @@
+.com_awardsRev {
+  .awardsWrapperRev {
+    display: flex;
+    //justify-content: space-around;
+
+    .awardsList {
+      padding: 0px 2%;
+      text-align: left;
+      border-right: 1px solid #d8d8d8;
+      width: 25%;
+      @include above(lg3) {
+        padding: 0px 2%;
+      }
+      @include below(lg2) {
+        padding: 0px 2%;
+      }
+
+      @include below(lgMid) {
+        padding: 0px 2%;
+      }
+
+      @include below(md3) {
+        padding: 0px 15px;
+      }
+
+      &:nth-child(1) {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        border: none;
+      }
+
+      // padding-inline: 1rem;
+      @include below(md) {
+        padding: 0 10px;
+        // text-align: center;
+      }
+      @include below(tb) {
+        padding: 0 2px;
+        text-align: center;
+      }
+      p {
+        margin-bottom: 0px;
+        @include below(lg2) {
+          font-size: 0.938em;
+        }
+        @include below(md3){
+          font-size: 0.8em !important;
+        }
+      }
+      @include below(sm) {
+        border: none;
+      }
+    }
+    @include below(sm) {
+      margin-top: 15px;
+    }
+  }
+  .slick-slider {
+    .slick-dots {
+      bottom: -35px;
+      li {
+        button {
+          border-color: #000;
+        }
+        &.slick-active {
+          button {
+            background-color: #000;
+            before {
+              color: #000;
+            }
+          }
+        }
+      }
+    }
+  }
+  .headWrappRev {
+    @include below(sm) {
+      text-align: center;
+    }
+  }
+}
+
+.awards-main-tab {
+  width: 100%;
+  .ComSlider-tab {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li {
+      display: inline-flex;
+      padding: 0px 30px 25px 0;
+      font-size: 1.188em;
+      color: #606161;
+      font-family: Verdana;
+      line-height: 100%;
+      cursor: pointer;
+      @include below(sm) {
+        font-size: 0.937em;
+        padding: 0px 30px 15px 0;
+      }
+      &.active {
+        color: #d8751b;
+        font-weight: normal;
+        line-height: 100%;
+        text-shadow: 0 0 1px #d8751b, 0 0 1px #d8751b;
+        //text-shadow: 0 0 1px #d8751b, 0 0 1px #d8751b;
+      }
+    }
+  }
+}
+
+.awardsSlide {
+  display: none;
+  &.active {
+    display: flex;
+    margin-top: -20px;
+    width: 100%;
+    flex-wrap: wrap;
+    display: block;
+  }
+  .imageWithRightTextWrapp {
+    margin-bottom: 0px !important;
+  }
+}
+
+.awardsCountrySlide {
+  opacity: 0;
+  display: none;
+  &.activeSlider {
+    display: block;
+  }
+}
+.imageWithRightTextSlide {
+  margin-bottom: 0px !important;
+}

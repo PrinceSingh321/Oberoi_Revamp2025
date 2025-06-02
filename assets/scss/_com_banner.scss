@@ -1,0 +1,521 @@
+.comp_bannerAndBookingWidget {
+  margin-top: 33px;
+  
+  @include between(lg3, lg4) {
+    margin-top: 75px;
+  }
+  @include between(tb, md) {
+    // margin-top: 0px;
+  }
+  @include below(tb) {
+    margin-top: 0px;
+  }
+  .banner-and-booking-widget {
+    // max-height: calc(100vh - 120px);
+    @include below(tb) {
+      // height: 100% !important;
+      max-height: inherit;
+    }
+    .banner {
+      min-height: auto !important;
+      opacity: 0;
+      &.slick-initialized {
+        opacity: 1;
+        transition: opacity 0.1s;
+      }
+    }
+  }
+  &.bookingEngineOffers {
+    .banner-and-booking-widget {
+      overflow: inherit !important;
+    }
+  }
+  .youtube-slide {
+    .youtube-video {
+      height: calc(100% + 100px) !important;
+      transform: translateY(-45px);
+      @include below(md) {
+        height: calc(100% + 109px) !important;
+        transform: translateY(-66px);
+      }
+      @include below(tb) {
+        height: calc(100% + 110px) !important;
+        transform: translateY(-55px);
+      }
+    }
+  }
+}
+#videoPopup {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  opacity: 0;
+  transition: all linear 0.5s;
+  padding: 0 40px;
+  background: #000;
+  &.active {
+    opacity: 1;
+    z-index: 99999999;
+    iframe {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .overlay {
+    position: fixed;
+    z-index: 9;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  .fullvideoClose {
+    position: absolute;
+    z-index: 999999;
+    right: 10px;
+    border: none;
+    height: 35px;
+    width: 35px;
+    background: transparent;
+    top: 15px;
+  }
+  .top-popup {
+    height: 10%;
+    background-color: #000;
+    z-index: 999998;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+  }
+}
+
+.banner {
+  .banner-video-button {
+    display: none;
+  }
+  img {
+    max-width: 100%;
+    // max-height: calc(100vh - 120px);
+    object-fit: cover;
+    @include below(tb) {
+      //object-fit: none;
+      object-fit: cover;
+      max-height: auto;
+      
+    }
+    @include below(sm) {
+      max-height: 100%;
+      height: calc(100vh - 120px);
+    }
+  }
+
+  .banner-video {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    .inline-YTPlayer {
+      top: -75px;
+    }
+
+    #muteUnMute {
+      width: 35px;
+      height: 35px;
+      position: absolute;
+      right: 15px;
+      top: 32px;
+      border: none;
+      z-index: 1;
+      text-indent: -9999px;
+      background: url(/images/OberoiHotels/rev/dist/sprites-icons.png) no-repeat;
+      background-position: -111px -82px;
+      &.active {
+        background-position: -111px -117px;
+      }
+    }
+  }
+  iframe {
+    @include between(tb, lg3) {
+      height: 91% !important;
+      object-fit: cover;
+      max-width: 100% !important;
+      margin: 0 !important;
+    }
+    @include between(tb, md) {
+      top: 12px !important;
+    }
+  }
+  .expand-video {
+    position: absolute;
+    z-index: 1;
+    right: 15px;
+    bottom: 0px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    a {
+      color: #fff;
+      font-size: 12px;
+      background: url(/images/OberoiHotels/rev/dist/sprites-icons.png) no-repeat;
+      width: 37px;
+      height: 60px;
+      background-position: -172px -171px;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 4px;
+      img {
+        width: auto;
+        margin: 0px auto;
+      }
+    }
+    @include below(tb) {
+      display: none;
+    }
+  }
+  //	.banner-image.disable .text-container {
+  //		opacity: 0;
+  //		visibility: hidden;
+  //		transition: all 0.3s ease;
+  //	}
+  .slick-dots {
+    bottom: 15px;
+    right: 50px;
+    text-align: right;
+    overflow: hidden;
+    li {
+      width: 10px;
+      height: 10px;
+      background: url(/images/oberoihotels/banner-dots.png) right center
+        no-repeat;
+      &.slick-active {
+        background: url(/images/oberoihotels/banner-dots.png) left center
+          no-repeat;
+      }
+      a {
+        text-indent: 9999px;
+        display: block;
+      }
+    }
+  }
+  div {
+    position: relative;
+  }
+  .slick-prev,
+  .slick-next {
+    height: auto;
+    margin-top: -18px;
+  }
+
+  .text-container {
+    position: absolute;
+    z-index: 1;
+    bottom: 100px;
+    font-size: 2em;
+    font-family: $vard;
+    color: #fff;
+    /* text-shadow: 4px 5px 8px #000; */
+    text-align: center;
+    width: 100%;
+    i {
+      font-style: italic;
+    }
+    .banner-arrow-bottom {
+      cursor: pointer;
+      position: absolute;
+      top: 100%;
+      bottom: -50%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      background: url(/images/oberoihotels/sprites-icons.png) no-repeat;
+      width: 32px;
+      height: 25px;
+      background-position: -189px -105px;
+    }
+  }
+  .banner-slide {
+    //		&:before
+    //		{
+    //			content: '\2039';
+    //			 @include transform(rotate(-90deg));
+    //			     position: absolute;
+    //			    z-index: 1;
+    //			    font-size:44px;
+    //			    left: 50%;
+    //			    bottom: 50px;
+    //			    color: #fff;
+    //			    font-family: $secondery-font-family;
+    //
+    //		}
+    .banner-layer {
+      background: url(/images/oberoihotels/overview/ban-t-bg.png) bottom center
+        repeat-x;
+      width: 100%;
+      position: absolute;
+      z-index: 0;
+      bottom: 0px;
+      height: 100%;
+    }
+
+    //		&.disable {
+    //			&:before
+    //		{
+    //			content: ' ';
+    //		}
+    //		}
+    .banner-image {
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .slick-prev::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    position: absolute;
+    top: 6px;
+    right: 0px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+  }
+  .slick-next::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    position: absolute;
+    top: 6px;
+    right: 0px;
+    transform: rotate(136deg);
+    -webkit-transform: rotate(136deg);
+    -moz-transform: rotate(136deg);
+  }
+}
+
+.bannerOption2 {
+  .banner {
+    img {
+      height: calc(100vh - 175px);
+      @include below(tb) {
+        max-height: auto;
+        height: calc(100vh - 120px);
+      }
+    }
+  }
+}
+/* .udaivilas-banner {
+	.text-container {
+		bottom: 162px;
+	}
+	.banner-slide {
+		&:before {
+			bottom: 115px;
+		}
+	}
+} */
+
+.homepage-booking-widgit {
+  top: -34px;
+}
+
+@media only screen and (max-width: 1600px) {
+  .banner {
+    .banner-slide {
+      &:before {
+        bottom: 60px;
+      }
+    }
+  }
+  .udaivilas-banner {
+    .banner-slide {
+      &:before {
+        bottom: 115px;
+      }
+    }
+  }
+}
+// @media only screen and (min-width: 1600px) {
+//   .banner-image {
+//     height: calc(100vh - 120px);
+//     overflow: hidden;
+//   }
+// }
+@media only screen and (max-width: 1199px) {
+  .banner {
+    .banner-video {
+      .inline-YTPlayer {
+        top: -100px;
+      }
+      .expand-video {
+        bottom: 34px;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 1440px) {
+  .banner {
+    .banner-video {
+      .inline-YTPlayer {
+        top: -75px;
+      }
+    }
+  }
+  .udaivilas-banner {
+    .text-container {
+      bottom: 70px;
+    }
+    .banner-slide {
+      &:before {
+        bottom: 25px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .banner .banner-video .inline-YTPlayer {
+    top: -45px;
+  }
+  .banner {
+    .banner-slide {
+      &::before {
+        bottom: 0px;
+      }
+    }
+    .text-container {
+      bottom: 35px;
+      font-size: 2em;
+    }
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1024px) {
+  .banner {
+    .banner-video {
+      .inline-YTPlayer {
+        top: -55px;
+      }
+      .expand-video {
+        bottom: 34px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .banner {
+    .banner-video {
+      display: none;
+      .inline-YTPlayer {
+        top: -22px;
+      }
+    }
+    .banner-video-button {
+      display: block;
+    }
+    .video-btn {
+      display: block;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+
+      img {
+        max-width: 50px;
+        object-fit: contain;
+      }
+    }
+    .banner-image.disable .text-container {
+      opacity: 1;
+      visibility: visible;
+    }
+    .text-container {
+      font-size: 1.5em;
+      bottom: 130px;
+
+      p {
+        font-size: 0.9em !important;
+      }
+
+      span {
+        display: block;
+      }
+    }
+    .banner-slide {
+      &:before {
+        bottom: 85px;
+      }
+    }
+  }
+  .udaivilas-banner {
+    .text-container {
+      bottom: 90px;
+    }
+    .banner-slide {
+      &:before {
+        bottom: 146px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+  .udaivilas-banner .text-container {
+    bottom: 140px;
+  }
+}
+
+.templateHomePage .comp_bannerAndBookingWidget {
+  margin-top: 34px;
+}
+@media (max-width: 1025px) {
+  .templateHomePage .comp_bannerAndBookingWidget {
+    margin-top: 0px;
+  }
+}
+
+.mobilemp4video .deskHide{
+  display: none;
+}
+
+@media screen and (max-width: 767px){
+  .mobilemp4video .youtube-video{
+      display: none;
+  }
+  .mobilemp4video .deskHide{
+  display: block;
+}
+.mobilemp4video video{
+  width:100%;
+  max-height: 90vh;
+  object-fit: cover;
+  transform: scale(1.01);
+}
+.mobilemp4video .youtube-slide .unMuteVideo.unmuteMobile{
+  display:block;
+  bottom:50px;
+}
+.mobilemp4video .mob-hide{
+  display: none!important;
+}
+.mobilemp4video .youtube-slide picture{
+  //display: none;
+}
+.mobilemp4video .playBtnOverView{
+  display:none;
+}
+
+}
