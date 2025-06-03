@@ -14,12 +14,14 @@
       padding: 0px 2% 0px 3.75rem;
       width: 44%;
       @include below(tb) {
-        margin-top: 60px;
+        //margin-top: 60px;
+        margin-top: 16px;
         width: 100%;
         padding: 0px 0px;
       }
       @include below(sm) {
-        margin-top: 25px;
+        //margin-top: 25px;
+        margin-top: 16px;
       }
     }
 
@@ -29,7 +31,7 @@
      
       @include below(tb) {
         width: 100%;
-        margin-bottom: 45px;
+        //margin-bottom: 45px;
         padding-bottom: 0px;
       }
       picture {
