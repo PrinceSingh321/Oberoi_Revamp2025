@@ -272,5 +272,13 @@
     //   }
     // }
     @include slickaroows();
+    .com_TwoImageTabSlider{
+      .com_TwoImageSlider-img-sec{
+        &.slick-slide{
+          padding-bottom: 0px;
+        }
+      }
+    }
   }
+ 
 }

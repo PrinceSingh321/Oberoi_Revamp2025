@@ -42,6 +42,24 @@
           padding: 0px !important;
           margin-bottom: 60px;
         }
+
+        &.offerPageTwoImageSlider-img-sec{
+          @include above(tb){
+            position: relative;
+            padding-bottom: 26px;
+          }
+          .twoColLayoutWrap{
+            .twoColRightContentWrap{
+              .slidesBtnRev{
+                @include above(tb){
+                  position: absolute;
+                  bottom: 0;
+                }
+              }
+            }
+          }
+        }
+        
       }
       .full-width {
         width: 100%;

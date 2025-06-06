@@ -330,6 +330,23 @@
       }
     }
   }
+  &.without_btn{
+    .fullWidth-Container{
+      .tab-two-imageWithHalfSlider{
+        .two-imageWithHalfSlider-img{
+          .slider-img-sec{
+            padding-bottom: 0px;
+          }
+        } 
+        .slidesTextRev{
+          &.w31{
+            padding: 18px 0 0px 0;
+            margin-top: 0px;
+          }
+          } 
+      } 
+    } 
+  }
 }
 
 .left-section-heading {

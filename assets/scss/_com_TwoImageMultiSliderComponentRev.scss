@@ -88,8 +88,8 @@ body {
         .multislider-slide {
           width: calc(100% + 60px);
           position: relative;
-          touch-action: pan-x !important;
-          -webkit-overflow-scrolling: touch;
+          //touch-action: pan-x !important;
+          //-webkit-overflow-scrolling: touch;
           //display: flex;
           //flex-wrap: wrap;
           //justify-content: space-between;
@@ -374,8 +374,8 @@ body {
 
         .multislider-sub-slide-img {
           width: 100%;
-          touch-action: pan-x !important;
-          -webkit-overflow-scrolling: touch;
+          // touch-action: pan-x !important;
+          // -webkit-overflow-scrolling: touch;
           picture {
             overflow: hidden;
             img {
@@ -385,6 +385,7 @@ body {
               }
             }
           }
+          &.slick-slider{}
         }
       }
       .slick-list {
@@ -402,6 +403,7 @@ body {
         &.slick-slide {
           //margin: 0 32px;
         }
+       
       }
       .slick-dots {
         bottom: -40px;

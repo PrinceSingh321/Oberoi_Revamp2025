@@ -132,6 +132,7 @@ function fnCountrySelection() {
   });
 }
 
+
 function fnRequestForm() {
   $("#RequestFromThanks-box").hide();
   $(".RequestFormBtn").on("click", function () {
@@ -166,12 +167,37 @@ function fnRequestForm() {
           .find(".towHalfformContainer")
       );
     }
-    $("html,body").animate(
-      {
-        scrollTop: $(".requestReservationForm-container").offset().top - 150,
-      },
-      100
-    );
+    // $("html,body").animate(
+    //   {
+    //     scrollTop: $(".requestReservationForm-container").offset().top - 150,
+    //   },
+    //   100
+    // );
+
+      var $target = $(".requestReservationForm-container");
+      var fixedOffset = 0;
+
+      if ($("header").length) {
+        fixedOffset += $("header").outerHeight() || 0;
+      }
+      if ($(".top-nav").length) {
+        fixedOffset += $(".top-nav").outerHeight() || 0;
+      }
+      if ($(".filterWrapp").hasClass("fixedtab")) {
+        fixedOffset += $(".filterWrapp").outerHeight() || 0;
+      }
+
+      fixedOffset += 86; // Additional buffer or fixed UI offset
+
+      var scrollTo = $target.offset().top - fixedOffset;
+
+      $("html, body").stop().animate(
+        {
+          scrollTop: scrollTo,
+        },
+        300 // smoother animation
+      );
+    
 
     var dataSelName = $(this).data("selname");
 
