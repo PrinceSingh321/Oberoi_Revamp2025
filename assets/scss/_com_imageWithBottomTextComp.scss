@@ -65,6 +65,9 @@
         width: 100%;
         padding-right: 0px !important;
         margin-bottom: 0px;
+        .slidesBtnRev{
+          position: inherit!important;
+        }
         @include below(sm) {
           margin-bottom: 50px;
         }
@@ -123,6 +126,7 @@
             }
           }
         }
+
       }
       .full-width-singleItem{
         width: 100%;
