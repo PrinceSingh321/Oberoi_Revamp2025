@@ -8,6 +8,7 @@
   }
   &.activeC {
     padding-bottom: 0px;
+    
     @include below(tb) {
       padding: 0px;
     }

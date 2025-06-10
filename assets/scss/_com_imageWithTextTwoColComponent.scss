@@ -182,6 +182,15 @@
           }
           &:first-child{
             padding-left: 0;
+            @include below(sm){
+              margin: 0 0 0 0 !important;
+            }
+          }
+          &:last-child{
+            @include below(sm){
+              padding: 0 8px;
+              margin-right: 8px;
+            }
           }
           
           &#showsustain{

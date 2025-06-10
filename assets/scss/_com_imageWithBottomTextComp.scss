@@ -59,6 +59,32 @@
             }
           }
         }
+        &.events_wrap_page{
+          @include above(tb){
+          position: relative;
+          padding-bottom: 26px;
+          }
+          .twoColLayoutWrap{
+            .twoColRightContentWrap{
+              .slidesBtnRev{
+                @include above(tb){
+                  position: absolute;
+                  bottom: 0;
+                }
+              }
+            }
+          }
+          &.full-width {
+            .twoColLayoutWrap{
+              .twoColRightContentWrap{
+                .slidesBtnRev{
+                  position: inherit!important;
+                }
+              }
+            }
+          }
+        }
+        
         
       }
       .full-width {

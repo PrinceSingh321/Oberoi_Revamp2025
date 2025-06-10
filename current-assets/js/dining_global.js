@@ -63,7 +63,7 @@ $(function () {
 
 function fnDiningform() {
     $('.error-msg').hide();
-
+    
     
     var hndlrurl = "/handlers/rev/dining-global.ashx";
     var currPageurl = window.location.pathname;
