@@ -47,6 +47,16 @@ function com_imageWithTextTwoColComponent() {
         }
     },
 
+    on: {
+        init: function () {
+            // Count only real slides, excluding duplicates used for loop
+            const realSlides = this.slides.filter(slide => !slide.classList.contains('swiper-slide-duplicate'));
+            if (realSlides.length === 1) {
+                document.querySelector('.descriptionImageSliderRev').classList.add('single_slide_active');
+            }
+        }
+    }
+
 });
 
   $("#lounge .multislider-sub-slide-img").each(function () {

@@ -11,7 +11,7 @@
       }
     }
     .text-containerRev {
-      padding: 0px 2% 0px 3.75rem;
+      padding: 0px 2% 30px 3.75rem;
       width: 44%;
       @include below(tb) {
         //margin-top: 60px;
@@ -27,8 +27,13 @@
 
     .descriptionImageSliderRev {
       width: 56%;
-      padding-bottom: 50px;
-     
+      padding-bottom: 30px;
+      &.single_slide_active{
+        padding-bottom: 0;
+        .text-containerRev{
+          padding: 0px 2% 0 3.75rem;
+        }
+      }
       @include below(tb) {
         width: 100%;
         //margin-bottom: 45px;
