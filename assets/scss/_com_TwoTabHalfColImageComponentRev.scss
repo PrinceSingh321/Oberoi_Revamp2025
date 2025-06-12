@@ -357,7 +357,7 @@
 }
 
 .right-section-btn {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   @include right-section-btn();
   @include below(sm) {
     display: block;
