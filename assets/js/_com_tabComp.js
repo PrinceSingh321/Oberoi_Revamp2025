@@ -41,6 +41,7 @@ function tabComponent() {
   $(".ComSlider-tab li").addClass("inactive");
   $(".imageWithRightTextWrappRev").show();
 
+  
   $(".ComSlider-tab li").click(function () {
     $(this).parents(".destinationMainWrapp").find(".getDropdownValue").addClass("active");
     // $(this).parents(".destinationMainWrapp").find(".right-section-btn .buttonStyle2Rev").show();  // to show view btn
@@ -63,7 +64,7 @@ function tabComponent() {
         $(".imageWithRightTextWrapp").fadeOut();
         $(".imageWithRightTextWrapp[data-id=" + categoryDtls + "]").fadeIn();
       }
-
+      
       //alzoha filter code end here
       else {
         $(".imageWithRightTextWrappRev").hide();
@@ -470,9 +471,17 @@ function fnTabFilter() {
       $(this).parents(".destination-container").find(".imageWithRightTextWrapp").addClass("is-hidden");
       $(".imageWithRightTextWrapp[data-category-detail=" + category + "]").removeClass("is-hidden");
     }
+     // Scroll to .DestscrollFixed (from bottom to top view)
+      var $scrollTarget = $(".destinationMainWrapp");
+      if ($scrollTarget.length) {
+        $("html, body").animate({
+          scrollTop: $scrollTarget.offset().top - 161
+        }, 600); 
+      }
+      
   });
   $(".ComSlider-item").click(function () {
-    $(".imageWithRightTextWrapp").removeClass("is-hidden");
+    //$(".imageWithRightTextWrapp").removeClass("is-hidden");
   });
   $(".shoAllExp").click(function () {
     $(".imageWithRightTextWrappRev").fadeIn("slow");

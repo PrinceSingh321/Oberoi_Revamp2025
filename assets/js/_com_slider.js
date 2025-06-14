@@ -115,6 +115,25 @@ function fnComSlider() {
         .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
         .find(".ComSlider-tab li[data-filter=" + dataSlickItem + "]")
         .addClass("active");
+        
+        $slickSlider
+        .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider").find(".ComSlider-tab li.hasdropdown [data-filter=" + dataSlickItem + "]")
+
+        // ✅ Add This Block: Handle hasdropdown li activation
+    $slickSlider
+    .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
+    .find(".ComSlider-tab li.hasdropdown")
+    .each(function () {
+      const $li = $(this);
+      const $childFilter = $li.find("[data-filter]");
+      if ($childFilter.attr("data-filter") === dataSlickItem) {
+        $li.addClass("active");
+      } else {
+        $li.removeClass("active");
+        $li.removeClass('hasdrop');
+        $li.removeClass('highlight');
+      }
+    });
 
   //     // Activate dropdown and sub-tabs if the slider item has dropdown
       $slickSlider

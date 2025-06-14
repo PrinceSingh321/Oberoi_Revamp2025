@@ -1737,6 +1737,9 @@ header.fixLengthLogo
   padding-bottom: 51%; /* 16:9 aspect ratio */
   min-height: auto;
   margin-top: 0;
+  @include above(tb){
+  overflow: hidden;
+  }
   &::after {
     position: absolute;
     content: "";
@@ -1749,12 +1752,25 @@ header.fixLengthLogo
     // height: 780px;
     padding-bottom: 0;
   }
-  .youtube-video {
+  .youtube-video{
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    @include above(tb){
+    object-fit: cover;
+    z-index: 1;
+    transition: opacity 0.5s ease-in-out;
+    }
+  }
+  
+    .video-placeholder{
+      @include above(tb){
+        object-fit: cover;
+        z-index: 1;
+        transition: opacity 0.5s ease-in-out;
+        }
   }
   .unMuteVideo {
     position: absolute;
