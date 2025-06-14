@@ -188,6 +188,26 @@ function videoBanner() {
   }
 }
 
+if ($(window).width() > 767) {
+$(".homePageBanner .banner").on("beforeChange", function (event, slick, currentSlide, nextSlide) {
+  if (nextSlide === 0) {
+    // Show placeholder before slide becomes active to avoid jerk
+    $("#video-placeholder").css("display", "block");
+    $("#player1").css("display", "none");
+  }
+});
+
+$(".homePageBanner .banner").on("afterChange", function (event, slick, currentSlide) {
+  if (currentSlide === 0) {
+    // Hide placeholder and show video with a smooth fade
+    setTimeout(function () {
+      $("#video-placeholder").fadeOut(300);  // Smoothly hide placeholder
+      $("#player1").fadeIn(300);             // Smoothly show video
+    }, 100); // Slight delay for natural transition
+  }
+});
+}
+
 if ($(window).width() < 767) {
   document.addEventListener("DOMContentLoaded", function () {
     const video = document.getElementById("video");

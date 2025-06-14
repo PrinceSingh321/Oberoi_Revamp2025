@@ -51,6 +51,7 @@ function selectForMobile() {
       }
       
     }
+    
 });
 
 // Prevent closing when clicking inside the dropdown
