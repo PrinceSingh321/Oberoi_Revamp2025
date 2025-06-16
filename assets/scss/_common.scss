@@ -2164,3 +2164,9 @@ select:-webkit-autofill:focus {
   to {
     opacity: 1; } 
   }
+
+  .paragraphRev{
+    &.removeheght{
+      padding-top: 0px;
+    }
+  }

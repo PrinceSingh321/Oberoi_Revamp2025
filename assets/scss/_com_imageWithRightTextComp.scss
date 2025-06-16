@@ -317,7 +317,15 @@
           }
           &.inactive {
             &::after {
-              display: none;
+              //display: none;
+              border-bottom: 2.5px solid #606161;
+              border-right: 2.5px solid #606161;
+            }
+            &:hover{
+              &:after{
+                border-bottom: 2.5px solid $colorOrange;
+                border-right: 2.5px solid $colorOrange;
+              }
             }
           }
         }
