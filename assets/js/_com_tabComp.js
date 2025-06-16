@@ -78,9 +78,6 @@ function tabComponent() {
 
     //  }
 
-   
-     
-    
 
     else {
            
@@ -460,26 +457,88 @@ function fnTabScroll() {
 }
 
 function fnTabFilter() {
-  $(".js-filter").on("click", function () {
-    var category = $(this).attr("data-category");
-    $(".js-filter").removeClass("active");
-    $(this).addClass("active");
 
-    if (category == "all") {
-      $(this).parents(".destination-container").find(".imageWithRightTextWrapp").removeClass("is-hidden");
-    } else {
-      $(this).parents(".destination-container").find(".imageWithRightTextWrapp").addClass("is-hidden");
-      $(".imageWithRightTextWrapp[data-category-detail=" + category + "]").removeClass("is-hidden");
-    }
-     // Scroll to .DestscrollFixed (from bottom to top view)
-      var $scrollTarget = $(".destinationMainWrapp");
-      if ($scrollTarget.length) {
-        $("html, body").animate({
-          scrollTop: $scrollTarget.offset().top - 161
-        }, 600); 
-      }
+  // $(".js-filter").on("click", function () {
+  //   var category = $(this).attr("data-category");
+  //   $(".js-filter").removeClass("active");
+  //   $(this).addClass("active");
+  //   $(this).parents(".destination-container").find(".imageWithRightTextWrapp").hide();
+  //   $("#"+category).show();
+
+  //   if (category == "all") {
+  //     $(this).parents(".destination-container").find(".imageWithRightTextWrapp").removeClass("is-hidden");
+  //   } else {
+  //     $(this).parents(".destination-container").find(".imageWithRightTextWrapp").addClass("is-hidden");
+  //     $(".imageWithRightTextWrapp[data-category-detail=" + category + "]").removeClass("is-hidden");
+  //   }
+  //    // Scroll to .DestscrollFixed (from bottom to top view)
+  //     var $scrollTarget = $(".destinationMainWrapp");
+  //     if ($scrollTarget.length) {
+  //       $("html, body").animate({
+  //         scrollTop: $scrollTarget.offset().top - 161
+  //       }, 600); 
+  //     }
       
+  // });
+
+  let currentTabId = null; // Track active tab
+  let tabFilters = {}; // Store selected filter per tab
+
+  $(".js-filter").on("click", function () {
+    const $filter = $(this);
+    const category = $filter.data("category");
+
+    const $destinationMain = $filter.closest(".destinationMainWrapp");
+    const $container = $filter.closest(".destination-container");
+
+    // Get current tab ID from dropdown wrapper
+    const $dropdown = $filter.closest(".dropDownFilter_Comp");
+    const tabId = $dropdown.attr("id");
+
+    // If user switched to another tab
+    if (currentTabId && currentTabId !== tabId) {
+      //Reset all filters for previous tab
+      $(".dropDownFilter_Comp#" + currentTabId).find(".js-filter").removeClass("active");
+      tabFilters[currentTabId] = "all"; // Reset to default
+
+      //Also reset dropdown label and active class
+      $(".dropDownFilter_Comp#" + currentTabId).find(".getDropdownValue").removeClass("active").text(""); // or use "All Categories"
+    }
+
+    // Update the current tab ID
+    currentTabId = tabId;
+
+    // Save selected filter for this tab
+    tabFilters[tabId] = category;
+
+    // Update filter UI for current dropdown
+    $filter.siblings().removeClass("active");
+    $filter.addClass("active");
+
+    // Reset filtered data display
+    const $allItems = $container.find(".imageWithRightTextWrapp");
+    $allItems.hide().removeClass("active_filter_data");
+
+    if (category === "all" && $destinationMain.length) {
+      // Handle "All" filter case
+      const $activeTab = $(".ComSlider-tab li[data-id='" + tabId + "']");
+      const matchDataId = $activeTab.data("category");
+      $allItems.filter("[data-id='" + matchDataId + "']").fadeIn();
+    } else {
+      // Show specific filter items
+      $allItems.filter("[data-category-detail='" + category + "']").fadeIn();
+    }
+
+    // Optional scroll to section
+    const $scrollTarget = $(".destinationMainWrapp");
+    if ($scrollTarget.length) {
+      $("html, body").animate({
+        scrollTop: $scrollTarget.offset().top - 161
+      }, 600);
+    }
   });
+
+
   $(".ComSlider-item").click(function () {
     //$(".imageWithRightTextWrapp").removeClass("is-hidden");
   });

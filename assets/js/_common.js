@@ -64,6 +64,14 @@ $(".dropDownFilter_Comp, .destFIlterTab").on("click", function (event) {
 
   $(".ComSlider-item").click(function () {
     $(this).parents(".ComSlider-tab").removeClass("openListItem");
+
+    // Scroll to content section if available
+    const $scrollTarget = $(".experiencePageContent");
+    if ($scrollTarget.length) {
+      $("html, body").animate({
+        scrollTop: $scrollTarget.offset().top - 161
+      }, 600);
+    }
   });
 }
 
