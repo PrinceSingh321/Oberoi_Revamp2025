@@ -1026,7 +1026,8 @@ body {
             color: #606161;
             font-family: $vardanaBold;
             padding-bottom: 1em;
-            font-size: 1.118em;
+            //font-size: 1.118em;
+            font-size: 1em;
             @include below(lg) {
               font-size: 0.937em;
             }
@@ -1081,15 +1082,38 @@ body {
                 .s-date {
                   margin: 0px 20px;
                   cursor: pointer;
+                  position: relative;
+                  //transition: background-color 0.3s ease, transform 0.2s ease;
+                  width: 30px;
+                  height: 30px;
+                  background: transparent;
+                  border: #878888 solid 1px;
+                  border-radius: 50%;
+                  display: inline-block;
+                  line-height: 28px;
                   &:hover{
+                    @include above(tb){
                     // background: #d8741b;
-                    color: #d8741b;
+                    color: #fff;
                     // border-radius: 50%;
                     // width: 30px;
                     // height: 30px;
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
+                    position: relative;
+                    z-index: 1;
+                    &::after{
+                      content: "";
+                      position: absolute;
+                      width: 30px;
+                      height: 30px;
+                      background: #d8741b;
+                      border-radius: 50%;
+                      z-index: -1;
+                      border: #d8741b solid 1px;
+                    }
+                  }
                   }
                   &.disableDate {
                     opacity: 0.6;
@@ -1110,6 +1134,7 @@ body {
                         border-radius: 2px;
                         white-space: nowrap;
                         z-index: 1;
+                        display: none;
                       }
                     }
                   }
@@ -1128,15 +1153,22 @@ body {
                   display: inline-flex;
                   align-items: center;
                   justify-content: center;
+                  border: #d8741b solid 1px;
                   }
                 }
                 .sold-out {
                   margin: 0px 20px;
                   cursor: not-allowed;
-                  opacity: 0.8;
+                  opacity: 0.5;
                   position: relative;
                   z-index: 1;
-                  
+                  width: 30px;
+                  height: 30px;
+                  display: inline-block;
+                  line-height: 30px;
+                  color: rgb(255, 255, 255);
+                  background: rgb(164, 164, 164);
+                  border-radius: 50%;
                   &::before {
                     content: 'SoldOut';
                     position: absolute;
@@ -1153,7 +1185,7 @@ body {
                   }
                 
                   &:hover::before {
-                    display: block;
+                    // display: block;
                     @include below(tb){
                       display: none;
                     }
@@ -2051,6 +2083,9 @@ select:-webkit-autofill:focus {
       bottom: 0;
       left: 0;
       transition: width 1.9s ease;
+      }
+      @include below(md3){
+        width: 36px;
       }
       @include below(tb){
         display: none;

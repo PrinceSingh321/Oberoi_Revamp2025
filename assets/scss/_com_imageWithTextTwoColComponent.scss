@@ -99,10 +99,25 @@
           top: calc(50% - 0px);
         }
         &::after{
-          color: #fff;
+          color: transparent;
           font-size: 1.7rem;
+          content: "";
+          display: block;
+          width: 20px;
+          height: 20px;
+          border-top: 2px solid #fff;
+          border-left: 2px solid #fff;
+          position: absolute;
+          top: 6px;
+          right: 0px;
+          transform: rotate(136deg);
+          -webkit-transform: rotate(136deg);
+          -moz-transform: rotate(136deg);
           @include below(md3){
             font-size: 1.4rem;
+          }
+          @include below(sm){
+            font-size: 1.8rem;
           }
         }
        }
@@ -114,10 +129,25 @@
           top: calc(50% - 0px);
         }
         &::after{
-          color: #fff;
+          color: transparent;
           font-size: 1.7rem;
+          content: "";
+          display: block;
+          width: 20px;
+          height: 20px;
+          border-top: 2px solid #fff;
+          border-left: 2px solid #fff;
+          position: absolute;
+          top: 6px;
+          right: 0px;
+          transform: rotate(-45deg);
+          -webkit-transform: rotate(-45deg);
+          -moz-transform: rotate(-45deg);
           @include below(md2){
             font-size: 1.4rem;
+          }
+          @include below(sm){
+            font-size: 1.8rem;
           }
         }
        }
@@ -133,6 +163,7 @@
           z-index: 2;
           background: transparent;
           opacity: 1;
+          overflow: hidden;
           &::before{
           content: "";
           position: absolute;

@@ -143,7 +143,7 @@
         //     }
         // }
         .error-msg {
-          font-size: 0.9rem;
+          font-size: 0.8rem;
           color: #ff0000;
           display: none;
           position: absolute;
@@ -244,7 +244,7 @@
           font-family: $vard;
           margin-right: 6%;
           position: relative;
-          @include below(md2) {
+          @include below(lg) {
             min-width: 20%;
           }
           @include below(tb) {
@@ -308,7 +308,8 @@
        &.selectBox2, &.selectBox24{
         .error-msg{
           bottom:6px;
-          top:auto;
+          //top:auto;
+          top:55px;
         }
        } 
       }
@@ -464,7 +465,7 @@
             }
           }
           .error-msg {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #ff0000;
             display: none;
             position: absolute;

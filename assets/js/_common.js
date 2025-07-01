@@ -465,5 +465,18 @@ function fnLoader() {
   }
 }
 
+$('.noOfGuestList input').one('focus', function () {
+  $(this).val('');
+});
+
+$('.noOfRoomsList input').one('focus', function () {
+  $(this).val('').attr('placeholder', '');
+});
+
+$('.noOfGuestWrap input').one('focus', function () {
+  $(this).val('');
+});
+
+
 
 

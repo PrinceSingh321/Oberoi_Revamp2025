@@ -119,7 +119,7 @@ function fnComSlider() {
         $slickSlider
         .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider").find(".ComSlider-tab li.hasdropdown [data-filter=" + dataSlickItem + "]")
 
-        // ✅ Add This Block: Handle hasdropdown li activation
+        //Add This Block: Handle hasdropdown li activation
     $slickSlider
     .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
     .find(".ComSlider-tab li.hasdropdown")
@@ -491,6 +491,7 @@ function fnComMultislider(
     fnPrefieldSelectBoxOnbutttonClick();
     
     fnRequestForm();
+    fnPrefieldSelectBoxOnbutttonClick();
   });
 
   $(window).load(function () {

@@ -410,6 +410,7 @@ body {
         li {
           button {
             border-color: #606161;
+            overflow: hidden;
           }
           &.slick-active {
             button {
