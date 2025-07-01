@@ -53,7 +53,7 @@ onSelectChange();
 insertLinkOnClick();
 detectPlatform();
 fnAquicomp();
-fnMouswheel();
+//fnMouswheel();
 fnLoader();
 // updateUlActiveClass();
 // fnAddActiveOnClick();
