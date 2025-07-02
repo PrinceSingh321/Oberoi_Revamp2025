@@ -1099,15 +1099,16 @@ body {
                     // width: 30px;
                     // height: 30px;
                     display: inline-flex;
-                    align-items: center;
+                    //align-items: center;
                     justify-content: center;
                     position: relative;
                     z-index: 1;
+                    border: #d8741b solid 1px;
                     &::after{
                       content: "";
                       position: absolute;
-                      width: 30px;
-                      height: 30px;
+                      width: 28px;
+                      height: 28px;
                       background: #d8741b;
                       border-radius: 50%;
                       z-index: -1;

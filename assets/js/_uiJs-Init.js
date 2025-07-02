@@ -55,6 +55,8 @@ detectPlatform();
 fnAquicomp();
 //fnMouswheel();
 fnLoader();
+fnNewsLetterSubscribtion();
+fnwebstoryslider();
 // updateUlActiveClass();
 // fnAddActiveOnClick();
 // fnTargettoPage();

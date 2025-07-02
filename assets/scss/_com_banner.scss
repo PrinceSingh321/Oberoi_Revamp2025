@@ -23,6 +23,16 @@
         opacity: 1;
         transition: opacity 0.1s;
       }
+      .bannerMobile{
+        .playButto{
+          img{
+            @include below(sm){
+              width: 40px;
+              height: initial;
+            }
+          }
+        }
+      }
     }
   }
   &.bookingEngineOffers {

@@ -1,0 +1,205 @@
+.templateTravel{
+   .image-text-block-style1{
+      .text-block {
+         p{
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            &.articlereadtime{
+               margin: 15px 0px 15px;
+            }
+         }
+      }
+   }
+}
+.templateGenericSeopagemultiimage{
+   .global-wellness-day-wrapper{
+      .image-text-component-style1{
+         .text-colm{
+            max-height: max-content;
+         }
+      }
+   }
+}
+.templateTravel{
+   .experiences-page{
+      .filter-componen{
+         .filter-results-list{
+            li{
+               min-height: 480px;
+            }
+         }
+      }
+   }
+ }
+ .offersContentSec{
+   &.webstoriesContentSec{
+      h1 {
+         font-family: "optimanormal";
+         font-size: 100%;
+         line-height: 70%;
+         width: 80%;
+         font-size: 2.563em;
+         color: #606161;
+         float: left;
+         margin-bottom: 15px;
+         font-weight: normal;
+     }
+      .webstoriesTab {
+      display: none;
+   }
+   }
+ }
+ .webstoriesTab{
+   ul{
+      &.webstoryfilterList {
+         width: 100%;
+         float: left;
+         list-style: none;
+         li{
+            float: left;
+            padding: 10px 20px 10px 0px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.9375em;
+            font-weight: 400;
+            color: #000;
+            background-color: #fff;
+            &.activec{
+               color: #e09049;
+
+            }
+         }
+
+      }
+   }
+   #webstoriesFilter {
+      display: none;
+    }
+   }
+   .webstories-slider {
+      width: 100%;
+      float: left;
+      position: relative;
+      margin-top: 20px;
+      .webstorySlides{
+         float: left;
+         position: relative;
+         a {
+            width: 100%;
+            float: left;
+          }
+          img{
+            &.webstry-ptch-box {
+               position: absolute;
+               bottom: 0;
+               left: 0;
+               width: 100%;
+             }
+             
+          }
+      }
+    }
+    .offers{
+      .webstories-slider{
+         .slick-list {
+            padding: 0 6% 0 0;
+            @include below(sm){
+               padding:0 0 0 0;;
+            }
+          }  
+          .slick-slide {
+            margin-right: 20px;
+            margin-left: 0;
+            @include below(sm){
+               margin-right:0;;
+            }
+          }
+          .webstoryDetails {
+            position: absolute;
+            color: #fff;
+            bottom: 25px;
+            width: 100%;
+            text-align: center;
+            padding: 0 10%;
+            h2 {
+               font-family: 'optimanormal';
+               font-size: 1em;
+               font-weight: bold;
+               text-transform: uppercase;
+               letter-spacing: 2px;
+             }
+             p {
+               font-size: 1rem;
+               font-weight: 100;
+               margin-top: 5px;
+               line-height: 140%;
+               color: #fff;
+             }
+             
+          }
+          
+         }
+         .slick-prev {
+            background: #fff;
+            left: 8%;
+            box-shadow: 3px 2px 5px 1px #ddd;
+            width: 50px;
+            top: 50% !important;
+            height: 50px;
+            z-index: 9;
+            @include below(sm){
+               left: 0;
+               box-shadow: none;
+               z-index: 9;
+            }
+            &::before {
+               display: inline-block;
+               opacity: 1;
+               content: "";
+               width: 12px;
+               height: 12px;
+               border-top: 2px solid #000;
+               border-left: 2px solid #000;
+               top: 50%;
+               left: 50%;
+               transform: translate(-50%, -50%) rotate(-45deg);
+               position: absolute;
+             }
+             
+          }
+          .slick-next {
+            background: #fff;
+            right: 8%;
+            box-shadow: none;
+            width: 50px;
+            height: 50px;
+            top: 50% !important;
+            z-index: 1;
+            @include below(sm){
+               right: 0;
+            }
+            &::before {
+               display: inline-block;
+               opacity: 1;
+               content: "";
+               width: 12px;
+               height: 12px;
+               border-top: 2px solid #000;
+               border-left: 2px solid #000;
+               top: 50%;
+               left: 50%;
+               transform: translate(-50%, -50%) rotate(135deg);
+               position: absolute;
+             }
+          }
+          .webstorieswrapper {
+            margin: 30px 0 0 0;
+            float: left;
+            width: 100%;
+          }
+             
+    }
+  

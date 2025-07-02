@@ -95,7 +95,7 @@ function videoBanner() {
       arrows: true,
       pauseOnHover: true,
       touchMove: true,
-      draggable: true, // Allow dragging with mouse/trackpad
+      draggable: true, 
       swipe: true ,
     });
 
