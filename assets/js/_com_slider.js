@@ -96,7 +96,7 @@ function fnComSlider() {
       });
     }
   });
-
+  
   // // Add class to active tab on slider change
   $(".com_TwoImageSlickSlider, .two-imageWithHalfSlider-img").on(
     "afterChange",
@@ -181,7 +181,14 @@ function fnComSlider() {
     
   );
 
-  
+  if($('.two-imageWithHalfSlider-img').length > 0){
+    $('.two-imageWithHalfSlider-img').on('afterChange', function(event, slick, currentSlide){
+      if (window.location.href.toLowerCase().includes("contact-us")) {
+          isDirectionMapInitialised = false;
+      }
+    });
+  }
+ 
   
 //  // Array to store each Swiper instance
 // const swipers = [];

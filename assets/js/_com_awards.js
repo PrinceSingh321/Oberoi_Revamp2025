@@ -1,20 +1,20 @@
 function mobileOnlySlider() {
-  $(".awardsWrapperRev").slick({
-    autoplay: false,
-    speed: 300,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    dots: true,
-    arrows: false,
-  });
-  $(window).resize(function () {
-    let $windowWidth = $(document).width();
-    if ($windowWidth < 1024) {
-      mobileOnlySlider();
-    } else {
-      $(".awardsWrapperRev").slick("unslick");
-    }
-  });
+  if($(".awardsWrapperRev").length > 0){
+    $(".awardsWrapperRev").slick({
+      autoplay: false,
+      speed: 300,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      dots: true,
+      arrows: false,
+    });
+  }
+  
+    // if ($(window).width() < 1024) {
+    //   mobileOnlySlider();
+    // } else {
+    //   $(".awardsWrapperRev").slick("unslick");
+    // }
 }
 
 function fnGlobalAwards() {

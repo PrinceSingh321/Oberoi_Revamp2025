@@ -158,6 +158,11 @@
       object-fit: cover;
       max-width: 100% !important;
       margin: 0 !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(100% + 106px)!important;
     }
     @include between(tb, md) {
       top: 12px !important;

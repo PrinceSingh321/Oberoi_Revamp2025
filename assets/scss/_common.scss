@@ -1535,7 +1535,7 @@ select {
           margin-top: 10px;
         }
         h4 {
-          font-size: 1.18rem;
+          font-size: 1.188rem;
           margin-bottom: 10px;
         }
       }
@@ -2206,3 +2206,25 @@ select:-webkit-autofill:focus {
       padding-top: 0px;
     }
   }
+
+.two-imageWithHalfSlider.imageWithRightTextSlide .awardsCountrySlide .textWrappRev h2{
+    font-family: "optimanormal";
+    font-size: 2.563rem;
+    font-weight: normal;
+    @include below(lg){
+      font-size: 2rem;
+    }
+    @include below(tb){
+      font-size: 1.5em;
+    }
+    
+}
+ 
+.imageWithTextWrappRev2.non-slider.storyContent .imageWithTextSlideRev .textWrappRev h4{
+  font-weight:bold;
+  font-family: "verdanaBold";
+  margin-bottom: 40px;
+  @include below(lg){
+    font-size: 0.937rem
+  }
+}

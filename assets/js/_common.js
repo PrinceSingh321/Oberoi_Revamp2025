@@ -121,10 +121,10 @@ function isZooming() {
 }
 
 function fnSlickChangeArrowPos() {
-  $(".slick-slider, .swiper").each(function () {
+  $(".slick-slider:not(.three-image-gallery .slick-slider), .swiper").each(function ()  {
     try {
       var toppos =
-        $(this).find(".slick-active, .swiper-slide-active").find("picture img").height() / 2;
+        $(this).find(".slick-slide, .swiper-slide-active").find("picture img").height() / 2;
       $(this)
         .find(".slick-prev, .slick-next, .swiper-button-next, .swiper-button-prev")
         .css("top", toppos + "px");
@@ -156,6 +156,10 @@ $(window).resize(function () {
   isZooming();
   fnSetBannerSectionHeight();
 });
+
+$(window).load(function(){
+  fnSlickChangeArrowPos();
+})
 
 function submitFormLoader() {
   $(".submitFormBtn").click(function () {
@@ -465,24 +469,9 @@ function fnLoader() {
   }
 }
 
-$('.noOfGuestList input').one('focus', function () {
-  $(this).val('');
-});
-
-$('.noOfRoomsList input').one('focus', function () {
-  $(this).val('').attr('placeholder', '');
-});
-
-$('.noOfGuestWrap input').one('focus', function () {
-  $(this).val('');
-});
-
-
-
-
 function fnwebstoryslider(){
   if($('.webstories-slider').length > 0){
-  $(".webstories-slider").slick({
+    $(".webstories-slider").slick({
       dots: false,
       arrows: true,
       infinite: true,
@@ -490,14 +479,20 @@ function fnwebstoryslider(){
       slidesToScroll: 1,
       padding: 10,
       responsive: [
-      {
-        breakpoint: 767,
-        settings: {
-          slidesToShow: 1,
+        {
+          breakpoint: 1024,  
+          settings: {
+            slidesToShow: 2,
+          }
+        },
+        {
+          breakpoint: 767,  
+          settings: {
+            slidesToShow: 1,
+          }
         }
-      },
       ]
-  });
+    });
 }
 }
 
@@ -519,3 +514,128 @@ function fnNewsLetterSubscribtion(){
   }
  
 }
+
+function fnOnBlurPlaceholder(){
+  if ($(".onbluervalue").length > 0) {
+    var $NewsLetterinput = $('.onbluervalue .input');
+  
+    $NewsLetterinput.each(function () {
+      var $input = $(this);
+      var defaultPlaceholder = $input.attr('placeholder');
+  
+      $input.data('defaultPlaceholder', defaultPlaceholder);
+  
+      $input.on('focus', function () {
+        $input.attr('placeholder', '');
+      });
+  
+      $input.on('blur', function () {
+        var val = $input.val().trim();
+        var placeholder = $input.attr('placeholder');
+        var defaultPH = $input.data('defaultPlaceholder');
+  
+        // Restore placeholder if it was cleared
+        if (!placeholder) {
+          $input.attr('placeholder', defaultPH);
+        }
+  
+        if (placeholder !== "") {
+          $input.addClass('has-value');
+        } else {
+          $input.removeClass('has-value');
+        }
+      });
+    });
+  }
+}
+
+
+function fnContactFocus() {
+  if($('.contact-us-form-wrap').length > 0){
+  $(".contact-us-form-wrap .form-field-col.focus_animation select.select-box, .focus_animation input, .contact-us-form-wrap .form-field.focus_animation select.country_code, .contact-us-form-wrap .form-field.focus_animation .select-box.contactUsAllHotels").on("focusout", function () {
+    var text_val = $(this).val();
+    if (text_val === "") {
+      $(this).removeClass("has-value");
+    } else {
+      $(this).addClass("has-value");
+    }
+  });
+}
+}
+
+function fnContactSelection() {
+  if($('.contact-us-form-wrap').length > 0){
+  $(".select-box").on("change", function () {
+    const selectedText = $(this).find("option:selected").text();
+    $(this).closest(".form-field-col.focus_animation, .form-field.focus_animation").find(".TextbindBox").text(selectedText);
+    if ($(this).val() === "") {
+      $(this).closest(".form-field-col, .form-field").find(".TextbindBox").text("");
+    }
+  });
+}
+}
+
+    function fnEventFocus() {
+      if ($('.request-a-proposal-form').length > 0) {
+        $(".eventDetails .calenderWrap .focus_animation .input, .accomodationForm .noOfGuestList .input, .accomodationForm .noOfRoomsList .input").each(function () {
+          var value = $(this).val()?.trim();
+          var placeholder = $(this).attr("placeholder");
+          var placeholderTrimmed = placeholder ? placeholder.trim() : "";
+        
+          if (value !== "" || placeholderTrimmed !== "") {
+            $(this).addClass("has-value");
+          } else {
+            $(this).removeClass("has-value"); 
+          }
+        });
+        $(".eventDetails .formWrap.focus_animation .input, .eventDetails .formWrap.focus_animation select, .eventDetails .calenderWrap .focus_animation .input, .accomodationForm .noOfGuestList .input, .accomodationForm .noOfRoomsList .input, .requestProposalContactForm .formWrap.focus_animation .select, .requestProposalContactForm .focus_animation .input").on("focusout", function () {
+          // var text_val = $(this).val();
+          // if (text_val === "") {
+          //   $(this).removeClass("has-value");
+          // } else {
+          //   $(this).addClass("has-value");
+          // }
+
+          var text_val = $(this).val().trim();
+          var $textBindBox = $(this).closest(".formWrap").find(".TextbindBox");
+          var textBindBoxText = $textBindBox.text().trim();
+
+          if (text_val === "" && textBindBoxText === "") {
+            $(this).removeClass("has-value");
+          } else {
+            $(this).addClass("has-value");
+          }
+          
+        });
+      }
+    }
+
+    function fnEventSelection() {
+      if ($('.request-a-proposal-form').length > 0) {
+        $(".eventDetails .formWrap.focus_animation select, .requestProposalContactForm .focus_animation .select").on("change", function () {
+          const selectedText = $(this).find("option:selected").text();
+          const selectedValue = $(this).val();
+
+          const $textBindBox = $(this).closest(".formWrap").find(".TextbindBox");
+
+          if (selectedValue === "") {
+            $textBindBox.text(""); // Clear on empty
+          } else {
+            $textBindBox.text(selectedText);
+          }
+
+          // Optional: Toggle `has-value` class
+          if (selectedValue === "") {
+            $(this).removeClass("has-value");
+          } else {
+            $(this).addClass("has-value");
+          }
+          
+        });
+      }
+    }
+
+
+
+
+

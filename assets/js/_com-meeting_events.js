@@ -26,6 +26,7 @@ function fnseatingchart() {
     $(this).parents(".cta-boxRev").siblings(".cta-boxRev").find(".buttonStyle2Rev").removeClass("active");
     $(".viewSeatingChart a").removeClass('active');
     $(".seatingChartWrapper").hide();
+    fnOnBlurPlaceholder();
   });
   $(".form-chart-tabs .heading").on("click", function () {
     $(this).addClass("activeAcc");
@@ -75,11 +76,11 @@ function fnseatingchart() {
 
   $(".selectedHotel").on("click", function (event) {
     event.stopPropagation(); // Prevent the event from propagating to document
-    $(".countryListInDropdown").show();
+    $(".countryListInDropdown").toggle();
     $(".hasSubHotel .subMenuHotelsList").hide();
   });
   $(".hasSubHotel").click(function () {
-    $(this).children(".subMenuHotelsList").show();
+    $(this).children(".subMenuHotelsList").toggle();
     $(this).siblings().children(".subMenuHotelsList").hide();
   });
 
@@ -88,6 +89,7 @@ function fnseatingchart() {
       !$(event.target).closest(".selectedHotel, .countryListInDropdown").length
     ) {
       $(".countryListInDropdown").hide();
+      
     }
   });
   $(".countryListInDropdown").on("click", function (event) {

@@ -5,7 +5,7 @@
 // });
 
 // init function
-videoBanner();
+//videoBanner();
 com_imageWithTextTwoColComponent();
 Activities();
 fnComSlider();
@@ -18,7 +18,7 @@ fnComMultislider();
 tabComponent();
 commonPopUp();
 fnTabScroll();
-fnSlickChangeArrowPos();
+//fnSlickChangeArrowPos();
 fnDestinationTabScroll();
 fnInputFocus();
 fnseatingchart();
@@ -57,6 +57,11 @@ fnAquicomp();
 fnLoader();
 fnNewsLetterSubscribtion();
 fnwebstoryslider();
+fnContactFocus();
+fnContactSelection();
+fnEventFocus();
+fnEventSelection();
+fnOnBlurPlaceholder();
 // updateUlActiveClass();
 // fnAddActiveOnClick();
 // fnTargettoPage();
