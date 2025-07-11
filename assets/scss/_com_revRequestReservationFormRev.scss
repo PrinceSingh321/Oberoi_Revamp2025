@@ -151,6 +151,7 @@
           top: 53px;
           line-height: 100%;
           z-index: 1;
+          font-family: 'VerdanaN';
           @include below(sm) {
             font-size: 0.7rem;
           }
@@ -608,7 +609,9 @@
       font-family: $vard;
       font-size: 1.125rem;
       color: $grey;
-      z-index: 91;
+      z-index: 99;
+      background: #fff;
+      width: 80%;
       @include below(md2) {
         font-size: 1rem;
       }
@@ -667,7 +670,7 @@
 }
 
 .ui-datepicker {
-  z-index: 91 !important;
+  z-index: 999!important;
 }
 
 .ui-datepicker .ui-datepicker-title {
