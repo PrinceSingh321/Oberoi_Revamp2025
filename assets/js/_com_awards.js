@@ -1,13 +1,22 @@
 function mobileOnlySlider() {
   if($(".awardsWrapperRev").length > 0){
-    $(".awardsWrapperRev").slick({
-      autoplay: false,
-      speed: 300,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      dots: true,
-      arrows: false,
-    });
+    if ($(window).width() < 1024) {
+      if (!$(".awardsWrapperRev").hasClass("slick-initialized")) {
+        $(".awardsWrapperRev").slick({
+          autoplay: false,
+          speed: 300,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+          arrows: false,
+        });
+  
+      }
+    } else {
+      if ($(".awardsWrapperRev").hasClass("slick-initialized")) {
+        $(".awardsWrapperRev").slick("unslick");
+      }
+    }
   }
   
     // if ($(window).width() < 1024) {
@@ -16,7 +25,6 @@ function mobileOnlySlider() {
     //   $(".awardsWrapperRev").slick("unslick");
     // }
 }
-
 function fnGlobalAwards() {
   var glblFlg = true;
   $(".awardsSlides >  li").click(function () {
