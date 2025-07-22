@@ -634,8 +634,80 @@ function fnContactSelection() {
         });
       }
     }
+   
+    function fnBookingRequestformSelection(){
+      if ($('.revformfieldbestofegypt').length > 0) {
+        $(".revformfieldbestofegypt .right-section input").each(function () {
+          var value = $(this).val()?.trim();
+          var placeholder = $(this).attr("placeholder");
+          var placeholderTrimmed = placeholder ? placeholder.trim() : "";
+        
+          if (value !== "" || placeholderTrimmed !== "") {
+            $(this).addClass("has-value");
+          } else {
+            $(this).removeClass("has-value"); 
+          }
+        });
 
+        $(".revformfieldbestofegypt .right-section input").on("focusout", function () {
+          var text_val = $(this).val();
+          if (text_val === "") {
+            $(this).removeClass("has-value");
+          } else {
+            $(this).addClass("has-value");
+          }
+        });
+    }
 
+  }
 
+  function fndashboardSelection() {
+    if ($('.rev_dashboardcontactWrap').length > 0) {
+      $(".rev_dashboardcontactWrap select.select-field").on("change", function () {
+        const selectedText = $(this).find("option:selected").text();
+        const selectedValue = $(this).val();
 
+        const $textBindBox = $(this).closest(".form-field").find(".dashboard_TextbindBox");
+
+        if (selectedValue === "") {
+          $textBindBox.text(""); // Clear on empty
+        } else {
+          $textBindBox.text(selectedText);
+        }
+
+        // Optional: Toggle `has-value` class
+        if (selectedValue === "") {
+          $(this).removeClass("has-value");
+        } else {
+          $(this).addClass("has-value");
+        }
+        
+      });
+    }
+  }
+
+  function fnBookingBestofReuestSelection() {
+    if ($('.revformfieldbestofegypt').length > 0) {
+      $(".revformfieldbestofegypt select.select").on("change", function () {
+        const selectedText = $(this).find("option:selected").text();
+        const selectedValue = $(this).val();
+
+        const $textBindBox = $(this).closest(".select-box-wrap").find(".Textboxselection");
+
+        if (selectedValue === "") {
+          $textBindBox.text(""); // Clear on empty
+        } else {
+          $textBindBox.text(selectedText);
+        }
+
+        // Optional: Toggle `has-value` class
+        if (selectedValue === "") {
+          $(this).removeClass("has-value");
+        } else {
+          $(this).addClass("has-value");
+        }
+        
+      });
+    }
+  }
 

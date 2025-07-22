@@ -56,6 +56,16 @@
     @include below(sm) {
       margin-top: 15px;
     }
+    &.slick-slider{
+      .slick-dots{
+        li{
+         button{
+           display: block;
+         }
+    } 
+  }
+}
+
   }
   .slick-slider {
     .slick-dots {
