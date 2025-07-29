@@ -444,7 +444,7 @@ function fnMouswheel() {
                       } else {
                           $(this).slick('slickPrev');
                       }
-                  }, isMacSafari ? 25 : 45); // Reduced timeout for Mac Safari
+                  }, isMacSafari ? 25 : 35); // Reduced timeout for Mac Safari // earlier speed isMacSafari ? 25 : 45);
               }
           }
       });
