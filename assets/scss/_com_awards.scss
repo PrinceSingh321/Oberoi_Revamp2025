@@ -2,21 +2,35 @@
   .awardsWrapperRev {
     display: flex;
     //justify-content: space-around;
-
+    @include below(tb){
+      margin-bottom: 43px;
+    }
     .awardsList {
-      padding: 0px 2%;
+      padding: 0px 1%;
       text-align: left;
       border-right: 1px solid #d8d8d8;
       width: 25%;
+      p{
+        &:first-child{
+          min-height: 60px;
+          @include below(lg2){
+            min-height: 50px;
+          }
+          @include below(md3){
+            min-height: 40px;
+          }
+         }
+      }
+      
       @include above(lg3) {
-        padding: 0px 2%;
+        padding: 0px 1%;
       }
       @include below(lg2) {
-        padding: 0px 2%;
+        padding: 0px 1%;
       }
 
       @include below(lgMid) {
-        padding: 0px 2%;
+        padding: 0px 1%;
       }
 
       @include below(md3) {
@@ -48,6 +62,7 @@
         @include below(md3){
           font-size: 0.8em !important;
         }
+        
       }
       @include below(sm) {
         border: none;

@@ -23,13 +23,14 @@ function com_imageWithTextTwoColComponent() {
     //freeMode: true,
     loop: true,
     speed: 600,
+    navigation: false,
     autoplay: {
       delay: 4000,
     },
-    navigation: {
-        nextEl: ".descriptionImageSliderRev .swiper-button-next",
-        prevEl: ".descriptionImageSliderRev .swiper-button-prev",
-    },
+    // navigation: {
+    //     nextEl: ".descriptionImageSliderRev .swiper-button-next",
+    //     prevEl: ".descriptionImageSliderRev .swiper-button-prev",
+    // },
     mousewheel: {
       forceToAxis: true,
       sensitivity: 0.5,          // Lower sensitivity to reduce skipping
@@ -57,6 +58,12 @@ function com_imageWithTextTwoColComponent() {
         }
     }
 
+    
+
+});
+
+document.querySelectorAll('.descriptionImageSliderRev .swiper-button-next, .descriptionImageSliderRev .swiper-button-prev').forEach(el => {
+  el.remove();
 });
 
   $("#lounge .multislider-sub-slide-img").each(function () {

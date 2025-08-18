@@ -60,14 +60,15 @@ function tabComponent() {
       //alzoha filter code start here
       if ($(".destinationOption2").length > 0) {
         $(".dropDownFilter_Comp").show();
-        $(".imageWithRightTextWrappRev").fadeIn();
-        $(".imageWithRightTextWrapp").fadeOut();
+        $(this).parents(".destinationOption2").find(".imageWithRightTextWrappRev").fadeIn();
+        $(this).parents(".destinationOption2").find(".imageWithRightTextWrapp").fadeOut();
         $(".imageWithRightTextWrapp[data-id=" + categoryDtls + "]").fadeIn();
       }
       
       //alzoha filter code end here
       else {
-        $(".imageWithRightTextWrappRev").hide();
+        $(this).parents(".destinationMainWrapp").find(".imageWithRightTextWrappRev").hide();
+        $(this).parents(".experiencePageContent").find(".imageWithRightTextWrappRev").hide();
         $("#" + dataTab).fadeIn("slow");
         $(".imageWithRightTextWrappRev.imageTextFormSlide").show();
       }

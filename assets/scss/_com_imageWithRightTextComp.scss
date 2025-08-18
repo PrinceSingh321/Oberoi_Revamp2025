@@ -218,6 +218,10 @@
       }
       .slick-prev {
         left: -1.9%;
+        @include below(tb){
+          left: 20px;
+          z-index: 9;
+        }
         @include below(sm) {
           left: 15px;
           z-index: 2;
@@ -245,6 +249,10 @@
       }
       .slick-next {
         right: -2%;
+        @include below(tb){
+          right: 20px;
+          z-index: 9;
+        }
         @include below(sm) {
           right: 15px;
         }
@@ -400,11 +408,20 @@
 }
 .targetScroll {
   position: relative;
-  top: -150px;
+  top: -190px;
+  @include below(tb){
+    top: -150px;
+  }
 }
 .targetScrollwel {
   position: relative;
-  top: -230px;
+  top: -150px;
+  @include below(md){
+    top: -100px;
+  }
+  @include below(tb){
+    top: -150px;
+  }
 }
 .is-hidden {
   display: none !important;
