@@ -123,7 +123,10 @@ ul {
     padding: 15px 18px 10px;
   }
   &.countryWidth {
-    min-width: 440px;
+    min-width: 500px;
+    @include below(lgMid){
+      min-width: 440px;
+    }
     @include below(sm) {
       min-width: 178px;
       top: 30px;

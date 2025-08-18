@@ -31,6 +31,9 @@
     }
     p {
       margin-bottom: 0;
+      @include below(md){
+        padding-right: 10px;
+      }
     }
   }
   .com_PurchaseSlider {

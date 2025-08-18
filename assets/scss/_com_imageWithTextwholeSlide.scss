@@ -160,7 +160,7 @@
     }
     .slick-next {
       @include below(tb) {
-        right: 3%;
+        right: 0%; /* before it was 3% */
       }
       @include below(sm) {
         right: 0;
@@ -168,7 +168,7 @@
     }
     .slick-prev {
       @include below(tb) {
-        left: 3%;
+        left: 0%; /* before it was 3% */
         z-index: 9;
       }
       @include below(sm) {

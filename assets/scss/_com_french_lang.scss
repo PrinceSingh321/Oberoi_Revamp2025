@@ -1,14 +1,20 @@
 .body-fr-fr{
    header{
       .header-left-unit{
+         @include above(tb){
+            width: 45%;
+         }
          .left-side-menu{
             ul{
                li{
                   padding: 0px 0.1vw;
+                  @include below(md3){
+                     font-size: 0.85em !important;
+                  }
                   a{
-                     padding: 0 1vw;
+                     padding: 0 0.7vw;
                      @include below(md3){
-                        padding: 0 0.9vw;
+                        padding: 0 0.7vw;
                      }
                   }
                }
@@ -28,9 +34,10 @@
             .right-side-menu{
                ul{
                   li{
-                     padding: 0px 1vw;
+                     padding: 0px 0.7vw;
                      @include below(md3){
-                        padding: 0px 0.6vw;
+                        padding: 0px 0.7vw;
+                        font-size: 0.85em !important;
                      }
                      a{
                         padding: 0 0.1vw;

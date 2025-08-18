@@ -120,20 +120,58 @@ function isZooming() {
   }
 }
 
+// function fnSlickChangeArrowPos() {
+//   $(".slick-slider:not(.three-image-gallery .slick-slider), .swiper").each(function ()  {
+//     try {
+//       var toppos =
+//         $(this).find(".slick-slide, .swiper-slide-active").find("picture img").height() / 2;
+//       $(this)
+//         .find(".slick-prev, .slick-next, .swiper-button-next, .swiper-button-prev")
+//         .css("top", toppos + "px");
+//       //console.log('arrowposition');
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   });
+// }
+
 function fnSlickChangeArrowPos() {
-  $(".slick-slider:not(.three-image-gallery .slick-slider), .swiper").each(function ()  {
+  $(".slick-slider:not(.three-image-gallery .slick-slider), .swiper").each(function () {
     try {
-      var toppos =
-        $(this).find(".slick-slide, .swiper-slide-active").find("picture img").height() / 2;
-      $(this)
-        .find(".slick-prev, .slick-next, .swiper-button-next, .swiper-button-prev")
-        .css("top", toppos + "px");
-      //console.log('arrowposition');
+      let $slider = $(this);
+
+      // Look for the active image depending on whether it's Slick or Swiper
+      let $activeImage = $slider.find(
+        ".slick-slide.slick-current picture img, .swiper-slide-active picture img"
+      );
+
+      if ($activeImage.length > 0) {
+        // If image is already loaded, set arrow position immediately
+        if ($activeImage[0].complete && $activeImage.height() > 0) {
+          let toppos = $activeImage.height() / 2;
+          $slider
+            .find(".slick-prev, .slick-next, .swiper-button-next, .swiper-button-prev")
+            .css("top", toppos + "px");
+          //console.log("arrowposition" + toppos);
+        } else {
+          // If image is not loaded yet, attach one-time load handler
+          $activeImage.one("load", function () {
+            let toppos = $(this).height() / 2;
+            $slider
+              .find(".slick-prev, .slick-next, .swiper-button-next, .swiper-button-prev")
+              .css("top", toppos + "px");
+            //console.log("arrowposition" + toppos + " (delayed after image load)");
+          });
+        }
+      } else {
+        console.log("No active image found in slider");
+      }
     } catch (err) {
-      console.log(err);
+      console.error("Error in fnSlickChangeArrowPos:", err);
     }
   });
 }
+
 
 function fnSetBannerSectionHeight() {
   $(".banner-and-booking-widget .slick-slider").each(function () {
@@ -158,7 +196,10 @@ $(window).resize(function () {
 });
 
 $(window).load(function(){
-  fnSlickChangeArrowPos();
+  setTimeout(()=>{
+    fnSlickChangeArrowPos();
+  }, 1000);
+  
 })
 
 function submitFormLoader() {
@@ -453,6 +494,24 @@ function fnMouswheel() {
 }
 
 
+// function fnLoader() {
+//   var $loader = $('.loader');
+
+//   if ($loader.length) {
+//     $loader.on('webkitAnimationEnd', function () {
+//       $('.solar-star-text').addClass('active');
+//     });
+
+//     $loader.addClass('deactive');
+
+//     $(window).on('load', function () {
+//         $loader.addClass('deactive');
+//     });
+//   }
+  
+// }
+
+
 function fnLoader() {
   var $loader = $('.loader');
 
@@ -461,13 +520,16 @@ function fnLoader() {
       $('.solar-star-text').addClass('active');
     });
 
-    $(window).on('load', function () {
-      setTimeout(function () {
-        $loader.addClass('deactive');
-      }, 2000);
+    document.addEventListener('DOMContentLoaded', function () {
+      $loader.addClass('deactive');
     });
+    
+
   }
 }
+
+
+
 
 function fnwebstoryslider(){
   if($('.webstories-slider').length > 0){
@@ -710,4 +772,17 @@ function fnContactSelection() {
       });
     }
   }
+
+  // function toSentenceCase(str) {
+  //   str = str.trim();
+  //   if (str.length === 0) return "";
+  //   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  // }
+  
+  // $('.templateHomePage .slidesTextRev p strong').each(function() {
+  //   var originalText = $(this).text();
+  //   var updatedText = toSentenceCase(originalText);
+  //   $(this).text(updatedText);
+  // });
+  
 

@@ -326,3 +326,36 @@
     }
   }
 }
+
+.com_imageWithTextTwoColComponent{
+  .descriptionSecRev{
+    .descriptionSec-wraperRev{
+       .text-containerRev{
+        .titleRev{
+          &.desShow{
+            @include below(tb){
+               display: none;
+            }
+          }
+        } 
+       }
+       .titleRev{
+        &.mob-show{
+          @include below(tb){
+          display: block;
+          font-family: "optimanormal";
+          line-height: 100%;
+          margin-bottom: 20px;
+          font-weight: 400;
+          color: #606161;
+          font-size: 1.375em;
+          }
+          @include below(sm){
+            font-size: 1.5em;
+          }
+        }
+       }
+       
+    }
+  } 
+} 

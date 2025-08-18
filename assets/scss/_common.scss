@@ -105,7 +105,7 @@ body {
   h6 {
     font-family: $opt;
     font-size: $heading-font-size;
-    line-height: 100%;
+    line-height: 125%;
     margin-bottom: 20px;
     font-weight: 400;
     color: $grey;
@@ -123,8 +123,11 @@ body {
       font-size: 2em;
     }
     @include below(tb) {
-      font-size: 1.1em;
+      font-size: 1.375em;
       margin-bottom: 15px;
+    }
+    @include below(sm){
+      font-size: 1.1em;
     }
   }
   p {
@@ -357,7 +360,7 @@ body {
   }
   .getDropdownValue {
     display: none;
-    @include below(sm) {
+    @include below(tb) {
       //display: inline-block;
       margin-bottom: 15px;
       text-align: left;
@@ -618,6 +621,26 @@ body {
       a {
         color: $colorOrange;
       }
+    }
+    .second_lvl_glblpgs{
+      .titleRev{
+        &.pagemainTitle{
+           padding-top: 20px;
+        }
+       } 
+    }
+  }
+  .second_lvl_glblpgs{
+    .titleRev{
+     &.pagemainTitle{
+        padding-top: 50px;
+        @include below(tb) {
+          padding-top: 20px;
+        }
+     }
+    } 
+    .paragraphRev{
+      padding: 0px 0 50px;
     }
   }
 }
@@ -1259,10 +1282,11 @@ select {
   }
   @include below(lgMid) {
   }
-  @include below(sm) {
+  @include below(tb) {
     right: 2.5%;
     top: 75px;
   }
+
   @include below(sm) {
     transform: translateX(-50%);
     max-width: 100%;
@@ -2232,3 +2256,15 @@ select:-webkit-autofill:focus {
     font-size: 0.937rem
   }
 }
+
+.templateHomePage{
+  .two-imageWithHalfSlider-img{
+    .slidesTextRev{
+      p{
+        strong {
+        //text-transform: capitalize;
+      }
+      }
+    }
+  }
+}  
