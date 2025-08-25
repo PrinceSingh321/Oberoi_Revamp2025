@@ -53,7 +53,7 @@ ul {
       }
       &:last-child {
         @include below(sm) {
-          padding-right: 0px;
+          //padding-right: 0px;
         }
       }
 

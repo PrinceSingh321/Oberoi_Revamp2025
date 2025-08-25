@@ -313,6 +313,12 @@
           top:55px;
         }
        } 
+       &.giftingPage{
+         .select-box-wrap{
+          width: 100%;
+          margin-right: 0;
+         }
+       }
       }
       &.disabledHotel{
         &.selectBox2{

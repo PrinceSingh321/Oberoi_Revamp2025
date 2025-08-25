@@ -882,12 +882,14 @@ body {
         display: inline-block;
         //width: 350px;
         min-width: 195px;
-        padding-right: 15px;
+        padding-right: 9px; 
         @include below(lg){
           min-width: 160px;
+          width: auto!important;
         }
         @include below(sm){
           min-width: 130px;
+          padding-right: 15px;
         }
         cursor: pointer;
         &.dayFilter {
@@ -937,14 +939,38 @@ body {
           font-size: 1.188em;
           color: #606161;
           font-family: $vardana;
+          position: relative;
+          padding-right: 10px;
+          cursor: pointer;
           @include below(lg) {
             font-size: 1rem;
           }
           @include below(sm) {
             font-size: 0.88rem;
+            padding-right: 2px;
           }
           @include below(xs4) {
             font-size: 0.8rem;
+          }
+          &::after {
+            position: absolute;
+            content: " ";
+            border-bottom: 2.5px solid #606161;
+            border-right: 2.5px solid #606161;
+            top: 7px;
+            margin-top: -0.21em;
+            height: 0.6em;
+            right: -12px;
+            transform: rotate(45deg);
+            width: 0.6em;
+            z-index: 2;
+            @include below(lg){
+              right: -25px;
+            }
+            @include below(sm){
+              right: -17px;
+              top: 5px;
+            }
           }
         }
         &::after {
@@ -956,10 +982,10 @@ body {
           margin-top: -0.21em;
           height: 0.6em;
           right: -5px;
-          position: absolute;
           transform: rotate(45deg);
           width: 0.6em;
           z-index: 2;
+          display: none;
           // @include below(lg){
           //   right: 20px;
           // }
