@@ -94,6 +94,43 @@
       }
     }
   }
+  &.giftWrapSection{
+    .width100mainWrapp{
+      background: radial-gradient(circle at right, #1a1a4a 0%, #0a0a1a 70%, #000 100%);
+      .width50{
+        .imgWithcontent{
+          .innerImageWidth50{
+            .innerImage{
+              width: 70%;
+              img{
+                
+                @include below(md3){
+                  max-width: 65%;
+                }
+                @include below(tb){
+                  max-width: 100%;
+                }
+              }
+            }
+            .gift_wrap_body_copy{
+              color: #c49f46;
+              padding: 18px 0 0 20px;
+              text-transform: uppercase;
+              width: 100%;
+              font-size: 2rem;
+              font-family: 'verdanaN';
+              @include below(md3){
+                font-size: 1.5rem;
+              }
+              @include below(sm){
+                font-size: 1.3rem;
+              }
+            }
+          } 
+        } 
+      } 
+    } 
+  }
 }
 .goldenBtn {
   display: inline-block;
