@@ -573,13 +573,19 @@ function fnReservationFormFuntion() {
     $(".openweddingForm").removeClass("active");
     $(this).parents(".requestReservationForm-container").hide();
   });
-
+   
   $(".openweddingForm").click(function () {
+    //alert('test');
     $(".requestReservationForm-container, .openDiningForm").removeClass(
       "active"
     );
     $(".request-a-proposal-form").hide();
-
+    setTimeout(()=>{
+      $(this).parents('.com_TwoTabHalfColImageComponentRev').find('.requestReservationForm-container #requestForm-box').show();
+      $(this).parents('.com_TwoTabHalfColImageComponentRev').find('.weddingNewForm #reservation-queries').show();
+      $(this).parents('.com_TwoTabHalfColImageComponentRev').find('.weddingForm-writeus').addClass('active');
+      $(this).parents('.com_TwoTabHalfColImageComponentRev').find('.weddingNewForm #reservation-queries').show();
+    }, 100);
     if (
       $(".weddingForm-writeus").is(":visible") &&
       $(this).hasClass("active")

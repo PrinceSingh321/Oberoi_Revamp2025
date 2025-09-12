@@ -6,8 +6,8 @@
   }
   @include below(sm) {
     margin-top: 15px;
-    // overflow-x: scroll;
-    // overflow-y:hidden;
+    overflow-x: scroll;
+    overflow-y:hidden;
   }
   &.overFlowScroll{
     @include below(sm) {
@@ -43,20 +43,13 @@ ul {
       display: flex;
     }
     @include below(sm) {
-      // width: 800px;
-      flex-wrap: nowrap;
+      width: 800px;
     }
     li {
       padding: 0px 50px 30px 0;
       position: relative;
       @include below(tb){
         padding: 0px 45px 30px 0;
-      }
-      @include below(sm){
-        padding: 0px 18px 30px 0;
-      }
-      @include below(xs3){
-        font-size: 0.8rem !important;
       }
       &:last-child {
         @include below(sm) {
@@ -85,7 +78,6 @@ ul {
           }
           @include below(sm) {
             padding: 3px;
-            right: 8px;
           }
         }
         &.hasdrop {

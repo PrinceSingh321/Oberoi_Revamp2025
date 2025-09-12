@@ -48,6 +48,14 @@ function com_imageWithTextTwoColComponent() {
         }
     },
 
+    // ✅ Lazy load enabled
+      // lazy: {
+      //   loadPrevNext: true,
+      //   loadPrevNextAmount: 2,
+      // },
+      // watchSlidesProgress: true,
+      // watchSlidesVisibility: true,
+
     on: {
         init: function () {
             // Count only real slides, excluding duplicates used for loop
@@ -55,7 +63,39 @@ function com_imageWithTextTwoColComponent() {
             if (realSlides.length === 1) {
                 document.querySelector('.descriptionImageSliderRev').classList.add('single_slide_active');
             }
-        }
+
+            // this.slides.forEach(slide => {
+            //   const img = slide.querySelector('img[data-src]');
+            //   if (img && !img.src) {
+            //     img.src = img.dataset.src;
+            //     img.removeAttribute('data-src');
+            //   }
+            //   const picture = slide.querySelector('picture');
+            //   if (picture) {
+            //     picture.querySelectorAll('source[data-srcset]').forEach(source => {
+            //       source.setAttribute('srcset', source.getAttribute('data-srcset'));
+            //       source.removeAttribute('data-srcset');
+            //     });
+            //   }
+            // });
+
+        },
+        
+        //  lazyImageReady: function (swiper, slideEl, imageEl) {
+        //     // ✅ Swiper lazy loaded, set src
+        //     if (imageEl.dataset.src) {
+        //       imageEl.src = imageEl.dataset.src;
+        //       imageEl.removeAttribute('data-src');
+        //     }
+        //     const picture = imageEl.closest('picture');
+        //     if (picture) {
+        //       picture.querySelectorAll('source[data-srcset]').forEach(source => {
+        //         source.setAttribute('srcset', source.getAttribute('data-srcset'));
+        //         source.removeAttribute('data-srcset');
+        //       });
+        //     }
+        //   }
+
     }
 
     

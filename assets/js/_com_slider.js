@@ -1,4 +1,37 @@
 function fnComSlider() {
+
+  // function loadPictureSources($img) {
+  //   const $picture = $img.closest('picture');
+  //   $picture.find('source').each(function () {
+  //     const srcset = $(this).attr('data-srcset');
+  //     if (srcset) {
+  //       $(this).attr('srcset', srcset).removeAttr('data-srcset');
+  //     }
+  //   });
+  // }
+  
+  // const $lazyloadslider = $('.two-imageWithHalfSlider-img, .two-imageWithHalfSlider-img');
+  
+  // $lazyloadslider.on('lazyLoaded', function (event, slick, image) {
+  //   loadPictureSources($(image));
+  // });
+
+  // $lazyloadslider.on('init afterChange', function (event, slick) {
+  //   // load current + next (half slide)
+  //   let current = slick.currentSlide;
+  //   let next = (current + 1) % slick.slideCount;
+  
+  //   [current, next].forEach(function (index) {
+  //     let $img = $(slick.$slides[index]).find('img[data-lazy]');
+  //     if ($img.length && !$img.attr('data-loaded')) {
+  //       $img.attr('src', $img.data('lazy'))
+  //           .removeAttr('data-lazy')
+  //           .attr('data-loaded', 'true');
+  //       loadPictureSources($img);
+  //     }
+  //   });
+  // });
+
   $(".two-imageWithHalfSlider-img, .imageTextFormSlide").slick({
     dots: false,
     arrows: true,
@@ -16,6 +49,8 @@ function fnComSlider() {
     ],
   });
 
+  
+
   $(".com_TwoImageSlickSlider").slick({
     arrows: true,
     dots: false,
@@ -26,6 +61,7 @@ function fnComSlider() {
     touchMove: true,
     draggable: true, // Allow dragging with mouse/trackpad
     swipe: true ,
+    lazyLoad: "ondemand",
     responsive: [
       {
         breakpoint: 1024,
@@ -39,6 +75,20 @@ function fnComSlider() {
       // instead of a settings object
     ],
   });
+
+  //Force load first fold (current + half slide) immediately after init
+  // $lazyloadslider.on('init', function (event, slick) {
+  //   let current = slick.currentSlide;
+  //   let next = (current + 1) % slick.slideCount;
+
+  //   [current, next].forEach(function (index) {
+  //     let $img = $(slick.$slides[index]).find('img[data-lazy]');
+  //     if ($img.length && !$img.attr('src')) {
+  //       $img.attr('src', $img.data('lazy')).removeAttr('data-lazy');
+  //       loadPictureSources($img);
+  //     }
+  //   });
+  // });
 
   
 
