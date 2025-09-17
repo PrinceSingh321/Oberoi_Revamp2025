@@ -1,36 +1,101 @@
 function fnComSlider() {
 
-  // function loadPictureSources($img) {
-  //   const $picture = $img.closest('picture');
-  //   $picture.find('source').each(function () {
-  //     const srcset = $(this).attr('data-srcset');
-  //     if (srcset) {
-  //       $(this).attr('srcset', srcset).removeAttr('data-srcset');
-  //     }
-  //   });
-  // }
-  
-  // const $lazyloadslider = $('.two-imageWithHalfSlider-img, .two-imageWithHalfSlider-img');
-  
-  // $lazyloadslider.on('lazyLoaded', function (event, slick, image) {
-  //   loadPictureSources($(image));
-  // });
-
-  // $lazyloadslider.on('init afterChange', function (event, slick) {
-  //   // load current + next (half slide)
-  //   let current = slick.currentSlide;
-  //   let next = (current + 1) % slick.slideCount;
-  
-  //   [current, next].forEach(function (index) {
-  //     let $img = $(slick.$slides[index]).find('img[data-lazy]');
-  //     if ($img.length && !$img.attr('data-loaded')) {
-  //       $img.attr('src', $img.data('lazy'))
-  //           .removeAttr('data-lazy')
-  //           .attr('data-loaded', 'true');
-  //       loadPictureSources($img);
-  //     }
-  //   });
-  // });
+    /****Lazy load ****/
+     
+    function setPicturePlaceholder($picture) {
+      const $img = $picture.find('img');
+      if ($img.attr('data-placeholder-set') || $img.attr('data-loaded')) return;
+    
+      const placeholderMobile = $img.attr('data-placeholder-mobile');
+      const placeholderDesktop = $img.attr('data-placeholder-desktop');
+    
+      $picture.find('source').each(function () {
+        const $source = $(this);
+        if ($source.attr('data-srcset')) {
+          const placeholder = $source.attr('data-placeholder');
+          if (placeholder) $source.attr('srcset', placeholder);
+        }
+      });
+    
+      if (!$img.attr('src')) {
+        const isMobile = window.matchMedia("(max-width: 720px)").matches;
+        if (isMobile && placeholderMobile) {
+          $img.attr('src', placeholderMobile);
+        } else if (placeholderDesktop) {
+          $img.attr('src', placeholderDesktop);
+        }
+      }
+    
+      $img.attr('data-placeholder-set', 'true');
+    }
+    
+    function loadRealImage($img) {
+      if (!$img.length || $img.attr('data-loaded')) return;
+    
+      const $picture = $img.closest('picture');
+    
+      $picture.find('source').each(function () {
+        const $source = $(this);
+        const srcset = $source.attr('data-srcset');
+        if (srcset) {
+          $source.attr('srcset', srcset).removeAttr('data-srcset');
+        }
+      });
+    
+      const lazySrc = $img.attr('data-lazy');
+      if (lazySrc) {
+        $img.attr('src', lazySrc);
+        $img.removeAttr('data-lazy');
+      }
+    
+      $img.attr('data-loaded', 'true');
+    }
+    
+    const $lazyloadslider = $('.two-imageWithHalfSlider-img, .com_TwoImageSlickSlider');
+    
+    // INIT EVENT – only set placeholders for NON-CLONED slides
+    $lazyloadslider.on('init', function (event, slick) {
+      const isMobile = window.matchMedia("(max-width: 720px)").matches;
+    
+      slick.$slides.not('.slick-cloned').each(function () {
+        setPicturePlaceholder($(this).find('picture'));
+      });
+    
+      const current = slick.currentSlide;
+      const slidesToLoad = [current];
+      if (!isMobile) slidesToLoad.push((current + 1) % slick.slideCount);
+    
+      slidesToLoad.forEach(function (index) {
+        const $slide = $(slick.$slides[index]);
+        if (!$slide.hasClass('slick-cloned')) {
+          loadRealImage($slide.find('img[data-lazy]'));
+        }
+      });
+    });
+    
+    // AFTER CHANGE – load images only for NON-CLONED slides
+    $lazyloadslider.on('afterChange', function (event, slick, currentSlide) {
+      const isMobile = window.matchMedia("(max-width: 720px)").matches;
+    
+      // Always include current slide, and next slide if desktop
+      const slidesToLoad = [currentSlide];
+      if (!isMobile) slidesToLoad.push((currentSlide + 1) % slick.slideCount);
+    
+      slidesToLoad.forEach(function (index) {
+        const $slide = $(slick.$slides[index]);
+        const $img = $slide.find('img[data-lazy]');
+    
+        // Load image for both real slides & clones (only once)
+        if (!$img.attr('data-loaded')) {
+          loadRealImage($img);
+          $img.attr('data-loaded', 'true');
+        }
+      });
+    });
+    
+    
+    
+    /**** End of Lazy load ****/
 
   $(".two-imageWithHalfSlider-img, .imageTextFormSlide").slick({
     dots: false,
@@ -76,22 +141,7 @@ function fnComSlider() {
     ],
   });
 
-  //Force load first fold (current + half slide) immediately after init
-  // $lazyloadslider.on('init', function (event, slick) {
-  //   let current = slick.currentSlide;
-  //   let next = (current + 1) % slick.slideCount;
-
-  //   [current, next].forEach(function (index) {
-  //     let $img = $(slick.$slides[index]).find('img[data-lazy]');
-  //     if ($img.length && !$img.attr('src')) {
-  //       $img.attr('src', $img.data('lazy')).removeAttr('data-lazy');
-  //       loadPictureSources($img);
-  //     }
-  //   });
-  // });
-
-  
-
+ 
   // Handle tab clicks
 
   // Handle tab clicks
