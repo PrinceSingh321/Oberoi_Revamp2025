@@ -1,36 +1,35 @@
 function fnComSlider() {
 
     /****Lazy load ****/
-     
     function setPicturePlaceholder($picture) {
       const $img = $picture.find('img');
       if ($img.attr('data-placeholder-set') || $img.attr('data-loaded')) return;
     
-      const placeholderMobile = $img.attr('data-placeholder-mobile');
-      const placeholderDesktop = $img.attr('data-placeholder-desktop');
+      const isMobile = window.matchMedia("(max-width: 720px)").matches;
+      const placeholder = isMobile
+        ? $img.attr('data-placeholder-mobile')
+        : $img.attr('data-placeholder-desktop');
+    
+      if (placeholder) {
+        $img.attr('src', placeholder);
+      }
     
       $picture.find('source').each(function () {
         const $source = $(this);
-        if ($source.attr('data-srcset')) {
-          const placeholder = $source.attr('data-placeholder');
-          if (placeholder) $source.attr('srcset', placeholder);
+        const placeholderSrc = $source.attr('data-placeholder');
+        if (placeholderSrc) {
+          $source.attr('srcset', placeholderSrc);
+        } else if (placeholder) {
+          $source.attr('srcset', placeholder);
         }
       });
-    
-      if (!$img.attr('src')) {
-        const isMobile = window.matchMedia("(max-width: 720px)").matches;
-        if (isMobile && placeholderMobile) {
-          $img.attr('src', placeholderMobile);
-        } else if (placeholderDesktop) {
-          $img.attr('src', placeholderDesktop);
-        }
-      }
     
       $img.attr('data-placeholder-set', 'true');
     }
     
     function loadRealImage($img) {
       if (!$img.length || $img.attr('data-loaded')) return;
+      $img.attr('data-loaded', 'true');
     
       const $picture = $img.closest('picture');
     
@@ -42,55 +41,62 @@ function fnComSlider() {
         }
       });
     
-      const lazySrc = $img.attr('data-lazy');
-      if (lazySrc) {
-        $img.attr('src', lazySrc);
-        $img.removeAttr('data-lazy');
+      if ($img.attr('data-lazy')) {
+        $img.attr('src', $img.attr('data-lazy')).removeAttr('data-lazy');
       }
     
-      $img.attr('data-loaded', 'true');
     }
     
-    const $lazyloadslider = $('.two-imageWithHalfSlider-img, .com_TwoImageSlickSlider');
+    function observeSlides($slider, slick) {
+      const $slides = slick.$slides;
     
-    // INIT EVENT – only set placeholders for NON-CLONED slides
-    $lazyloadslider.on('init', function (event, slick) {
-      const isMobile = window.matchMedia("(max-width: 720px)").matches;
-    
-      slick.$slides.not('.slick-cloned').each(function () {
+      $slides.not('.slick-cloned').each(function () {
         setPicturePlaceholder($(this).find('picture'));
       });
     
-      const current = slick.currentSlide;
-      const slidesToLoad = [current];
-      if (!isMobile) slidesToLoad.push((current + 1) % slick.slideCount);
-    
-      slidesToLoad.forEach(function (index) {
-        const $slide = $(slick.$slides[index]);
-        if (!$slide.hasClass('slick-cloned')) {
-          loadRealImage($slide.find('img[data-lazy]'));
-        }
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const $slide = $(entry.target);
+            const $img = $slide.find('img[data-lazy]');
+            loadRealImage($img);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        root: $slider[0].querySelector('.slick-list'),
+        rootMargin: '50px',
+        threshold: 0.1
       });
-    });
     
-    // AFTER CHANGE – load images only for NON-CLONED slides
-    $lazyloadslider.on('afterChange', function (event, slick, currentSlide) {
-      const isMobile = window.matchMedia("(max-width: 720px)").matches;
-    
-      // Always include current slide, and next slide if desktop
-      const slidesToLoad = [currentSlide];
-      if (!isMobile) slidesToLoad.push((currentSlide + 1) % slick.slideCount);
-    
-      slidesToLoad.forEach(function (index) {
-        const $slide = $(slick.$slides[index]);
-        const $img = $slide.find('img[data-lazy]');
-    
-        // Load image for both real slides & clones (only once)
-        if (!$img.attr('data-loaded')) {
-          loadRealImage($img);
-          $img.attr('data-loaded', 'true');
-        }
+      $slides.add($slider.find('.slick-cloned')).each(function () {
+        observer.observe(this);
       });
+    }
+    
+    // ---- INIT ----
+    const $lazyloadslider = $('.two-imageWithHalfSlider-img, .com_TwoImageSlickSlider');
+    
+    $lazyloadslider.on('init', function (event, slick) {
+      const $slider = $(this);
+      const isMobile = window.matchMedia("(max-width: 991px)").matches;
+    
+      if (isMobile) {
+        setTimeout(() => {
+          observeSlides($slider, slick);
+    
+          // ✅ FIX: Force load second slide after small delay
+          const $secondSlide = $slider.find('.slick-slide[data-slick-index="1"]').not('.slick-cloned');
+          if ($secondSlide.length) {
+            const $picture = $secondSlide.find('picture');
+            const $img = $picture.find('img');
+            setPicturePlaceholder($picture);  // ensure placeholder is set
+            setTimeout(() => loadRealImage($img), 300); // force load after 300ms
+          }
+        }, 0);
+      } else {
+        observeSlides($slider, slick);
+      }
     });
     
     

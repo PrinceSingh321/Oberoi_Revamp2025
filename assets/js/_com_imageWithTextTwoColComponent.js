@@ -16,91 +16,90 @@ function com_imageWithTextTwoColComponent() {
   //   ],
   // });
 
+  
+
   var DescriptionSwiper = new Swiper('.descriptionImageSliderRev', {
     slidesPerView: 1,
-    //mousewheelControl: true,
     parallax: true,
-    //freeMode: true,
     loop: true,
     speed: 600,
     navigation: false,
     autoplay: {
       delay: 4000,
     },
-    // navigation: {
-    //     nextEl: ".descriptionImageSliderRev .swiper-button-next",
-    //     prevEl: ".descriptionImageSliderRev .swiper-button-prev",
-    // },
     mousewheel: {
       forceToAxis: true,
-      sensitivity: 0.5,          // Lower sensitivity to reduce skipping
+      sensitivity: 0.5,
       releaseOnEdges: false,
-      thresholdDelta: 20,        // Helps filter small scrolls (trackpad flicks)
-      thresholdTime: 200,        // Ignores new scrolls for 300ms
+      thresholdDelta: 20,
+      thresholdTime: 200,
     },
     pagination: {
-        el: '.descriptionImageSliderRev .swiper-pagination',
-        clickable: true,
+      el: '.descriptionImageSliderRev .swiper-pagination',
+      clickable: true,
     },
     breakpoints: {
-        992: {
-            slidesPerView: 1,
-        }
+      992: {
+        slidesPerView: 1,
+      }
     },
-
-    // ✅ Lazy load enabled
-      lazy: {
-        loadPrevNext: true,
-        loadPrevNextAmount: 2,
-      },
-      watchSlidesProgress: true,
-      watchSlidesVisibility: true,
-
+    lazy: {
+      loadPrevNext: true,
+      loadOnTransitionStart: true
+    },
+    watchSlidesProgress: true,
+    watchSlidesVisibility: true,
+  
     on: {
-        init: function () {
-            // Count only real slides, excluding duplicates used for loop
-            const realSlides = this.slides.filter(slide => !slide.classList.contains('swiper-slide-duplicate'));
-            if (realSlides.length === 1) {
-                document.querySelector('.descriptionImageSliderRev').classList.add('single_slide_active');
-            }
-
-            this.slides.forEach(slide => {
-              const img = slide.querySelector('img[data-src]');
-              if (img && !img.src) {
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-              }
-              const picture = slide.querySelector('picture');
-              if (picture) {
-                picture.querySelectorAll('source[data-srcset]').forEach(source => {
-                  source.setAttribute('srcset', source.getAttribute('data-srcset'));
-                  source.removeAttribute('data-srcset');
-                });
-              }
-            });
-
-        },
-        
-         lazyImageReady: function (swiper, slideEl, imageEl) {
-            // ✅ Swiper lazy loaded, set src
-            if (imageEl.dataset.src) {
-              imageEl.src = imageEl.dataset.src;
-              imageEl.removeAttribute('data-src');
-            }
-            const picture = imageEl.closest('picture');
-            if (picture) {
-              picture.querySelectorAll('source[data-srcset]').forEach(source => {
-                source.setAttribute('srcset', source.getAttribute('data-srcset'));
-                source.removeAttribute('data-srcset');
-              });
-            }
-          }
-
+      init(swiper) {
+        const realSlides = swiper.slides.filter(slide => !slide.classList.contains('swiper-slide-duplicate'));
+        if (realSlides.length === 1) {
+          document.querySelector('.descriptionImageSliderRev').classList.add('single_slide_active');
+        }
+  
+        setAllPlaceholders();
+        loadSlideImage(swiper.slides[swiper.activeIndex]);
+      },
+  
+      slideChange(swiper) {
+        loadSlideImage(swiper.slides[swiper.activeIndex]);
+      }
     }
-
-    
-
-});
+  });
+  
+  function setAllPlaceholders() {
+    document.querySelectorAll(".custom-placeholder").forEach(el => {
+      const isMobile = window.matchMedia("(max-width: 720px)").matches;
+      const src = isMobile ? el.dataset.placeholderMobile : el.dataset.placeholderDesktop;
+      el.style.backgroundImage = `url('${src}')`;
+    });
+  }
+  
+  function loadSlideImage(slideEl) {
+    if (!slideEl) return;
+  
+    // Agar already load ho chuka hai to skip karo
+    if (slideEl.dataset.imageLoaded === "true") return;
+  
+    const picture = slideEl.querySelector("picture");
+    if (!picture) return;
+  
+    picture.querySelectorAll("source").forEach(source => {
+      if (source.dataset.srcset) source.srcset = source.dataset.srcset;
+    });
+  
+    const img = picture.querySelector("img");
+    if (img && img.dataset.src) {
+      img.onload = () => {
+        const placeholder = slideEl.querySelector(".custom-placeholder");
+        if (placeholder) placeholder.classList.add("hidden");
+        // Mark as loaded to prevent reloading
+        slideEl.dataset.imageLoaded = "true";
+      };
+      img.src = img.dataset.src;
+    }
+  }
+  
 
 document.querySelectorAll('.descriptionImageSliderRev .swiper-button-next, .descriptionImageSliderRev .swiper-button-prev').forEach(el => {
   el.remove();
