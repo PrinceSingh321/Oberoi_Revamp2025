@@ -24,9 +24,9 @@ function com_imageWithTextTwoColComponent() {
     loop: true,
     speed: 600,
     navigation: false,
-    autoplay: {
-      delay: 4000,
-    },
+    // autoplay: {
+    //   delay: 4000,
+    // },
     mousewheel: {
       forceToAxis: true,
       sensitivity: 0.5,

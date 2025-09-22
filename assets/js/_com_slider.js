@@ -14,16 +14,6 @@ function fnComSlider() {
         $img.attr('src', placeholder);
       }
     
-      $picture.find('source').each(function () {
-        const $source = $(this);
-        const placeholderSrc = $source.attr('data-placeholder');
-        if (placeholderSrc) {
-          $source.attr('srcset', placeholderSrc);
-        } else if (placeholder) {
-          $source.attr('srcset', placeholder);
-        }
-      });
-    
       $img.attr('data-placeholder-set', 'true');
     }
     
@@ -44,7 +34,6 @@ function fnComSlider() {
       if ($img.attr('data-lazy')) {
         $img.attr('src', $img.attr('data-lazy')).removeAttr('data-lazy');
       }
-    
     }
     
     function observeSlides($slider, slick) {
@@ -82,22 +71,41 @@ function fnComSlider() {
       const isMobile = window.matchMedia("(max-width: 991px)").matches;
     
       if (isMobile) {
-        setTimeout(() => {
-          observeSlides($slider, slick);
+        observeSlides($slider, slick);
     
-          // ✅ FIX: Force load second slide after small delay
-          const $secondSlide = $slider.find('.slick-slide[data-slick-index="1"]').not('.slick-cloned');
-          if ($secondSlide.length) {
-            const $picture = $secondSlide.find('picture');
+        // Force load first two slides on mobile
+        [0, 1].forEach(idx => {
+          const $slide = $slider.find(`.slick-slide[data-slick-index="${idx}"]`).not('.slick-cloned');
+          if ($slide.length) {
+            const $picture = $slide.find('picture');
             const $img = $picture.find('img');
-            setPicturePlaceholder($picture);  // ensure placeholder is set
-            setTimeout(() => loadRealImage($img), 300); // force load after 300ms
+            setPicturePlaceholder($picture);
+            loadRealImage($img);
           }
-        }, 0);
+        });
       } else {
         observeSlides($slider, slick);
       }
     });
+    
+    // Handle slide change (mobile prev/next)
+    $lazyloadslider.on('afterChange', function (event, slick, currentSlide) {
+      const $currentSlide = $(slick.$slides[currentSlide]).not('.slick-cloned');
+      const $picture = $currentSlide.find('picture');
+      const $img = $picture.find('img');
+      setPicturePlaceholder($picture);
+      loadRealImage($img);
+    
+      // Optional: preload next slide for smoother UX
+      const $nextSlide = $(slick.$slides[currentSlide + 1]).not('.slick-cloned');
+      if ($nextSlide.length) {
+        const $nextPic = $nextSlide.find('picture');
+        const $nextImg = $nextPic.find('img');
+        setPicturePlaceholder($nextPic);
+        loadRealImage($nextImg);
+      }
+    });
+    
     
     
     

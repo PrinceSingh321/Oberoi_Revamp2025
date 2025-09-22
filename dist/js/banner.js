@@ -59,15 +59,57 @@ $(document).ready(function(){
 		
 	});
 	
-    $('.homePageBanner .banner').slick({
+    // $('.homePageBanner .banner').slick({
+    //     dots: false,
+    //     infinite: true,
+    //     fade: true,         
+    //     cssEase: 'linear',
+    //     speed: 1000,
+    //     autoplay: false,
+    //     autoplaySpeed: 5000,   
+    // });
+
+    $(document).ready(function () {
+      var $homeslider = $('.homePageBanner .banner');
+    
+      $homeslider.slick({
         dots: false,
         infinite: true,
-        fade: true,         
+        fade: true,
         cssEase: 'linear',
         speed: 1000,
-        autoplay: false,
-        autoplaySpeed: 5000,   
+        autoplay: false // manual control
+      });
+    
+      // Function to move to next slide after given delay
+      function goToNextSlide(delay) {
+        clearTimeout($homeslider.data('autoplayTimer'));
+        var timer = setTimeout(function () {
+          $homeslider.slick('slickNext');
+        }, delay);
+        $homeslider.data('autoplayTimer', timer);
+        console.log('autoplayvideo'+ timer);
+      }
+    
+      function handleSlideChange(currentSlide) {
+        if (currentSlide === 0) {
+          // First slide: let video play for 20s
+          goToNextSlide(20000);
+        } else {
+          // Other slides: only 2s delay
+          goToNextSlide(2000);
+        }
+      }
+    
+      // Handle first slide on load
+      handleSlideChange(0);
+    
+      // Handle slide change events
+      $homeslider.on('afterChange', function (event, slick, currentSlide) {
+        handleSlideChange(currentSlide);
+      });
     });
+    
 	
 });
 
