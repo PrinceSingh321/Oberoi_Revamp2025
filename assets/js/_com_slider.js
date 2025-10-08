@@ -106,9 +106,7 @@ function fnComSlider() {
       }
     });
     
-    
-    
-    
+
     /**** End of Lazy load ****/
 
   $(".two-imageWithHalfSlider-img, .imageTextFormSlide").slick({
