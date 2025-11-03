@@ -33,6 +33,7 @@
           }
         }
       }
+      
     }
   }
   &.bookingEngineOffers {
@@ -533,4 +534,26 @@
   display:none;
 }
 
+}
+
+.templateHomePage{
+  .comp_bannerAndBookingWidget{
+    &.homePageBanner{
+      .banner-and-booking-widget{
+        .banner{
+          @include above(sm){
+            aspect-ratio: 1920 / 980;
+            overflow: hidden;
+          }
+          .video-wrapper{
+            iframe{
+              @include above(sm){
+                height: calc(100% + 116px) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

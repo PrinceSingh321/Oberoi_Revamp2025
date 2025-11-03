@@ -142,7 +142,7 @@ function fnSlickChangeArrowPos() {
 
       // Look for the active image depending on whether it's Slick or Swiper
       let $activeImage = $slider.find(
-        ".slick-slide.slick-current picture img, .swiper-slide-active picture img"
+        ".slick-slide.slick-current picture img, .swiper-slide.swiper-slide-active picture img"
       );
 
       if ($activeImage.length > 0) {

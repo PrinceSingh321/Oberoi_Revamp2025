@@ -1,456 +1,606 @@
 function fnComSlider() {
 
-    /****Lazy load ****/
-    function setPicturePlaceholder($picture) {
-      const $img = $picture.find('img');
-      if ($img.attr('data-placeholder-set') || $img.attr('data-loaded')) return;
+  //   /****Lazy load ****/
+  //   function setPicturePlaceholder($picture) {
+  //     const $img = $picture.find('img');
+  //     if ($img.attr('data-placeholder-set') || $img.attr('data-loaded')) return;
     
-      const isMobile = window.matchMedia("(max-width: 720px)").matches;
-      const placeholder = isMobile
-        ? $img.attr('data-placeholder-mobile')
-        : $img.attr('data-placeholder-desktop');
+  //     const isMobile = window.matchMedia("(max-width: 720px)").matches;
+  //     const placeholder = isMobile
+  //       ? $img.attr('data-placeholder-mobile')
+  //       : $img.attr('data-placeholder-desktop');
     
-      if (placeholder) {
-        $img.attr('src', placeholder);
-      }
+  //     if (placeholder) {
+  //       $img.attr('src', placeholder);
+  //     }
     
-      $img.attr('data-placeholder-set', 'true');
-    }
+  //     $img.attr('data-placeholder-set', 'true');
+  //   }
     
-    function loadRealImage($img) {
-      if (!$img.length || $img.attr('data-loaded')) return;
-      $img.attr('data-loaded', 'true');
+  //   function loadRealImage($img) {
+  //     if (!$img.length || $img.attr('data-loaded')) return;
+  //     $img.attr('data-loaded', 'true');
     
-      const $picture = $img.closest('picture');
+  //     const $picture = $img.closest('picture');
     
-      $picture.find('source').each(function () {
-        const $source = $(this);
-        const srcset = $source.attr('data-srcset');
-        if (srcset) {
-          $source.attr('srcset', srcset).removeAttr('data-srcset');
-        }
-      });
+  //     $picture.find('source').each(function () {
+  //       const $source = $(this);
+  //       const srcset = $source.attr('data-srcset');
+  //       if (srcset) {
+  //         $source.attr('srcset', srcset).removeAttr('data-srcset');
+  //       }
+  //     });
     
-      if ($img.attr('data-lazy')) {
-        $img.attr('src', $img.attr('data-lazy')).removeAttr('data-lazy');
-      }
-    }
+  //     if ($img.attr('data-lazy')) {
+  //       $img.attr('src', $img.attr('data-lazy')).removeAttr('data-lazy');
+  //     }
+  //   }
     
-    function observeSlides($slider, slick) {
-      const $slides = slick.$slides;
+  //   function observeSlides($slider, slick) {
+  //     const $slides = slick.$slides;
     
-      $slides.not('.slick-cloned').each(function () {
-        setPicturePlaceholder($(this).find('picture'));
-      });
+  //     $slides.not('.slick-cloned').each(function () {
+  //       setPicturePlaceholder($(this).find('picture'));
+  //     });
     
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const $slide = $(entry.target);
-            const $img = $slide.find('img[data-lazy]');
-            loadRealImage($img);
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        root: $slider[0].querySelector('.slick-list'),
-        rootMargin: '50px',
-        threshold: 0.1
-      });
+  //     const observer = new IntersectionObserver((entries) => {
+  //       entries.forEach(entry => {
+  //         if (entry.isIntersecting) {
+  //           const $slide = $(entry.target);
+  //           const $img = $slide.find('img[data-lazy]');
+  //           loadRealImage($img);
+  //           observer.unobserve(entry.target);
+  //         }
+  //       });
+  //     }, {
+  //       root: $slider[0].querySelector('.slick-list'),
+  //       rootMargin: '50px',
+  //       threshold: 0.1
+  //     });
     
-      $slides.add($slider.find('.slick-cloned')).each(function () {
-        observer.observe(this);
-      });
-    }
+  //     $slides.add($slider.find('.slick-cloned')).each(function () {
+  //       observer.observe(this);
+  //     });
+  //   }
     
-    // ---- INIT ----
-    const $lazyloadslider = $('.two-imageWithHalfSlider-img, .com_TwoImageSlickSlider');
+  //   // ---- INIT ----
+  //   const $lazyloadslider = $('.two-imageWithHalfSlider-img, .com_TwoImageSlickSlider');
     
-    $lazyloadslider.on('init', function (event, slick) {
-      const $slider = $(this);
-      const isMobile = window.matchMedia("(max-width: 991px)").matches;
+  //   $lazyloadslider.on('init', function (event, slick) {
+  //     const $slider = $(this);
+  //     const isMobile = window.matchMedia("(max-width: 991px)").matches;
     
-      if (isMobile) {
-        observeSlides($slider, slick);
+  //     if (isMobile) {
+  //       observeSlides($slider, slick);
     
-        // Force load first two slides on mobile
-        [0, 1].forEach(idx => {
-          const $slide = $slider.find(`.slick-slide[data-slick-index="${idx}"]`).not('.slick-cloned');
-          if ($slide.length) {
-            const $picture = $slide.find('picture');
-            const $img = $picture.find('img');
-            setPicturePlaceholder($picture);
-            loadRealImage($img);
-          }
-        });
-      } else {
-        observeSlides($slider, slick);
-      }
-    });
+  //       // Force load first two slides on mobile
+  //       [0, 1].forEach(idx => {
+  //         const $slide = $slider.find(`.slick-slide[data-slick-index="${idx}"]`).not('.slick-cloned');
+  //         if ($slide.length) {
+  //           const $picture = $slide.find('picture');
+  //           const $img = $picture.find('img');
+  //           setPicturePlaceholder($picture);
+  //           loadRealImage($img);
+  //         }
+  //       });
+  //     } else {
+  //       observeSlides($slider, slick);
+  //     }
+  //   });
     
-    // Handle slide change (mobile prev/next)
-    $lazyloadslider.on('afterChange', function (event, slick, currentSlide) {
-      const $currentSlide = $(slick.$slides[currentSlide]).not('.slick-cloned');
-      const $picture = $currentSlide.find('picture');
-      const $img = $picture.find('img');
-      setPicturePlaceholder($picture);
-      loadRealImage($img);
+  //   // Handle slide change (mobile prev/next)
+  //   $lazyloadslider.on('afterChange', function (event, slick, currentSlide) {
+  //     const $currentSlide = $(slick.$slides[currentSlide]).not('.slick-cloned');
+  //     const $picture = $currentSlide.find('picture');
+  //     const $img = $picture.find('img');
+  //     setPicturePlaceholder($picture);
+  //     loadRealImage($img);
     
-      // Optional: preload next slide for smoother UX
-      const $nextSlide = $(slick.$slides[currentSlide + 1]).not('.slick-cloned');
-      if ($nextSlide.length) {
-        const $nextPic = $nextSlide.find('picture');
-        const $nextImg = $nextPic.find('img');
-        setPicturePlaceholder($nextPic);
-        loadRealImage($nextImg);
-      }
-    });
+  //     // Optional: preload next slide for smoother UX
+  //     const $nextSlide = $(slick.$slides[currentSlide + 1]).not('.slick-cloned');
+  //     if ($nextSlide.length) {
+  //       const $nextPic = $nextSlide.find('picture');
+  //       const $nextImg = $nextPic.find('img');
+  //       setPicturePlaceholder($nextPic);
+  //       loadRealImage($nextImg);
+  //     }
+  //   });
     
 
-    /**** End of Lazy load ****/
+  //   /**** End of Lazy load ****/
 
-  $(".two-imageWithHalfSlider-img, .imageTextFormSlide").slick({
-    dots: false,
-    arrows: true,
-    lazyLoad: "ondemand",
-    touchMove: true,
-    draggable: true, // Allow dragging with mouse/trackpad
-    swipe: true ,
-    responsive: [
-      {
-        breakpoint: 1025,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  });
+  // $(".two-imageWithHalfSlider-img, .imageTextFormSlide").slick({
+  //   dots: false,
+  //   arrows: true,
+  //   lazyLoad: "ondemand",
+  //   touchMove: true,
+  //   draggable: true, // Allow dragging with mouse/trackpad
+  //   swipe: true ,
+  //   responsive: [
+  //     {
+  //       breakpoint: 1025,
+  //       settings: {
+  //         slidesToShow: 1,
+  //       },
+  //     },
+  //   ],
+  // });
 
   
 
-  $(".com_TwoImageSlickSlider").slick({
-    arrows: true,
-    dots: false,
-    infinite: true,
-    slidesToScroll: 1,
-    slidesToShow: 2,
-    centerPadding: "20px",
-    touchMove: true,
-    draggable: true, // Allow dragging with mouse/trackpad
-    swipe: true ,
-    lazyLoad: "ondemand",
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-      // You can unslick at a given breakpoint now by adding:
-      // settings: "unslick"
-      // instead of a settings object
-    ],
-  });
+  // $(".com_TwoImageSlickSlider").slick({
+  //   arrows: true,
+  //   dots: false,
+  //   infinite: true,
+  //   slidesToScroll: 1,
+  //   slidesToShow: 2,
+  //   centerPadding: "20px",
+  //   touchMove: true,
+  //   draggable: true, // Allow dragging with mouse/trackpad
+  //   swipe: true ,
+  //   lazyLoad: "ondemand",
+  //   responsive: [
+  //     {
+  //       breakpoint: 1024,
+  //       settings: {
+  //         slidesToShow: 1,
+  //         slidesToScroll: 1,
+  //       },
+  //     },
+  //     // You can unslick at a given breakpoint now by adding:
+  //     // settings: "unslick"
+  //     // instead of a settings object
+  //   ],
+  // });
 
  
-  // Handle tab clicks
+  // // Handle tab clicks
+  // $(".com_TwoImageSliderComponentRev .ComSlider-tab li, .two-imageWithHalfSlider .ComSlider-tab li").on("click", function () {
+  //   var $this = $(this);
+  //   var itemCategory = $this.attr("data-filter");
+  //   var $parentSlider = $this.closest(
+  //     ".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider"
+  //   );
 
-  // Handle tab clicks
-  $(
-    ".com_TwoImageSliderComponentRev .ComSlider-tab li, .two-imageWithHalfSlider .ComSlider-tab li"
-  ).on("click", function () {
-    var $this = $(this);
-    var itemCategory = $this.attr("data-filter");
-    var $parentSlider = $this.closest(
+  //   // Update slider based on attribute
+  //   var itemCtgoryIndex = $parentSlider
+  //     .find(
+  //       ".slider-img-sec:not('.slick-cloned')[data-slide=" +
+  //         itemCategory +
+  //         "], .com_TwoImageSlider-img-sec:not('.slick-cloned')[data-slide=" +
+  //         itemCategory +
+  //         "]"
+  //     )
+  //     .attr("data-slick-index");
+
+  //   $parentSlider
+  //     .find(".com_TwoImageSlickSlider, .two-imageWithHalfSlider-img")
+  //     .slick("slickGoTo", itemCtgoryIndex);
+
+  //   // Activate the current tab
+  //   $parentSlider.find(".ComSlider-tab li").removeClass("active");
+  //   $this.addClass("active");
+
+  //   // Activate dropdown and sub-tabs if clicked tab has dropdown
+  //   if ($this.hasClass("hasdropdown")) {
+  //     var $dropdown = $this.find(".country-dropdown");
+  //     $dropdown.addClass("active");
+
+  //     $this.addClass("active");
+
+  //     // Activate country list items in dropdown
+  //     $dropdown.find("li").each(function () {
+  //       var $item = $(this);
+  //       var filterValue = $item.attr("data-filter");
+  //       if (
+  //         $parentSlider
+  //           .find(".com_TwoImageSlider-img-sec[data-slide=" + filterValue + "]")
+  //           .is(":visible")
+  //       ) {
+  //         $item.addClass("active");
+  //       } else {
+  //         $item.removeClass("active");
+  //       }
+  //     });
+  //   }
+  // });
+  
+  // // // Add class to active tab on slider change
+  // $(".com_TwoImageSlickSlider, .two-imageWithHalfSlider-img").on(
+  //   "afterChange",
+  //   function (event, slick, currentSlide) {
+  //     let $slickSlider = $(this);
+  //     let dataSlickItem = $slickSlider
+  //       .find(".slick-slide.slick-active")
+  //       .attr("data-slide");
+
+  //     // Update active tab
+  //     $slickSlider
+  //       .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
+  //       .find(".ComSlider-tab li")
+  //       .removeClass("active");
+  //     $slickSlider
+  //       .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
+  //       .find(".ComSlider-tab li[data-filter=" + dataSlickItem + "]")
+  //       .addClass("active");
+        
+  //       $slickSlider
+  //       .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider").find(".ComSlider-tab li.hasdropdown [data-filter=" + dataSlickItem + "]")
+
+  //       //Add This Block: Handle hasdropdown li activation
+  //   $slickSlider
+  //   .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
+  //   .find(".ComSlider-tab li.hasdropdown")
+  //   .each(function () {
+  //     const $li = $(this);
+  //     const $childFilter = $li.find("[data-filter]");
+  //     if ($childFilter.attr("data-filter") === dataSlickItem) {
+  //       $li.addClass("active");
+  //     } else {
+  //       $li.removeClass("active");
+  //       $li.removeClass('hasdrop');
+  //       $li.removeClass('highlight');
+  //     }
+  //   });
+
+  // //     // Activate dropdown and sub-tabs if the slider item has dropdown
+  //     $slickSlider
+  //       .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
+  //       .find(".country-list.hasdropdown")
+  //       .each(function () {
+  //         var $countryList = $(this);
+  //         var countryDropdown = $countryList.find(".country-dropdown");
+  //         var activeDropdownItem = countryDropdown.find(
+  //           "li[data-filter=" + dataSlickItem + "]"
+  //         );
+
+  //         if (activeDropdownItem.length) {
+  //           $countryList.addClass("active");
+  //           countryDropdown.addClass("active");
+  //           activeDropdownItem.addClass("active");
+  //         } else {
+  //           $countryList.removeClass("active");
+  //           countryDropdown.removeClass("active");
+  //           countryDropdown.find("li").removeClass("active");
+  //         }
+  //       });
+
+  //  //hide map on slide change  and show image
+  //      if($("#dmap").length > 0){
+  //       $("#dmap").hide();
+  //       $("#map-image").show();
+  //     }
+
+  //   // Update dropdown value text
+  //     var filterActvTxt = $slickSlider
+  //       .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
+  //       .find(".ComSlider-tab li.active")
+  //       .text();
+  //     $slickSlider
+  //       .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
+  //       .find(".getDropdownValue")
+  //       .text(filterActvTxt);
+        
+  //   $(".slidesBtnRev .cta-boxRev .buttonStyle2Rev").removeClass("active");
+
+  //   $(".viewMapData").hide();
+    
+  //   }
+    
+  // );
+
+  // if($('.two-imageWithHalfSlider-img').length > 0){
+  //   $('.two-imageWithHalfSlider-img').on('afterChange', function(event, slick, currentSlide){
+  //     if (window.location.href.toLowerCase().includes("contact-us")) {
+  //         isDirectionMapInitialised = false;
+  //     }
+  //   });
+  // }
+ 
+  
+  /*** Lazyloading Code ***/
+function setPicturePlaceholder($picture, index, isImmediate = false) {
+  const $img = $picture.querySelector("img");
+  if (!$img || $img.hasAttribute("data-loaded")) return;
+
+  const isMobile = window.matchMedia("(max-width: 720px)").matches;
+  const placeholder = isMobile
+    ? $img.getAttribute("data-placeholder-mobile")
+    : $img.getAttribute("data-placeholder-desktop");
+
+  // Set placeholder initially
+  if (placeholder) {
+    $img.src = placeholder;
+  }
+
+  // Function to load the real image
+  const loadRealImage = () => {
+    const sources = $picture.querySelectorAll("source");
+    sources.forEach((source) => {
+      const dataSrcset = source.getAttribute("data-srcset");
+      if (dataSrcset) source.setAttribute("srcset", dataSrcset);
+    });
+
+    const actualSrc = $img.getAttribute("data-lazy");
+    if (actualSrc) {
+      const tempImg = new Image();
+      tempImg.src = actualSrc;
+      tempImg.onload = function () {
+        $img.src = actualSrc;
+        $img.setAttribute("data-loaded", "true");
+        $img.classList.add("loaded");
+      };
+    }
+  };
+
+  // If immediate load is requested (e.g., first 2 slides on desktop)
+  if (isImmediate) {
+    loadRealImage();
+    return;
+  }
+
+  // Load immediately if already in viewport
+  const rect = $picture.getBoundingClientRect();
+  const inViewport =
+    rect.top < window.innerHeight &&
+    rect.bottom > 0 &&
+    rect.left < window.innerWidth &&
+    rect.right > 0;
+
+  if (inViewport) {
+    loadRealImage();
+    return;
+  }
+
+  // Otherwise, observe when it enters the viewport
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          loadRealImage();
+          obs.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  observer.observe($picture);
+}
+
+// Run after DOM loads
+document.addEventListener("DOMContentLoaded", function () {
+  const pictures = document.querySelectorAll(
+    ".two-imageWithHalfSlider-img picture, .com_TwoImageSlickSlider picture"
+  );
+
+  const isDesktop = window.matchMedia("(min-width: 1025px)").matches;
+
+  pictures.forEach((picture, index) => {
+    const isImmediate = isDesktop && index < 2;
+    setPicturePlaceholder(picture, index, isImmediate);
+  });
+});
+
+let isMobileView = window.matchMedia("(max-width: 720px)").matches;
+
+window.addEventListener("resize", () => {
+  const currentIsMobile = window.matchMedia("(max-width: 720px)").matches;
+
+  if (currentIsMobile !== isMobileView) {
+    isMobileView = currentIsMobile;
+
+    document
+      .querySelectorAll(
+        ".two-imageWithHalfSlider-img picture, .com_TwoImageSlickSlider picture"
+      )
+      .forEach(($picture, index) => {
+        const $img = $picture.querySelector("img");
+        if ($img && !$img.hasAttribute("data-loaded")) {
+          setPicturePlaceholder($picture, index, false);
+        }
+      });
+  }
+});
+
+/**** End of Lazyloading Code ****/
+
+// Array to store each Swiper instance
+const swipers = [];
+
+// Initialize Swipers
+document
+  .querySelectorAll(".two-imageWithHalfSlider-img, .com_TwoImageSlickSlider")
+  .forEach(($el) => {
+    const isTwoImageSlider = $el.classList.contains("com_TwoImageSlickSlider");
+    const $container = $el.closest(
       ".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider"
     );
 
-    // Update slider based on attribute
-    var itemCtgoryIndex = $parentSlider
-      .find(
-        ".slider-img-sec:not('.slick-cloned')[data-slide=" +
-          itemCategory +
-          "], .com_TwoImageSlider-img-sec:not('.slick-cloned')[data-slide=" +
-          itemCategory +
-          "]"
-      )
-      .attr("data-slick-index");
+    const swiper = new Swiper($el, {
+      slidesPerView: isTwoImageSlider ? 2 : 1.4,
+      spaceBetween: isTwoImageSlider ? 67 : 0,
+      speed: 600,
+      parallax: true,
+      loop: true,
+      mousewheel: {
+        forceToAxis: true,
+        sensitivity: 0.5,
+        releaseOnEdges: false,
+        thresholdDelta: 20,
+        thresholdTime: 200,
+      },
+      navigation: {
+        nextEl: $container.querySelector(".swiper-button-next"),
+        prevEl: $container.querySelector(".swiper-button-prev"),
+      },
+      breakpoints: {
+        1025: {
+          slidesPerView: isTwoImageSlider ? 2 : 1.4,
+        },
+        0: {
+          slidesPerView: 1,
+          spaceBetween: isTwoImageSlider ? 0 : 0,
+        },
+      },
+      on: {
+        slideChange: function () {
+          handleSlideChange($el, this);
+        },
+      },
+    });
 
-    $parentSlider
-      .find(".com_TwoImageSlickSlider, .two-imageWithHalfSlider-img")
-      .slick("slickGoTo", itemCtgoryIndex);
+    // Disable interaction if real slides < 3
+    const realSlidesCount = Array.from(swiper.slides).filter(
+      (slide) => !slide.classList.contains("swiper-slide-duplicate")
+    ).length;
 
-    // Activate the current tab
-    $parentSlider.find(".ComSlider-tab li").removeClass("active");
-    $this.addClass("active");
+    if (realSlidesCount < 3) {
+      swiper.allowTouchMove = false;
+      swiper.mousewheel.disable();
+      $container
+        .querySelectorAll(".swiper-button-next, .swiper-button-prev")
+        .forEach((btn) => (btn.style.display = "none"));
+    }
 
-    // Activate dropdown and sub-tabs if clicked tab has dropdown
-    if ($this.hasClass("hasdropdown")) {
-      var $dropdown = $this.find(".country-dropdown");
-      $dropdown.addClass("active");
+    swipers.push({ el: $el, instance: swiper });
+  });
 
-      $this.addClass("active");
+// Handle tab clicks
+document
+  .querySelectorAll(
+    ".com_TwoImageSliderComponentRev .ComSlider-tab li, .two-imageWithHalfSlider .ComSlider-tab li"
+  )
+  .forEach(($tab) => {
+    $tab.addEventListener("click", () => {
+      const itemCategory = $tab.getAttribute("data-filter");
+      const $parentSlider = $tab.closest(
+        ".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider"
+      );
+      const $swiperEl = $parentSlider.querySelector(".swiper");
+      const swiperData = swipers.find((sw) => sw.el === $swiperEl);
+      if (!swiperData) return;
 
-      // Activate country list items in dropdown
-      $dropdown.find("li").each(function () {
-        var $item = $(this);
-        var filterValue = $item.attr("data-filter");
+      const swiperInstance = swiperData.instance;
+      let realIndex = -1;
+
+      swiperInstance.slides.forEach((slide) => {
         if (
-          $parentSlider
-            .find(".com_TwoImageSlider-img-sec[data-slide=" + filterValue + "]")
-            .is(":visible")
+          slide.getAttribute("data-slide") === itemCategory &&
+          !slide.classList.contains("swiper-slide-duplicate")
         ) {
-          $item.addClass("active");
-        } else {
-          $item.removeClass("active");
+          const datasetIndex = slide.dataset.swiperSlideIndex;
+          realIndex = datasetIndex
+            ? parseInt(datasetIndex, 10)
+            : slide.swiperSlideIndex;
         }
       });
-    }
-  });
-  
-  // // Add class to active tab on slider change
-  $(".com_TwoImageSlickSlider, .two-imageWithHalfSlider-img").on(
-    "afterChange",
-    function (event, slick, currentSlide) {
-      let $slickSlider = $(this);
-      let dataSlickItem = $slickSlider
-        .find(".slick-slide.slick-active")
-        .attr("data-slide");
+
+      if (realIndex >= 0) {
+        // ✅ Find all real (non-duplicate) slides matching the clicked data-slide
+        const realSlides = Array.from(swiperInstance.slides).filter(
+          (slide) =>
+            slide.getAttribute("data-slide") === itemCategory &&
+            !slide.classList.contains("swiper-slide-duplicate")
+        );
+      
+        if (realSlides.length > 0) {
+          // ✅ Use the FIRST real occurrence always
+          const firstRealSlide = realSlides[0];
+          const firstRealIndex = parseInt(firstRealSlide.dataset.swiperSlideIndex || firstRealSlide.swiperSlideIndex, 10);
+      
+          // ✅ Always move to the first original slide (not the closest duplicate)
+          swiperInstance.slideToLoop(firstRealIndex, 600, true);
+        }
+      }
+      
+      
 
       // Update active tab
-      $slickSlider
-        .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
-        .find(".ComSlider-tab li")
-        .removeClass("active");
-      $slickSlider
-        .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
-        .find(".ComSlider-tab li[data-filter=" + dataSlickItem + "]")
-        .addClass("active");
-        
-        $slickSlider
-        .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider").find(".ComSlider-tab li.hasdropdown [data-filter=" + dataSlickItem + "]")
+      $parentSlider
+        .querySelectorAll(".ComSlider-tab li")
+        .forEach((li) => li.classList.remove("active"));
+      $tab.classList.add("active");
 
-        //Add This Block: Handle hasdropdown li activation
-    $slickSlider
-    .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
-    .find(".ComSlider-tab li.hasdropdown")
-    .each(function () {
-      const $li = $(this);
-      const $childFilter = $li.find("[data-filter]");
-      if ($childFilter.attr("data-filter") === dataSlickItem) {
-        $li.addClass("active");
-      } else {
-        $li.removeClass("active");
-        $li.removeClass('hasdrop');
-        $li.removeClass('highlight');
-      }
-    });
+      // Dropdown logic
+      if ($tab.classList.contains("hasdropdown")) {
+        const $dropdown = $tab.querySelector(".country-dropdown");
+        $dropdown.classList.add("active");
 
-  //     // Activate dropdown and sub-tabs if the slider item has dropdown
-      $slickSlider
-        .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
-        .find(".country-list.hasdropdown")
-        .each(function () {
-          var $countryList = $(this);
-          var countryDropdown = $countryList.find(".country-dropdown");
-          var activeDropdownItem = countryDropdown.find(
-            "li[data-filter=" + dataSlickItem + "]"
+        $dropdown.querySelectorAll("li").forEach(($item) => {
+          const filterValue = $item.getAttribute("data-filter");
+          const targetSlide = $parentSlider.querySelector(
+            `.swiper-slide[data-slide="${filterValue}"]`
           );
-
-          if (activeDropdownItem.length) {
-            $countryList.addClass("active");
-            countryDropdown.addClass("active");
-            activeDropdownItem.addClass("active");
-          } else {
-            $countryList.removeClass("active");
-            countryDropdown.removeClass("active");
-            countryDropdown.find("li").removeClass("active");
-          }
+          $item.classList.toggle(
+            "active",
+            targetSlide && targetSlide.classList.contains("swiper-slide-visible")
+          );
         });
-
-   //hide map on slide change  and show image
-       if($("#dmap").length > 0){
-        $("#dmap").hide();
-        $("#map-image").show();
-      }
-
-    // Update dropdown value text
-      var filterActvTxt = $slickSlider
-        .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
-        .find(".ComSlider-tab li.active")
-        .text();
-      $slickSlider
-        .parents(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider")
-        .find(".getDropdownValue")
-        .text(filterActvTxt);
-        
-    $(".slidesBtnRev .cta-boxRev .buttonStyle2Rev").removeClass("active");
-
-    $(".viewMapData").hide();
-    
-    }
-    
-  );
-
-  if($('.two-imageWithHalfSlider-img').length > 0){
-    $('.two-imageWithHalfSlider-img').on('afterChange', function(event, slick, currentSlide){
-      if (window.location.href.toLowerCase().includes("contact-us")) {
-          isDirectionMapInitialised = false;
+      } else {
+        $parentSlider
+          .querySelectorAll(".country-dropdown")
+          .forEach((dd) => dd.classList.remove("active"));
       }
     });
+  });
+
+// Handle Swiper slide change
+function handleSlideChange($sliderEl, swiperInstance) {
+  const $parent = $sliderEl.closest(
+    ".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider"
+  );
+  const currentSlide = swiperInstance.slides[swiperInstance.activeIndex];
+  const dataSlide = currentSlide.getAttribute("data-slide");
+
+  // Update tabs
+  $parent.querySelectorAll(".ComSlider-tab li").forEach((li) => {
+    li.classList.toggle("active", li.getAttribute("data-filter") === dataSlide);
+  });
+
+  // Handle dropdowns
+  $parent.querySelectorAll(".country-list.hasdropdown").forEach(($countryList) => {
+    const $dropdown = $countryList.querySelector(".country-dropdown");
+    const $activeItem = $dropdown.querySelector(`li[data-filter="${dataSlide}"]`);
+
+    if ($activeItem) {
+      $countryList.classList.add("active");
+      $dropdown.classList.add("active");
+      $dropdown.querySelectorAll("li").forEach((li) => li.classList.remove("active"));
+      $activeItem.classList.add("active");
+    } else {
+      $countryList.classList.remove("active");
+      $dropdown.classList.remove("active");
+      $dropdown.querySelectorAll("li").forEach((li) => li.classList.remove("active"));
+    }
+  });
+
+  // Hide map on slide change
+  const dmap = document.querySelector("#dmap");
+  const mapImage = document.querySelector("#map-image");
+  if (dmap && mapImage) {
+    dmap.style.display = "none";
+    mapImage.style.display = "block";
   }
+
+  // Update dropdown visible text
+  const activeTab = $parent.querySelector(".ComSlider-tab li.active");
+  const dropdownValue = $parent.querySelector(".getDropdownValue");
+  if (activeTab && dropdownValue) {
+    dropdownValue.textContent = activeTab.textContent;
+  }
+
+  // Hide map buttons and data
+  document
+    .querySelectorAll(".slidesBtnRev .cta-boxRev .buttonStyle2Rev")
+    .forEach((btn) => btn.classList.remove("active"));
+  document.querySelectorAll(".viewMapData").forEach((el) => {
+    el.style.display = "none";
+  });
+}
+
+
  
-  
-//  // Array to store each Swiper instance
-// const swipers = [];
-
-// // Initialize Swipers
-// $(".two-imageWithHalfSlider-img, .com_TwoImageSlickSlider").each(function () {
-//   const $el = $(this);
-//   const isTwoImageSlider = $el.hasClass("com_TwoImageSlickSlider");
-//   const $container = $el.closest(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider");
-
-//   const swiper = new Swiper(this, {
-//     slidesPerView: isTwoImageSlider ? 2 : 1.4,
-//     spaceBetween: isTwoImageSlider ? 67 : 0,
-//     speed: 600,
-//     parallax: true,
-//     loop: true,
-//     mousewheel: {
-//       forceToAxis: true,
-//       sensitivity: 0.5,
-//       releaseOnEdges: false,
-//       thresholdDelta: 20,
-//       thresholdTime: 200,
-//     },
-//     navigation: {
-//       nextEl: $container.find(".swiper-button-next")[0],
-//       prevEl: $container.find(".swiper-button-prev")[0],
-//     },
-//     breakpoints: {
-//       1025: {
-//         slidesPerView: isTwoImageSlider ? 2 : 1.4,
-//       },
-//       0: {
-//         slidesPerView: 1,
-//         spaceBetween: isTwoImageSlider ? 0 : 0,
-//       },
-//     },
-//     on: {
-//       slideChange: function () {
-//         handleSlideChange($el, this);
-//       },
-//     },
-//   });
-   
-//    // Disable interaction if real slides < 3
-//    const realSlidesCount = swiper.slides.filter(slide => !slide.classList.contains("swiper-slide-duplicate")).length;
-
-//    if (realSlidesCount < 3) {
-//      swiper.allowTouchMove = false;
-//      swiper.mousewheel.disable();
-//      $container.find(".swiper-button-next, .swiper-button-prev").hide(); // Optional: hide arrows
-//    }
-
-//   swipers.push({ el: this, instance: swiper });
-  
-// });
-
-// // Handle tab clicks
-// $(".com_TwoImageSliderComponentRev .ComSlider-tab li, .two-imageWithHalfSlider .ComSlider-tab li").on("click", function () {
-//   const $this = $(this);
-//   const itemCategory = $this.attr("data-filter");
-//   const $parentSlider = $this.closest(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider");
-//   const $swiperEl = $parentSlider.find('.swiper')[0];
-
-//   const swiperData = swipers.find(sw => sw.el === $swiperEl);
-//   if (swiperData) {
-//     const swiperInstance = swiperData.instance;
-
-//     // Find the REAL (non-duplicate) slide index using originalSlides
-//     let realIndex = -1;
-//     swiperInstance.slides.forEach((slide, index) => {
-//       if (
-//         slide.getAttribute('data-slide') === itemCategory &&
-//         !slide.classList.contains('swiper-slide-duplicate')
-//       ) {
-//         realIndex = swiperInstance.realIndex; // fallback
-//         const dataset = swiperInstance.slides[index].dataset;
-//         realIndex = parseInt(dataset.swiperSlideIndex) || index;
-//       }
-//     });
-
-//     if (realIndex >= 0) {
-//       swiperInstance.slideToLoop(realIndex);
-//     }
-//   }
-
-//   // Activate the clicked tab
-//   $parentSlider.find(".ComSlider-tab li").removeClass("active");
-//   $this.addClass("active");
-
-//   // Handle dropdown logic
-//   if ($this.hasClass("hasdropdown")) {
-//     const $dropdown = $this.find(".country-dropdown");
-//     $dropdown.addClass("active");
-
-//     $dropdown.find("li").each(function () {
-//       const $item = $(this);
-//       const filterValue = $item.attr("data-filter");
-//       const isVisible = $parentSlider.find(`.swiper-slide[data-slide="${filterValue}"]`).is(":visible");
-//       $item.toggleClass("active", isVisible);
-//     });
-//   }
-// });
-
-
-// // Handle Swiper slide change
-// function handleSlideChange($sliderEl, swiperInstance) {
-//   const $parent = $sliderEl.closest(".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider");
-
-//   const currentSlide = swiperInstance.slides[swiperInstance.activeIndex];
-//   const dataSlide = $(currentSlide).attr("data-slide");
-
-//   // Update tabs
-//   $parent.find(".ComSlider-tab li").removeClass("active");
-//   $parent.find(`.ComSlider-tab li[data-filter="${dataSlide}"]`).addClass("active");
-
-//   // Handle dropdowns
-//   $parent.find(".country-list.hasdropdown").each(function () {
-//     const $countryList = $(this);
-//     const $dropdown = $countryList.find(".country-dropdown");
-//     const $activeItem = $dropdown.find(`li[data-filter="${dataSlide}"]`);
-
-//     if ($activeItem.length) {
-//       $countryList.addClass("active");
-//       $dropdown.addClass("active");
-//       $dropdown.find("li").removeClass("active");
-//       $activeItem.addClass("active");
-//     } else {
-//       $countryList.removeClass("active");
-//       $dropdown.removeClass("active");
-//       $dropdown.find("li").removeClass("active");
-//     }
-//   });
-
-//    //hide map on slide change  and show image
-//        if($("#dmap").length > 0){
-//         $("#dmap").hide();
-//         $("#map-image").show();
-//       }
-
-//   // Update dropdown visible text
-//   const activeTabText = $parent.find(".ComSlider-tab li.active").text();
-//   $parent.find(".getDropdownValue").text(activeTabText);
-
-//   // Hide map and reset state
-//   $(".slidesBtnRev .cta-boxRev .buttonStyle2Rev").removeClass("active");
-//   $(".viewMapData").hide();
-// }
-
-
-   
   
 }
 
