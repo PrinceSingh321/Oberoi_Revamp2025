@@ -1,30 +1,75 @@
+// function mobileOnlySlider() {
+//   if($(".awardsWrapperRev").length > 0){
+//     if ($(window).width() < 1024) {
+//       if (!$(".awardsWrapperRev").hasClass("slick-initialized")) {
+//         $(".awardsWrapperRev").slick({
+//           autoplay: false,
+//           speed: 300,
+//           slidesToShow: 1,
+//           slidesToScroll: 1,
+//           dots: true,
+//           arrows: false,
+//         });
+  
+//       }
+//     } else {
+//       if ($(".awardsWrapperRev").hasClass("slick-initialized")) {
+//         $(".awardsWrapperRev").slick("unslick");
+//       }
+//     }
+//   }
+  
+//     // if ($(window).width() < 1024) {
+//     //   mobileOnlySlider();
+//     // } else {
+//     //   $(".awardsWrapperRev").slick("unslick");
+//     // }
+// }
+
+let awardsSwiper = null;
+
 function mobileOnlySlider() {
-  if($(".awardsWrapperRev").length > 0){
-    if ($(window).width() < 1024) {
-      if (!$(".awardsWrapperRev").hasClass("slick-initialized")) {
-        $(".awardsWrapperRev").slick({
-          autoplay: false,
-          speed: 300,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          dots: true,
-          arrows: false,
-        });
-  
-      }
-    } else {
-      if ($(".awardsWrapperRev").hasClass("slick-initialized")) {
-        $(".awardsWrapperRev").slick("unslick");
-      }
-    }
+  const $slider = document.querySelector(".awardsWrapperRev");
+  if (!$slider) return;
+
+  const isMobile = window.innerWidth < 1024;
+
+  if (isMobile && !awardsSwiper) {
+    awardsSwiper = new Swiper(".awardsWrapperRev", {
+      slidesPerView: 1,
+      spaceBetween: 0,
+      autoplay: false,
+      speed: 600,
+      parallax: true,
+      loop: true,
+      mousewheel: {
+        forceToAxis: true,
+        sensitivity: 0.5,
+        releaseOnEdges: false,
+        thresholdDelta: 20,
+        thresholdTime: 200,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      allowTouchMove: true,
+    });
+  } else if (!isMobile && awardsSwiper) {
+    awardsSwiper.destroy(true, true);
+    awardsSwiper = null;
   }
-  
-    // if ($(window).width() < 1024) {
-    //   mobileOnlySlider();
-    // } else {
-    //   $(".awardsWrapperRev").slick("unslick");
-    // }
 }
+
+// Initialize on load
+//mobileOnlySlider();
+
+// Reinitialize on resize
+window.addEventListener("resize", () => {
+  mobileOnlySlider();
+});
+
+
 function fnGlobalAwards() {
   var glblFlg = true;
   $(".awardsSlides >  li").click(function () {

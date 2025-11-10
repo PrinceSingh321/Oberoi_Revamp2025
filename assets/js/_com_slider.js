@@ -371,7 +371,7 @@ function setPicturePlaceholder($picture, index, isImmediate = false) {
 // Run after DOM loads
 document.addEventListener("DOMContentLoaded", function () {
   const pictures = document.querySelectorAll(
-    ".two-imageWithHalfSlider-img picture, .com_TwoImageSlickSlider picture"
+    ".two-imageWithHalfSlider-img picture, .com_TwoImageSlickSlider picture, .imageTextFormSlide picture, .imageWithTextWrappRev picture"
   );
 
   const isDesktop = window.matchMedia("(min-width: 1025px)").matches;
@@ -392,7 +392,7 @@ window.addEventListener("resize", () => {
 
     document
       .querySelectorAll(
-        ".two-imageWithHalfSlider-img picture, .com_TwoImageSlickSlider picture"
+        ".two-imageWithHalfSlider-img picture, .com_TwoImageSlickSlider picture, .imageTextFormSlide picture, .imageWithTextWrappRev picture"
       )
       .forEach(($picture, index) => {
         const $img = $picture.querySelector("img");
@@ -598,6 +598,51 @@ function handleSlideChange($sliderEl, swiperInstance) {
     el.style.display = "none";
   });
 }
+
+// Initialize Swiper
+document.querySelectorAll(".imageTextFormSlide").forEach(($el) => {
+  const slideCount = $el.querySelectorAll(".swiper-slide").length;
+
+  //If there's only one slide, hide arrows and skip loop
+  const hasMultipleSlides = slideCount > 1;
+
+  if (!hasMultipleSlides) {
+    // Hide navigation arrows if present
+    const nextBtn = $el.querySelector(".swiper-button-next");
+    const prevBtn = $el.querySelector(".swiper-button-prev");
+    if (nextBtn) nextBtn.style.display = "none";
+    if (prevBtn) prevBtn.style.display = "none";
+  }
+
+  const swiper = new Swiper($el, {
+    slidesPerView: 1,
+    spaceBetween: 0,
+    speed: 600,
+    parallax: true,
+    loop: hasMultipleSlides, //disable loop if single slide
+    allowTouchMove: hasMultipleSlides, //disable swipe if single
+    mousewheel: hasMultipleSlides
+      ? {
+          forceToAxis: true,
+          sensitivity: 0.5,
+          releaseOnEdges: false,
+          thresholdDelta: 20,
+          thresholdTime: 200,
+        }
+      : false,
+    navigation: hasMultipleSlides
+      ? {
+          nextEl: $el.querySelector(".swiper-button-next"),
+          prevEl: $el.querySelector(".swiper-button-prev"),
+        }
+      : {},
+    breakpoints: {
+      1025: {
+        slidesPerView: 1,
+      },
+    },
+  });
+});
 
 
  

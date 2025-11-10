@@ -3,8 +3,37 @@
     display: flex;
     //justify-content: space-around;
     @include below(tb){
-      margin-bottom: 43px;
+      padding-bottom: 43px;
+      .swiper-pagination{
+        .swiper-pagination-bullet{
+          height: 7px;
+          width: 35px;
+          border-radius: 20px;
+          background: transparent;
+          border: solid 1px #999;
+          opacity: 1;
+          overflow: hidden;
+          position: relative;
+          &::before{
+            content: "";
+            position: absolute;
+            width: 0%;
+            bottom: 0;
+            left: 0;
+            transition: width 1.9s ease;
+          }
+          &.swiper-pagination-bullet-active{
+            // background: #606161;
+            &::before {
+              width: 100%;
+              background: #606161;
+              height: 7px;
+          }
+          }
+        }
+      }
     }
+   
     .awardsList {
       padding: 0px 1%;
       text-align: left;
@@ -78,6 +107,13 @@
            display: block;
          }
     } 
+    .swiper-pagination{
+      .swiper-pagination-bullet{
+        height: 7px;
+        width: 30px;
+        border-radius: 10px;
+      }
+    }
   }
 }
 

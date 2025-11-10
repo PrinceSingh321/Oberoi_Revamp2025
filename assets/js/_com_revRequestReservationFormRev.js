@@ -269,15 +269,13 @@ function fnRequestForm() {
   if (window.location.href.includes("/contact-us")) {
     $("body").addClass("rev_global_contact-page");
 }
-  $(".two-imageWithHalfSlider .slick-arrow, .ComSlider-item.inactive, .imageWithRightTextWrappRev .slick-arrow , .two-imageWithHalfSlider-img .slick-arrow").click(function () {
+  $(".two-imageWithHalfSlider .slick-arrow, .ComSlider-item.inactive, .imageWithRightTextWrappRev .slick-arrow , .two-imageWithHalfSlider-img .slick-arrow, .imageTextFormSlide .swiper-button-next, .imageTextFormSlide .swiper-button-prev").click(function () {
     if (!$("body").hasClass("contact-us")) {
       $(".request-a-proposal-form, .weddingForm-writeus.active, #reservation-queries").hide();
       $(".rev_global_contact-page #reservation-queries").removeAttr("style");
       
       
-      $(".requestReservationForm-container, .btnRequestAProposal").removeClass(
-        "active"
-      );
+      $(".requestReservationForm-container, .btnRequestAProposal").removeClass("active");
       $(".rev_global_contact-page #reservation-queries").addClass('active');
       $(".requestReservationForm-container #requestForm-box").show();
       $(".requestReservationForm-container #RequestFromThanks-box").hide();
