@@ -27,12 +27,12 @@
           line-height: 0px;
           font-size: 0px;
           cursor: pointer;
-          //margin-top: 3.94vh;
+          margin-top: 3.94vh;
           @include below(tb){
             left: 2%;
           }
           @include below(sm){
-            left: 4%;
+            left: 8%;
           }
           &::after{
             content: "";
@@ -62,13 +62,13 @@
           width: 20px;
           line-height: 0px;
           font-size: 0px;
-          //margin-top: 3.94vh;
+          margin-top: 3.94vh;
           cursor: pointer;
           @include below(tb){
             right: 2%;
           }
           @include below(sm){
-            right: 4%;
+            right: 8%;
           }
           &::after{
             content: "";
