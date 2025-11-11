@@ -642,6 +642,7 @@
       text-overflow: ellipsis;
       white-space:nowrap;
       padding-right:15px;
+      font-family: 'verdanaN'; 
       @include below(md2) {
         font-size: 0.955rem;
       }
