@@ -187,8 +187,12 @@
         }
         &.swiper{
           position: initial;
+          padding-right: 28%;
+          @include below(tb) {
+            padding: 0 0% 0 0;
+          }
           .swiper-button-next{
-            right: 30.5%;
+            right: 29.5%;
             background-image: none;
             position: absolute;
             display: block;
@@ -197,6 +201,9 @@
             line-height: 0px;
             font-size: 0px;
             cursor: pointer;
+            @include below(md3){
+               right: 30.5%;
+            }
             @include below(tb){
               right: 5%;
             }
@@ -265,6 +272,7 @@
               }
             }
           }
+          
         }
       }
       .two-imgSlider-main {

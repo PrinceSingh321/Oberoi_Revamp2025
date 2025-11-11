@@ -191,6 +191,7 @@
 .awardsCountrySlide {
   opacity: 0;
   display: none;
+  height: 0;
   &.activeSlider {
     display: block;
   }

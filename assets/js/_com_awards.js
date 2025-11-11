@@ -80,7 +80,11 @@ function fnGlobalAwards() {
 
     setTimeout(function () {
       fnSlickChangeArrowPos();
-      $(".awardsCountrySlide.activeSlider").css("opacity", "1");
+      //$(".awardsCountrySlide.activeSlider").css("opacity", "1");
+      $(".awardsCountrySlide.activeSlider").css({
+        "opacity": "1",
+        "height": "auto"
+      });
     }, 100);
   });
 

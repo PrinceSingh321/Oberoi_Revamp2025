@@ -30,11 +30,11 @@ function fncountrydropdown() {
   }
 
   $(
-    ".country_slider .com_TwoImageSlickSlider .slick-prev, .country_slider .com_TwoImageSlickSlider .slick-next"
+    ".country_slider .com_TwoImageSlickSlider .slick-prev, .country_slider .com_TwoImageSlickSlider .slick-next, .country_slider .com_TwoImageSlickSlider .swiper-button-prev, .country_slider .com_TwoImageSlickSlider .swiper-button-next"
   ).on("click", function () {
     $("#egypt").removeClass("highlight");
     var selectedCountry = $(
-      ".country_slider .com_TwoImageSlider-img-sec.slick-slide.slick-active"
+      ".country_slider .com_TwoImageSlider-img-sec.slick-slide.slick-active, .country_slider .com_TwoImageSlider-img-sec.swiper-slide.swiper-slide-active"
     ).attr("data-country");
     console.log(selectedCountry);
     if (selectedCountry === "egypt") {

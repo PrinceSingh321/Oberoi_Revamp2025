@@ -418,7 +418,7 @@ document
     );
 
     const swiper = new Swiper($el, {
-      slidesPerView: isTwoImageSlider ? 2 : 1.4,
+      slidesPerView: isTwoImageSlider ? 2 : 1,
       spaceBetween: isTwoImageSlider ? 67 : 0,
       speed: 600,
       parallax: true,
@@ -436,7 +436,7 @@ document
       },
       breakpoints: {
         1025: {
-          slidesPerView: isTwoImageSlider ? 2 : 1.4,
+          slidesPerView: isTwoImageSlider ? 2 : 1,
         },
         0: {
           slidesPerView: 1,
@@ -447,8 +447,17 @@ document
         slideChange: function () {
           handleSlideChange($el, this);
         },
+        slideChangeTransitionEnd: function () {
+         // Hide map buttons and data
+        document.querySelectorAll(".slidesBtnRev .cta-boxRev .buttonStyle2Rev").forEach((btn) => btn.classList.remove("active"));
+        document.querySelectorAll(".viewMapData").forEach((el) => {
+          el.style.display = "none";
+        });
+        },
       },
     });
+
+    
 
     // Disable interaction if real slides < 3
     const realSlidesCount = Array.from(swiper.slides).filter(
@@ -467,10 +476,7 @@ document
   });
 
 // Handle tab clicks
-document
-  .querySelectorAll(
-    ".com_TwoImageSliderComponentRev .ComSlider-tab li, .two-imageWithHalfSlider .ComSlider-tab li"
-  )
+document.querySelectorAll(".com_TwoImageSliderComponentRev .ComSlider-tab li, .two-imageWithHalfSlider .ComSlider-tab li" )
   .forEach(($tab) => {
     $tab.addEventListener("click", () => {
       const itemCategory = $tab.getAttribute("data-filter");
@@ -497,7 +503,7 @@ document
       });
 
       if (realIndex >= 0) {
-        // ✅ Find all real (non-duplicate) slides matching the clicked data-slide
+        //Find all real (non-duplicate) slides matching the clicked data-slide
         const realSlides = Array.from(swiperInstance.slides).filter(
           (slide) =>
             slide.getAttribute("data-slide") === itemCategory &&
@@ -505,11 +511,11 @@ document
         );
       
         if (realSlides.length > 0) {
-          // ✅ Use the FIRST real occurrence always
+          //Use the FIRST real occurrence always
           const firstRealSlide = realSlides[0];
           const firstRealIndex = parseInt(firstRealSlide.dataset.swiperSlideIndex || firstRealSlide.swiperSlideIndex, 10);
       
-          // ✅ Always move to the first original slide (not the closest duplicate)
+          //Always move to the first original slide (not the closest duplicate)
           swiperInstance.slideToLoop(firstRealIndex, 600, true);
         }
       }
@@ -521,10 +527,14 @@ document
         .querySelectorAll(".ComSlider-tab li")
         .forEach((li) => li.classList.remove("active"));
       $tab.classList.add("active");
+      
 
       // Dropdown logic
       if ($tab.classList.contains("hasdropdown")) {
         const $dropdown = $tab.querySelector(".country-dropdown");
+        $parentSlider.querySelectorAll(".ComSlider-item").forEach(($item) => {
+          $item.classList.remove("active");
+        });
         $dropdown.classList.add("active");
 
         $dropdown.querySelectorAll("li").forEach(($item) => {
@@ -532,10 +542,8 @@ document
           const targetSlide = $parentSlider.querySelector(
             `.swiper-slide[data-slide="${filterValue}"]`
           );
-          $item.classList.toggle(
-            "active",
-            targetSlide && targetSlide.classList.contains("swiper-slide-visible")
-          );
+          $item.classList.toggle("active", targetSlide && targetSlide.classList.contains("swiper-slide-active"));
+          
         });
       } else {
         $parentSlider
@@ -591,13 +599,16 @@ function handleSlideChange($sliderEl, swiperInstance) {
   }
 
   // Hide map buttons and data
-  document
-    .querySelectorAll(".slidesBtnRev .cta-boxRev .buttonStyle2Rev")
-    .forEach((btn) => btn.classList.remove("active"));
-  document.querySelectorAll(".viewMapData").forEach((el) => {
-    el.style.display = "none";
-  });
+  // document.querySelectorAll(".slidesBtnRev .cta-boxRev .buttonStyle2Rev").forEach((btn) => btn.classList.remove("active"));
+  // document.querySelectorAll(".viewMapData").forEach((el) => {
+  //   el.style.display = "none";
+  // });
+  
+  
+    
 }
+
+
 
 // Initialize Swiper
 document.querySelectorAll(".imageTextFormSlide").forEach(($el) => {

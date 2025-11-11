@@ -550,7 +550,7 @@
       width: 55%;
       overflow: hidden;
       img {
-        transition: 3s ease;
+        transition: 3s ease;  
         &:hover {
           transform: scale(1.1);
         }
@@ -728,7 +728,85 @@
           }
         }
       }
+    
     }
+
+      .two-imageWithHalfSlider-tab-content{
+        position: relative;
+        .two-imageWithHalfSlider-img{
+          position: initial;
+          .swiper-button-prev{
+            left: -2%;
+            background-image: none;
+            position: absolute;
+            display: block;
+            height: 20px;
+            width: 20px;
+            line-height: 0px;
+            font-size: 0px;
+            cursor: pointer;
+            @include below(tb){
+              left: 3%;
+            }
+            @include below(sm){
+              left: 4%;
+            }
+            &:after{
+              content: "";
+              display: block;
+              width: 20px;
+              height: 20px;
+              border-top: 1px solid #000;
+              border-left: 1px solid #000;
+              position: absolute;
+              top: 6px;
+              right: 0px;
+              transform: rotate(-45deg);
+              -webkit-transform: rotate(-45deg);
+              -moz-transform: rotate(-45deg);
+              @include below(tb){
+                border-top: 1px solid #fff;
+              border-left: 1px solid #fff;
+              }
+            }
+          }
+          .swiper-button-next{
+            right: -2%;
+            background-image: none;
+            position: absolute;
+            display: block;
+            height: 20px;
+            width: 20px;
+            line-height: 0px;
+            font-size: 0px;
+            cursor: pointer;
+            @include below(tb){
+              right: 3%;
+            }
+            @include below(sm){
+              right: 4%;
+            }
+            &:after{
+              content: "";
+              display: block;
+              width: 20px;
+              height: 20px;
+              border-top: 1px solid #000;
+              border-left: 1px solid #000;
+              position: absolute;
+              top: 6px;
+              right: 0px;
+              transform: rotate(136deg);
+              -webkit-transform: rotate(136deg);
+              -moz-transform: rotate(136deg);
+              @include below(tb){
+                border-top: 1px solid #fff;
+              border-left: 1px solid #fff;
+              }
+            }
+          }
+        }
+      }
   }
   @include commonTabCompRev();
 }

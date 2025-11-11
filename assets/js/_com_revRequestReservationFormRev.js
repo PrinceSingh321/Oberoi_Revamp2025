@@ -269,7 +269,7 @@ function fnRequestForm() {
   if (window.location.href.includes("/contact-us")) {
     $("body").addClass("rev_global_contact-page");
 }
-  $(".two-imageWithHalfSlider .slick-arrow, .ComSlider-item.inactive, .imageWithRightTextWrappRev .slick-arrow , .two-imageWithHalfSlider-img .slick-arrow, .imageTextFormSlide .swiper-button-next, .imageTextFormSlide .swiper-button-prev").click(function () {
+  $(".two-imageWithHalfSlider .slick-arrow, .two-imageWithHalfSlider .swiper-button-prev, .two-imageWithHalfSlider .swiper-button-next, .ComSlider-item.inactive, .imageWithRightTextWrappRev .slick-arrow, .imageWithRightTextWrappRev .swiper-button-next, .imageWithRightTextWrappRev .swiper-button-prev, .two-imageWithHalfSlider-img .slick-arrow, .two-imageWithHalfSlider-img .swiper-button-prev, .two-imageWithHalfSlider-img .swiper-button-next, .imageTextFormSlide .swiper-button-next, .imageTextFormSlide .swiper-button-prev").click(function () {
     if (!$("body").hasClass("contact-us")) {
       $(".request-a-proposal-form, .weddingForm-writeus.active, #reservation-queries").hide();
       $(".rev_global_contact-page #reservation-queries").removeAttr("style");
