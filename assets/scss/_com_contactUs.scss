@@ -76,6 +76,7 @@
               color: $colorOrange;
               left: 0;
               text-align: left;
+              font-family: "verdanaN";
               @include below(tb) {
                 font-size: 0.937rem;
               }
