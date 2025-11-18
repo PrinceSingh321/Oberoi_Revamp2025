@@ -413,12 +413,36 @@ document
   .querySelectorAll(".two-imageWithHalfSlider-img, .com_TwoImageSlickSlider")
   .forEach(($el) => {
     const isTwoImageSlider = $el.classList.contains("com_TwoImageSlickSlider");
+    const isSingleSlider = $el.closest(".imageWithRightTextSlide") !== null;
     const $container = $el.closest(
       ".com_TwoImageSliderComponentRev, .two-imageWithHalfSlider"
     );
+    
+    const spv = isSingleSlider 
+      ? 1 
+      : isTwoImageSlider 
+        ? 2 
+        : 1.4;
 
+    const $wrapper = $el.querySelector(".swiper-wrapper");
+    const slides = $el.querySelectorAll(".swiper-slide");
+    const slideCount = slides.length;
+
+    // AUTO DUPLICATE SLIDES TO SUPPORT INFINITE LOOP 
+    if (slideCount <= spv + 1.5) {
+      // total slides ko minimum 4 banate (Swiper loop + fractional fix)
+      const cloneNeeded = 4 - slideCount;
+
+      for (let i = 0; i < cloneNeeded; i++) {
+        const clone = slides[i % slideCount].cloneNode(true);
+        clone.classList.add("auto-duplicate");
+        $wrapper.appendChild(clone);
+      }
+    }
+     
     const swiper = new Swiper($el, {
-      slidesPerView: isTwoImageSlider ? 2 : 1,
+      //slidesPerView: isSingleSlider ? 1 : isTwoImageSlider ? 2 : 1.4,
+      slidesPerView: spv,
       spaceBetween: isTwoImageSlider ? 67 : 0,
       speed: 600,
       parallax: true,
@@ -436,11 +460,12 @@ document
       },
       breakpoints: {
         1025: {
-          slidesPerView: isTwoImageSlider ? 2 : 1,
+          //slidesPerView: isSingleSlider ? 1 : isTwoImageSlider ? 2 : 1.4,
+          slidesPerView: spv,
         },
         0: {
           slidesPerView: 1,
-          spaceBetween: isTwoImageSlider ? 0 : 0,
+          spaceBetween: 0,
         },
       },
       on: {
@@ -448,23 +473,26 @@ document
           handleSlideChange($el, this);
         },
         slideChangeTransitionEnd: function () {
-         // Hide map buttons and data
-        document.querySelectorAll(".slidesBtnRev .cta-boxRev .buttonStyle2Rev").forEach((btn) => btn.classList.remove("active"));
-        document.querySelectorAll(".viewMapData").forEach((el) => {
-          el.style.display = "none";
-        });
+          // Hide map buttons and data
+          document
+            .querySelectorAll(".slidesBtnRev .cta-boxRev .buttonStyle2Rev")
+            .forEach((btn) => btn.classList.remove("active"));
+          document.querySelectorAll(".viewMapData").forEach((el) => {
+            el.style.display = "none";
+          });
         },
+        
       },
     });
 
     
 
-    // Disable interaction if real slides < 3
+    // Disable interaction if real slides < 2
     const realSlidesCount = Array.from(swiper.slides).filter(
       (slide) => !slide.classList.contains("swiper-slide-duplicate")
     ).length;
 
-    if (realSlidesCount < 3) {
+    if (realSlidesCount < 2) {
       swiper.allowTouchMove = false;
       swiper.mousewheel.disable();
       $container
