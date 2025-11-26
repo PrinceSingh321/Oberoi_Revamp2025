@@ -429,7 +429,7 @@ document
     const slideCount = slides.length;
 
     // AUTO DUPLICATE SLIDES TO SUPPORT INFINITE LOOP 
-    if (slideCount <= spv + 1.5) {
+    if (slideCount === 2) {
       // total slides ko minimum 4 banate (Swiper loop + fractional fix)
       const cloneNeeded = 4 - slideCount;
 
@@ -470,7 +470,7 @@ document
       },
       on: {
         slideChange: function () {
-          handleSlideChange($el, this);
+          //handleSlideChange($el, this);
         },
         slideChangeTransitionEnd: function () {
           // Hide map buttons and data
@@ -480,6 +480,10 @@ document
           document.querySelectorAll(".viewMapData").forEach((el) => {
             el.style.display = "none";
           });
+            document.querySelectorAll('.two-imageWithHalfSlider .country-list, .com_TwoImageSliderComponentRev .country-list').forEach((li) => {
+              li.classList.remove('highlight', 'hasdrop');
+            });
+            handleSlideChange($el, this);
         },
         
       },
@@ -564,6 +568,7 @@ document.querySelectorAll(".com_TwoImageSliderComponentRev .ComSlider-tab li, .t
           $item.classList.remove("active");
         });
         $dropdown.classList.add("active");
+        
 
         $dropdown.querySelectorAll("li").forEach(($item) => {
           const filterValue = $item.getAttribute("data-filter");
@@ -571,7 +576,7 @@ document.querySelectorAll(".com_TwoImageSliderComponentRev .ComSlider-tab li, .t
             `.swiper-slide[data-slide="${filterValue}"]`
           );
           $item.classList.toggle("active", targetSlide && targetSlide.classList.contains("swiper-slide-active"));
-          
+           
         });
       } else {
         $parentSlider
@@ -612,12 +617,59 @@ function handleSlideChange($sliderEl, swiperInstance) {
   });
 
   // Hide map on slide change
-  const dmap = document.querySelector("#dmap");
-  const mapImage = document.querySelector("#map-image");
-  if (dmap && mapImage) {
-    dmap.style.display = "none";
-    mapImage.style.display = "block";
+  // const dmap = document.querySelector("#dmap");
+  // const mapImage = document.querySelector("#map-image");
+  // if (dmap && mapImage) {
+  //   dmap.style.display = "none";
+  //   mapImage.style.display = "block";
+  // }
+
+  const parent = document.querySelector(".tab-two-imageWithHalfSlider");
+
+  if (parent) {
+    const dmap = document.querySelector("#dmap");
+    const calcBtn = parent.querySelector(".get-direction");
+    const mapImage = parent.querySelector("#map-image");
+    const hotelEndPoint = document.getElementById("hotelEndPoint");
+    const calculateDirectionBtn = document.getElementById("calculateDirection");
+  
+    if (calcBtn && mapImage) {
+      // By default display block
+      mapImage.style.display = "block";
+      dmap.style.display = "none";
+  
+      // On click hide
+      calcBtn.addEventListener("click", () => {
+        mapImage.style.display = "none";
+        dmap.style.display = "block";
+
+         // CHECK IF hotelEndPoint HAS VALUE
+        if (hotelEndPoint && hotelEndPoint.value.trim() !== "") {
+          mapImage.style.display = "none";
+          dmap.style.display = "block";
+          $("#directionMsg").text("");
+        } else {
+          mapImage.style.display = "block"; // HIDE IF NO VALUE
+          dmap.style.display = "none";     // default map also hide
+          
+          $("#directionMsg").text("Location not found.");
+        }
+        
+      });
+
+    }
+  
+    // KEYUP ENTER EVENT IN PURE JS
+    if (hotelEndPoint && calculateDirectionBtn) {
+      hotelEndPoint.addEventListener("keyup", (event) => {
+        if (event.key === "Enter") {
+          calculateDirectionBtn.click();
+        }
+      });
+    }
   }
+  
+
 
   // Update dropdown visible text
   const activeTab = $parent.querySelector(".ComSlider-tab li.active");
@@ -690,251 +742,561 @@ document.querySelectorAll(".imageTextFormSlide").forEach(($el) => {
 
 
 
-function fnComMultislider(
-  sliderClass,
-  subSliderContainerClass,
-  viewAllButtonClass
-) {
-  $(sliderClass).each(function (index, element) {
-    // Initialize the main slider
-    $(element).slick({
-      dots: false,
-      arrows: true,
-      slidesToShow: 2,
-      slidesToScroll: 1,
-      lazyLoad: "ondemand",
-      touchMove: true,
-      draggable: true, // Allow dragging with mouse/trackpad
-      swipe: true ,
-      responsive: [
-        {
-          breakpoint: 991,
-          settings: {
-            slidesToShow: 1,
-          },
-        },
-      ],
+// function fnComMultislider(
+//   sliderClass,
+//   subSliderContainerClass,
+//   viewAllButtonClass
+// ) {
+//   $(sliderClass).each(function (index, element) {
+//     // Initialize the main slider
+//     $(element).slick({
+//       dots: false,
+//       arrows: true,
+//       slidesToShow: 2,
+//       slidesToScroll: 1,
+//       lazyLoad: "ondemand",
+//       touchMove: true,
+//       draggable: true, // Allow dragging with mouse/trackpad
+//       swipe: true ,
+//       responsive: [
+//         {
+//           breakpoint: 991,
+//           settings: {
+//             slidesToShow: 1,
+//           },
+//         },
+//       ],
+//     });
+
+//     var SliderSlideCount = $(element).slick("getSlick").slideCount;
+
+//     if (SliderSlideCount == 1) {
+//       var parentContainer = $(this).parents(".com_container");
+//       //var sliderClass1 = parentContainer.find(sliderClass);
+//       var subSliderContainerClass1 = parentContainer.find(
+//         subSliderContainerClass
+//       );
+//       //alert(SliderSlideCount);
+//       $(element).slick("unslick");
+//       $(element)
+//         .find(".multisider-sub-slider-container:first-child")
+//         .addClass("fullwidth");
+//       //   $(subSliderContainerClass1).find(".multislider-sub-slide img").each(function (imgIndex, imgElement) {
+//       //     var imgBigDataSrc = $(imgElement).attr("src");
+//       //     var imgLastItem = $(imgElement).attr("src");
+
+//       //     if ($(imgElement).attr("src") != undefined) {
+//       //         var imgDataSrc = $(imgElement).attr("src");
+//       //         if (imgLastItem == "yes") {
+//       //             $(imgElement).parents("picture").find("source:nth-child(1), source:nth-child(2), source:nth-child(3)").attr("srcset", imgBigDataSrc);
+//       //             //console.log(imgBigDataSrc);
+//       //         }
+//       //         else {
+//       //             $(imgElement).parents("picture").find("source:nth-child(1), source:nth-child(2), source:nth-child(3)").attr("srcset", imgDataSrc);
+//       //         }
+//       //     }
+
+//       // });
+//     }
+//   });
+
+//   // Initialize the sub-slider outside the loop
+
+//   $(subSliderContainerClass).slick({
+//     dots: true,
+//     arrows: false,
+//     autoplay: false,
+//     fade: true,
+//     cssEase: "cubic-bezier(0.7, 0, 0.3, 1)",
+//     speed: 900,
+//     pauseOnHover: true,
+//     lazyLoad: "ondemand",
+//     touchMove: true,
+//     responsive: [
+//       {
+//         breakpoint: 991,
+//         settings: {
+//           slidesToShow: 1,
+//           autoplay: false,
+//           arrows: true,
+//           settings: "refresh",
+//         },
+//       },
+//     ],
+//   });
+
+//   $(subSliderContainerClass).slick("refresh");
+
+  
+  
+
+//   //$(".view-all-button").hide();
+
+//   var SliderSlideCount = $(sliderClass).slick("getSlick").slideCount;
+//   if (SliderSlideCount > 2) {
+//     //$(viewAllButtonClass).show();
+//   } else {
+//     //$(viewAllButtonClass).hide();
+//   }
+
+//   $(viewAllButtonClass).on("click", function () {
+//     var parentContainer = $(this).parents(".com_container");
+//     var sliderClass1 = parentContainer.find(sliderClass);
+//     var subSliderContainerClass1 = parentContainer.find(
+//       subSliderContainerClass
+//     );
+//     var viewAllButtonClass = parentContainer.find(viewAllButtonClass);
+
+//     $(this).hide();
+//     parentContainer.find(".viewLessBtn").show();
+
+//     $(sliderClass1).slick("destroy");
+//     var subSliderSlideCount = $(this)
+//       .parents(".com_container")
+//       .find(".multislider-sub-slide-img")
+//       .slick("getSlick").slideCount;
+//     if ($(subSliderSlideCount) % 2 !== 0) {
+      
+//     }
+//     setTimeout(function () {
+//       $(subSliderContainerClass).slick("refresh");
+//     }, 200);
+//     $(this).hide();
+
+//     parentContainer.find(".multiSlider-main-slide").addClass("active");
+
+//     fnRequestForm();
+//     if($(window).width() > 767){
+//       MouseoverEvent();
+//       }
+//     fnPrefieldSelectBoxOnbutttonClick();
+    
+//     fnRequestForm();
+//     fnPrefieldSelectBoxOnbutttonClick();
+//   });
+
+//   $(window).load(function () {
+//     if ($(window).width() < 767) {
+//       $(".multiSlider-main-slide").addClass("active");
+//       $(viewAllButtonClass).hide();
+//       $(".multislider-slide").slick("unslick");
+//     }
+//   });
+// }
+
+// fnComMultislider(".multislider-slide",".multislider-sub-slide-img",".view-all-button");
+
+// if($(window).width() > 767){
+// function MouseoverEvent() {
+//   $(".multislider-sub-slide-img").mouseover(function () {
+//     $(this).slick("play");
+//   });
+//   $(".multislider-sub-slide-img").mouseout(function () {
+//     $(this).slick("pause");
+//   });
+// }
+// MouseoverEvent();
+// }
+
+
+// $(".viewLessBtn").on("click", function () {
+//   // Additional actions after reinitialization
+//   setTimeout(function () {
+//     fnSlickChangeArrowPos();
+//     fnRequestForm();
+//     fnPrefieldSelectBoxOnbutttonClick();
+//     if($(window).width() > 767){
+//     MouseoverEvent();
+//     }
+//   }, 300);
+
+//   var parentContainer = $(this).parents(".com_container");
+
+//   // Hide corresponding "View Back" button and show corresponding "View All" button
+//   $(this).hide();
+//   $(this).parents(".com_container").find(".view-all-button").show();
+
+//   var multiSliderMainSlide = parentContainer.find(".multiSlider-main-slide");
+//   if (multiSliderMainSlide.length > 0) {
+//     multiSliderMainSlide.removeClass("active");
+//   }
+
+//   // Reinitialize main slider corresponding to this button
+//   var slider = parentContainer.find(".multislider-slide");
+//   slider.slick({
+//     dots: false,
+//     arrows: true,
+//     slidesToShow: 2,
+//     slidesToScroll: 1,
+//     lazyLoad: "ondemand",
+//     touchMove: true,
+//     responsive: [
+//       {
+//         breakpoint: 991,
+//         settings: {
+//           slidesToShow: 1,
+//           spaceBetween: 0,
+//         },
+//       },
+//     ],
+//   });
+
+//   var Subslider = parentContainer.find(".multislider-sub-slide-img");
+
+//   // $(Subslider).slick({
+//   //   dots: true,
+//   //   arrows: false,
+//   //   autoplay: false,
+//   //   fade: true,
+//   //   cssEase: "cubic-bezier(0.7, 0, 0.3, 1)",
+//   //   speed: 900,
+//   //   pauseOnHover: true,
+//   //   lazyLoad: "ondemand",
+//   //   responsive: [
+//   //     {
+//   //       breakpoint: 991,
+//   //       settings: {
+//   //         slidesToShow: 1,
+//   //         autoplay: false,
+//   //         settings: "refresh",
+//   //       },
+//   //     },
+//   //   ],
+//   // });
+
+//   fnRequestForm();
+// });
+
+
+function fnComMultislider(sliderClass, subSliderContainerClass, viewAllButtonClass) {
+  // Maps to keep track of instances and listeners, keyed by DOM element
+  const mainMap = new WeakMap();
+  const subMap = new WeakMap();
+
+  // Helper: find the actual .swiper container inside wrapper (or wrapper itself if it is .swiper)
+  function findSwiperContainer(el) {
+    if (!el) return null;
+    return el.classList.contains('swiper') ? el : el.querySelector('.swiper');
+  }
+
+  // INITIALIZE or RE-INIT MAIN SLIDERS
+  document.querySelectorAll(sliderClass).forEach((element) => {
+    const swiperContainer = findSwiperContainer(element);
+    if (!swiperContainer) return;
+
+    // If already initialized, destroy first (safe re-init)
+    const existing = mainMap.get(element);
+    if (existing && !existing.destroyed) {
+      existing.destroy(true, true);
+      mainMap.delete(element);
+    }
+
+    // Create main swiper
+    const mainSwiper = new Swiper(swiperContainer, {
+      slidesPerView: 2,
+      spaceBetween: 20,
+      loop: true,
+      lazy: { loadOnTransitionStart: true },
+      grabCursor: true,
+      watchSlidesProgress: true,
+      navigation: {
+        nextEl: element.querySelector('.swiper-button-next'),
+        prevEl: element.querySelector('.swiper-button-prev'),
+      },
+      breakpoints: {
+        0: { slidesPerView: 1 },
+        992: { slidesPerView: 2 },
+      },
     });
 
-    var SliderSlideCount = $(element).slick("getSlick").slideCount;
+    mainMap.set(element, mainSwiper);
 
-    if (SliderSlideCount == 1) {
-      var parentContainer = $(this).parents(".com_container");
-      //var sliderClass1 = parentContainer.find(sliderClass);
-      var subSliderContainerClass1 = parentContainer.find(
-        subSliderContainerClass
-      );
-      //alert(SliderSlideCount);
-      $(element).slick("unslick");
-      $(element)
-        .find(".multisider-sub-slider-container:first-child")
-        .addClass("fullwidth");
-      //   $(subSliderContainerClass1).find(".multislider-sub-slide img").each(function (imgIndex, imgElement) {
-      //     var imgBigDataSrc = $(imgElement).attr("src");
-      //     var imgLastItem = $(imgElement).attr("src");
-
-      //     if ($(imgElement).attr("src") != undefined) {
-      //         var imgDataSrc = $(imgElement).attr("src");
-      //         if (imgLastItem == "yes") {
-      //             $(imgElement).parents("picture").find("source:nth-child(1), source:nth-child(2), source:nth-child(3)").attr("srcset", imgBigDataSrc);
-      //             //console.log(imgBigDataSrc);
-      //         }
-      //         else {
-      //             $(imgElement).parents("picture").find("source:nth-child(1), source:nth-child(2), source:nth-child(3)").attr("srcset", imgDataSrc);
-      //         }
-      //     }
-
-      // });
+    // SINGLE SLIDE -> destroy main and mark first sub as fullwidth
+    if (mainSwiper.slides && mainSwiper.slides.length === 1) {
+      mainSwiper.destroy(true, true);
+      mainMap.delete(element);
+      const firstSub = element.querySelector('.multisider-sub-slider-container');
+      if (firstSub) firstSub.classList.add('fullwidth');
     }
   });
 
-  // Initialize the sub-slider outside the loop
+  // INITIALIZE SUB-SLIDERS (idempotent)
+  document.querySelectorAll(subSliderContainerClass).forEach((subSliderEl) => {
+    const subSwiperContainer = findSwiperContainer(subSliderEl);
+    if (!subSwiperContainer) return;
 
-  $(subSliderContainerClass).slick({
-    dots: true,
-    arrows: false,
-    autoplay: false,
-    fade: true,
-    cssEase: "cubic-bezier(0.7, 0, 0.3, 1)",
-    speed: 900,
-    pauseOnHover: true,
-    lazyLoad: "ondemand",
-    touchMove: true,
-    responsive: [
-      {
-        breakpoint: 991,
-        settings: {
-          slidesToShow: 1,
-          autoplay: false,
-          arrows: true,
-          settings: "refresh",
-        },
+    // destroy if exists
+    const existing = subMap.get(subSliderEl);
+    if (existing && !existing.destroyed) {
+      existing.destroy(true, true);
+      subMap.delete(subSliderEl);
+    }
+
+    // create new sub swiper
+    const subSwiper = new Swiper(subSwiperContainer, {
+      slidesPerView: 1,
+      effect: 'fade',
+      fadeEffect: { crossFade: true },
+      loop: false,
+      speed: 900,
+      autoplay: false,
+      lazy: { loadOnTransitionStart: true },
+      pagination: {
+        el: subSliderEl.querySelector('.swiper-pagination'),
+        clickable: true,
       },
-    ],
+      allowTouchMove: true,
+      breakpoints: { 0: { slidesPerView: 1 }, 992: { slidesPerView: 1 } },
+    });
+
+    // store
+    subMap.set(subSliderEl, subSwiper);
+
+    // setup mouseover play/pause (safe - remove previous handlers by using dataset flag)
+    if (!subSliderEl.dataset._multislider_mouse_handlers) {
+      const onEnter = () => { if (subSwiper && subSwiper.autoplay) subSwiper.autoplay.start(); };
+      const onLeave = () => { if (subSwiper && subSwiper.autoplay) subSwiper.autoplay.stop(); };
+
+      subSliderEl.addEventListener('mouseover', onEnter);
+      subSliderEl.addEventListener('mouseout', onLeave);
+
+      // mark handlers added (so re-initialization doesn't add duplicate handlers)
+      subSliderEl.dataset._multislider_mouse_handlers = '1';
+    }
   });
 
-  $(subSliderContainerClass).slick("refresh");
+  // VIEW ALL button logic (attach handlers idempotently)
+  document.querySelectorAll(viewAllButtonClass).forEach((btn) => {
+    // avoid attaching event multiple times
+    if (btn.dataset._multislider_viewall_init === '1') return;
+    btn.dataset._multislider_viewall_init = '1';
 
-  
-  
+    btn.addEventListener('click', function () {
+      const parentContainer = this.closest('.com_container');
+      if (!parentContainer) return;
 
-  //$(".view-all-button").hide();
+      // UI toggle
+      this.style.display = 'none';
+      const viewLessBtn = parentContainer.querySelector('.viewLessBtn');
+      if (viewLessBtn) viewLessBtn.style.display = 'block';
 
-  var SliderSlideCount = $(sliderClass).slick("getSlick").slideCount;
-  if (SliderSlideCount > 2) {
-    //$(viewAllButtonClass).show();
-  } else {
-    //$(viewAllButtonClass).hide();
-  }
-
-  $(viewAllButtonClass).on("click", function () {
-    var parentContainer = $(this).parents(".com_container");
-    var sliderClass1 = parentContainer.find(sliderClass);
-    var subSliderContainerClass1 = parentContainer.find(
-      subSliderContainerClass
-    );
-    var viewAllButtonClass = parentContainer.find(viewAllButtonClass);
-
-    $(this).hide();
-    parentContainer.find(".viewLessBtn").show();
-
-    $(sliderClass1).slick("destroy");
-    var subSliderSlideCount = $(this)
-      .parents(".com_container")
-      .find(".multislider-sub-slide-img")
-      .slick("getSlick").slideCount;
-    if ($(subSliderSlideCount) % 2 !== 0) {
-      // Set data-src for images within odd sub-slider
-      // $(subSliderContainerClass1).find(".multislider-sub-slide img").each(function (imgIndex, imgElement) {
-      //     //console.log($(imgElement).attr("src"));
-      //     var imgBigDataSrc = $(imgElement).attr("src");
-      //     var imgLastItem = $(imgElement).attr("src");
-      //     //console.log(imgBigDataSrc);
-      //     if ($(imgElement).attr("src") != undefined) {
-      //         var imgDataSrc = $(imgElement).attr("src");
-      //         if (imgLastItem == "yes") {
-      //             $(imgElement)
-      //                 .parents("picture")
-      //                 .find("source:nth-child(1), source:nth-child(2), source:nth-child(3)")
-      //                 .attr("srcset", imgBigDataSrc);
-      //             //console.log(imgBigDataSrc);
-      //         }
-      //         else {
-      //             $(imgElement)
-      //                 .parents("picture")
-      //                 .find("source:nth-child(1), source:nth-child(2), source:nth-child(3)")
-      //                 .attr("srcset", imgDataSrc);
-      //         }
-      //     }
-      // });
-      //$(subSliderContainerClass1).find(".slick-slide:last-child").parents(".slick-slider").parent(".multisider-sub-slider-container:last-child").addClass("fullwidth");
-      // $(subSliderContainerClass1).find(".slick-slide:nth-child(even)").parents(".slick-slider").parent(".multisider-sub-slider-container:nth-child(even)").removeClass("fullwidth");
-    }
-    setTimeout(function () {
-      $(subSliderContainerClass).slick("refresh");
-    }, 200);
-    $(this).hide();
-
-    parentContainer.find(".multiSlider-main-slide").addClass("active");
-
-    fnRequestForm();
-    if($(window).width() > 767){
-      MouseoverEvent();
+      // find the main slider wrapper inside this com_container
+      const mainWrapper = parentContainer.querySelector(sliderClass);
+      if (mainWrapper) {
+        // If we stored the instance on wrapper -> destroy
+        const instance = mainMap.get(mainWrapper);
+        if (instance && !instance.destroyed) {
+          instance.destroy(true, true);
+          mainMap.delete(mainWrapper);
+        } else {
+          // fallback: find actual DOM .swiper and destroy if present (cover all cases)
+          const mainSwiperEl = findSwiperContainer(mainWrapper);
+          if (mainSwiperEl && mainSwiperEl.swiper && !mainSwiperEl.swiper.destroyed) {
+            mainSwiperEl.swiper.destroy(true, true);
+          }
+        }
       }
-    fnPrefieldSelectBoxOnbutttonClick();
-    
-    fnRequestForm();
-    fnPrefieldSelectBoxOnbutttonClick();
+
+      // Re-init sub sliders inside this container (destroy any existing and create fresh)
+      const subSliderContainers = parentContainer.querySelectorAll(subSliderContainerClass);
+      subSliderContainers.forEach((subSliderEl) => {
+        const existing = subMap.get(subSliderEl);
+        if (existing && !existing.destroyed) {
+          existing.destroy(true, true);
+          subMap.delete(subSliderEl);
+        }
+
+        const innerSwiper = findSwiperContainer(subSliderEl);
+        if (!innerSwiper) return;
+
+        const reinit = new Swiper(innerSwiper, {
+          slidesPerView: 1,
+          effect: 'fade',
+          fadeEffect: { crossFade: true },
+          loop: false,
+          speed: 900,
+          lazy: { loadOnTransitionStart: true },
+          pagination: {
+            el: subSliderEl.querySelector('.swiper-pagination'),
+            clickable: true,
+          },
+          allowTouchMove: true,
+        });
+
+        subMap.set(subSliderEl, reinit);
+
+        // ensure mouseover handlers exist (dataset prevents duplicates)
+        if (!subSliderEl.dataset._multislider_mouse_handlers) {
+          const onEnter = () => { if (reinit && reinit.autoplay) reinit.autoplay.start(); };
+          const onLeave = () => { if (reinit && reinit.autoplay) reinit.autoplay.stop(); };
+          subSliderEl.addEventListener('mouseover', onEnter);
+          subSliderEl.addEventListener('mouseout', onLeave);
+          subSliderEl.dataset._multislider_mouse_handlers = '1';
+        }
+      });
+
+      // Expand layout
+      parentContainer.querySelector('.multiSlider-main-slide')?.classList.add('active');
+
+      // Custom callbacks (unchanged)
+      if (typeof fnRequestForm === 'function') fnRequestForm();
+      if (window.innerWidth > 767 && typeof MouseoverEvent === 'function') MouseoverEvent();
+      if (typeof fnPrefieldSelectBoxOnbutttonClick === 'function') fnPrefieldSelectBoxOnbutttonClick();
+    });
   });
 
-  $(window).load(function () {
-    if ($(window).width() < 767) {
-      $(".multiSlider-main-slide").addClass("active");
-      $(viewAllButtonClass).hide();
-      $(".multislider-slide").slick("unslick");
+  // MOBILE: run on load (destroy mains and show expanded)
+  function handleMobileOnLoad() {
+    if (window.innerWidth < 767) {
+      document.querySelectorAll('.multiSlider-main-slide').forEach((el) => el.classList.add('active'));
+      document.querySelectorAll(viewAllButtonClass).forEach((btn) => (btn.style.display = 'none'));
+
+      // destroy any main swipers tracked
+      mainMap.forEach?.(function(dummy, key) {
+        // WeakMap doesn't support forEach in all envs; fallback below
+      });
+
+      // fallback: scan DOM and destroy any .swiper inside sliderClass wrappers
+      document.querySelectorAll(sliderClass).forEach((slider) => {
+        const swEl = findSwiperContainer(slider);
+        if (swEl && swEl.swiper && !swEl.swiper.destroyed) {
+          swEl.swiper.destroy(true, true);
+        }
+      });
     }
-  });
-}
-
-fnComMultislider(".multislider-slide",".multislider-sub-slide-img",".view-all-button");
-
-if($(window).width() > 767){
-function MouseoverEvent() {
-  $(".multislider-sub-slide-img").mouseover(function () {
-    $(this).slick("play");
-  });
-  $(".multislider-sub-slide-img").mouseout(function () {
-    $(this).slick("pause");
-  });
-}
-MouseoverEvent();
-}
-
-
-$(".viewLessBtn").on("click", function () {
-  // Additional actions after reinitialization
-  setTimeout(function () {
-    fnSlickChangeArrowPos();
-    fnRequestForm();
-    fnPrefieldSelectBoxOnbutttonClick();
-    if($(window).width() > 767){
-    MouseoverEvent();
-    }
-  }, 300);
-
-  var parentContainer = $(this).parents(".com_container");
-
-  // Hide corresponding "View Back" button and show corresponding "View All" button
-  $(this).hide();
-  $(this).parents(".com_container").find(".view-all-button").show();
-
-  var multiSliderMainSlide = parentContainer.find(".multiSlider-main-slide");
-  if (multiSliderMainSlide.length > 0) {
-    multiSliderMainSlide.removeClass("active");
   }
 
-  // Reinitialize main slider corresponding to this button
-  var slider = parentContainer.find(".multislider-slide");
-  slider.slick({
-    dots: false,
-    arrows: true,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    lazyLoad: "ondemand",
-    touchMove: true,
-    responsive: [
-      {
-        breakpoint: 991,
-        settings: {
-          slidesToShow: 1,
-          spaceBetween: 0,
-        },
+  // run immediately in case the function is called after DOM is ready
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    handleMobileOnLoad();
+  } else {
+    window.addEventListener('load', handleMobileOnLoad);
+  }
+}
+
+
+// Initialize
+fnComMultislider('.multislider-slide', '.multislider-sub-slide-img', '.view-all-button');
+
+
+// View Less logic
+document.querySelectorAll('.viewLessBtn').forEach((btn) => {
+  btn.addEventListener('click', function () {
+    const parentContainer = this.closest('.com_container');
+    if (!parentContainer) return;
+
+    // Hide ViewLess, show ViewAll
+    this.style.display = 'none';
+    const viewAllButton = parentContainer.querySelector('.view-all-button');
+    if (viewAllButton) viewAllButton.style.display = 'block';
+
+    // Collapse layout
+    const mainSlide = parentContainer.querySelector('.multiSlider-main-slide');
+    if (mainSlide) mainSlide.classList.remove('active');
+
+    // =====================================
+    // ⭐ FIXED: ALWAYS FIND CORRECT MAIN SLIDER
+    // =====================================
+    const mainWrapper = parentContainer.querySelector('.multislider-slide');
+    if (!mainWrapper) return;
+
+    const mainSwiperEl =
+      mainWrapper.classList.contains('swiper')
+        ? mainWrapper
+        : mainWrapper.querySelector('.swiper');
+
+    if (!mainSwiperEl) return;
+
+    // Destroy if exists
+    if (mainSwiperEl.swiper && !mainSwiperEl.swiper.destroyed) {
+      mainSwiperEl.swiper.destroy(true, true);
+    }
+
+    // =====================================
+    // ⭐ FIXED: RE-INIT MAIN SWIPER (MATCHES YOUR MAIN INIT)
+    // =====================================
+    const newMainSwiper = new Swiper(mainSwiperEl, {
+      slidesPerView: 2,
+      spaceBetween: 20,
+      loop: false,
+      lazy: { loadOnTransitionStart: true },
+      grabCursor: true,
+      watchSlidesProgress: true,
+      navigation: {
+        nextEl: parentContainer.querySelector('.swiper-button-next'),
+        prevEl: parentContainer.querySelector('.swiper-button-prev'),
       },
-    ],
+      breakpoints: {
+        0: { slidesPerView: 1 },
+        992: { slidesPerView: 2 },
+      },
+    });
+
+    // =====================================
+    // ⭐ FIXED: RE-INIT SUB SLIDERS
+    // =====================================
+    parentContainer.querySelectorAll('.multislider-sub-slide-img').forEach((subSliderEl) => {
+      const subSwiperContainer =
+        subSliderEl.classList.contains('swiper')
+          ? subSliderEl
+          : subSliderEl.querySelector('.swiper');
+
+      if (!subSwiperContainer) return;
+
+      if (subSwiperContainer.swiper && !subSwiperContainer.swiper.destroyed) {
+        subSwiperContainer.swiper.destroy(true, true);
+      }
+
+      const s = new Swiper(subSwiperContainer, {
+        slidesPerView: 1,
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        loop: false,
+        speed: 900,
+        lazy: { loadOnTransitionStart: true },
+        pagination: {
+          el: subSliderEl.querySelector('.swiper-pagination'),
+          clickable: true,
+        },
+        allowTouchMove: true,
+      });
+
+      // Restore hover autoplay
+      if (!subSliderEl.dataset._multislider_mouse_handlers) {
+        subSliderEl.addEventListener('mouseover', () => s.autoplay?.start?.());
+        subSliderEl.addEventListener('mouseout', () => s.autoplay?.stop?.());
+        subSliderEl.dataset._multislider_mouse_handlers = '1';
+      }
+    });
+
+    // Re-run other functions
+    setTimeout(() => {
+      fnSlickChangeArrowPos?.();
+      fnRequestForm?.();
+      fnPrefieldSelectBoxOnbutttonClick?.();
+      if (window.innerWidth > 767) MouseoverEvent?.();
+    }, 300);
   });
-
-  var Subslider = parentContainer.find(".multislider-sub-slide-img");
-
-  // $(Subslider).slick({
-  //   dots: true,
-  //   arrows: false,
-  //   autoplay: false,
-  //   fade: true,
-  //   cssEase: "cubic-bezier(0.7, 0, 0.3, 1)",
-  //   speed: 900,
-  //   pauseOnHover: true,
-  //   lazyLoad: "ondemand",
-  //   responsive: [
-  //     {
-  //       breakpoint: 991,
-  //       settings: {
-  //         slidesToShow: 1,
-  //         autoplay: false,
-  //         settings: "refresh",
-  //       },
-  //     },
-  //   ],
-  // });
-
-  fnRequestForm();
 });
+
+
+
+
+if (window.innerWidth > 767) {
+  function MouseoverEvent() {
+    document.querySelectorAll(".multislider-sub-slide-img .swiper").forEach((swiperEl) => {
+      const swiperInstance = swiperEl.swiper;
+      if (!swiperInstance) return;
+
+      swiperEl.addEventListener("mouseenter", () => {
+        if (swiperInstance.autoplay) swiperInstance.autoplay.start();
+      });
+
+      swiperEl.addEventListener("mouseleave", () => {
+        if (swiperInstance.autoplay) swiperInstance.autoplay.stop();
+      });
+    });
+  }
+
+  MouseoverEvent();
+}

@@ -30,9 +30,10 @@
           margin-top: 3.94vh;
           @include below(tb){
             left: 2%;
+            margin-top: 0px;
           }
           @include below(sm){
-            left: 8%;
+            left: 4%;
           }
           &::after{
             content: "";
@@ -66,9 +67,10 @@
           cursor: pointer;
           @include below(tb){
             right: 2%;
+            margin-top: 0px;
           }
           @include below(sm){
-            right: 8%;
+            right: 4%;
           }
           &::after{
             content: "";
@@ -115,6 +117,7 @@
             overflow: hidden;
             img {
               transition: 3s ease;
+              width:100%;
               &:hover {
                 transform: scale(1.1);
               }

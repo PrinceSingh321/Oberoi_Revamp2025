@@ -292,7 +292,8 @@
           &.mob-country-codewrap {
             &::after {
               pointer-events: none;
-              z-index: 99999;
+              // z-index: 99999;
+              z-index: 991;
             }
           }
         }

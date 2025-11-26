@@ -90,8 +90,13 @@ function fnGlobalAwards() {
 
   $(".awardsSlides li.country-list").click(function () {
     if (glblFlg) {
-      $(".two-imageWithHalfSlider-img").slick("refresh");
-      $(".two-imageWithHalfSlider-img").slick("setPosition");
+      // $(".two-imageWithHalfSlider-img").slick("refresh");
+      // $(".two-imageWithHalfSlider-img").slick("setPosition");
+      // Check if element is Slick initialized
+      if ($(".two-imageWithHalfSlider-img").hasClass("slick-initialized")) {
+        $(".two-imageWithHalfSlider-img").slick("refresh");
+        $(".two-imageWithHalfSlider-img").slick("setPosition");
+    }
     }
     // if($(this).hasClass("active")){
     //   $(this).find(".country-dropdown li").each(function(){

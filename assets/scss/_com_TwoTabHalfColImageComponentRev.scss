@@ -408,6 +408,102 @@
   }
 }
 
+.com_TwoImageSliderComponentRev{
+.two-imageWithHalfSlider{
+ .two-imageWithHalfSlider-img{
+&.swiper{
+  position: initial;
+  // padding-right: 28%;
+  @include below(tb) {
+    padding: 0 0% 0 0;
+    position: relative;
+  }
+  .swiper-button-next{
+    right: 30.5%;
+    background-image: none;
+    position: absolute;
+    display: block;
+    height: 20px;
+    width: 20px;
+    line-height: 0px;
+    font-size: 0px;
+    cursor: pointer;
+    @include below(md3){
+       right: 30.5%;
+    }
+    @include below(tb){
+      right: 5%;
+    }
+    @include below(sm){
+      right: 4%;
+    }
+    &::after{
+      // color: rgb(110 110 110);
+      // font-size: 1.7rem;
+      content: "";
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-top: 1px solid #000;
+      border-left: 1px solid #000;
+      position: absolute;
+      top: 6px;
+      right: 0px;
+      transform: rotate(136deg);
+      -webkit-transform: rotate(136deg);
+      -moz-transform: rotate(136deg);
+      @include below(tb){
+        // color: #fff;
+        // font-size: 1.4rem;
+        border-top: 1px solid #fff;
+        border-left: 1px solid #fff;
+      }
+    }
+  }
+  .swiper-button-prev{
+    left: -2%;
+    background-image: none;
+    position: absolute;
+    display: block;
+    height: 20px;
+    width: 20px;
+    line-height: 0px;
+    font-size: 0px;
+    cursor: pointer;
+    @include below(tb){
+      left: 4%;
+    }
+    @include below(sm){
+      left: 4%;
+    }
+    &::after{
+      // color: rgb(110 110 110);
+      // font-size: 1.7rem;
+      content: "";
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-top: 1px solid #000;
+      border-left: 1px solid #000;
+      position: absolute;
+      top: 6px;
+      right: 0px;
+      transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      @include below(tb){
+        // color: #fff;
+        // font-size: 1.4rem;
+        border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      }
+    }
+  }
+}
+}
+}
+}
+
 .left-section-heading {
   @include left-section-heading();
   .commonTabtitle {

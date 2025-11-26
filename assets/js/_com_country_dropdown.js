@@ -70,18 +70,17 @@ function fncountryscroll() {
               $this.addClass("highlight");
             }
           });
-        if ($(this).hasClass("hasdrop")) {
-          setTimeout(function () {
-            $(".countryscroll").css("overflow-x", "initial");
-            $(".countryscroll").addClass("overFlowScroll");
-            
-          }, 10);
-        } else {
-          setTimeout(function () {
-            $(".countryscroll").css("overflow-x", "scroll");
-            $(".countryscroll").removeClass("overFlowScroll");
-          }, 300);
-        }
+      
+// setTimeout(function () {
+//   if ($(".country-dropdown:visible").length > 0) {
+//     $(".countryscroll").css("overflow-x", "initial");
+//     $(".countryscroll").addClass("overFlowScroll");
+//   } else {
+//     $(".countryscroll").css("overflow-x", "scroll");
+//     $(".countryscroll").removeClass("overFlowScroll");
+//   }
+// }, 300);
+
        
         //   setTimeout(function(){
 
@@ -102,20 +101,115 @@ function fncountryscroll() {
         $(this).siblings("li.country-list").removeClass("hasdrop, highlight");
         $(".country-dropdown").slideUp();
         setTimeout(function () {
-          $(".countryscroll").css("overflow-x", "scroll");
+          //$(".countryscroll").css("overflow-x", "scroll");
         }, 300);
       });
 
      // Smooth scroll to center when clicking li
-$(".country-dropdownMain li").on("click", function (event) {
-  event.preventDefault();
-  this.scrollIntoView({
-    behavior: "smooth",
-    block: "nearest",
-    inline: "center",
-  });
-  
-});
+    //  $(".country-dropdownMain li").on("click", function (event) {
+    //   event.preventDefault();
+    //   event.stopPropagation(); // <-- IMPORTANT
+    
+    //   this.scrollIntoView({
+    //     behavior: "smooth",
+    //     block: "nearest",
+    //     inline: "center",
+    //   });
+    // });
+
+    if (window.innerWidth <= 767) {
+      let isTouch = false;
+      let startX = 0;
+
+        $(".countryscroll").on("touchstart", function (e) {
+            isTouch = true;
+            startX = e.originalEvent.touches[0].clientX;
+          })
+          .on("touchmove", function (e) {
+            if (!isTouch) return;
+
+            let currentX = e.originalEvent.touches[0].clientX;
+            let diffX = Math.abs(currentX - startX);
+
+            // detect actual drag X-direction
+            if (diffX > 10) {
+              $(".country-dropdown").removeClass("show").hide(); // Hide dropdown
+              $(".hasdropdown").removeClass("hasdrop");
+            }
+          })
+          .on("touchend", function () {
+            isTouch = false;
+          });
+          
+      const container = document.querySelector(".country-dropdownMain");
+      let activeLi = null;
+      let activeDropdown = null;
+    
+      function updateDropdownPosition() {
+        if (!activeLi || !activeDropdown) return;
+    
+        const liRect = activeLi.getBoundingClientRect();
+        activeDropdown.style.position = "fixed";
+        activeDropdown.style.top = liRect.bottom + "px";
+        activeDropdown.style.left = liRect.left + "px";
+      }
+    
+      const countryListItems = document.querySelectorAll(".country-list");
+      const dropdowns = document.querySelectorAll(".country-dropdown");
+    
+      if (countryListItems.length > 0) {
+        countryListItems.forEach((li) => {
+          li.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+    
+            this.scrollIntoView({
+              behavior: "smooth",
+              inline: "center",
+              block: "nearest",
+            });
+    
+            countryListItems.forEach((item) =>
+              item.classList.remove("active")
+            );
+    
+            dropdowns.forEach((dd) => (dd.style.display = "none"));
+    
+            this.classList.add("active");
+    
+            const dropdown = this.querySelector(".country-dropdown");
+    
+            if (dropdown) {
+              activeLi = this;
+              activeDropdown = dropdown;
+    
+              dropdown.style.display = "block";
+              updateDropdownPosition();
+    
+              setTimeout(updateDropdownPosition, 200);
+            } else {
+              activeLi = null;
+              activeDropdown = null;
+            }
+          });
+        });
+      }
+    
+      //Safe event binding only if container exists
+      if (container) {
+        container.addEventListener("scroll", updateDropdownPosition);
+      }
+    
+      window.addEventListener("scroll", updateDropdownPosition);
+      window.addEventListener("resize", updateDropdownPosition);
+
+
+    }
+    
+    
+
+    
+
 
       // // Horizontal scroll support
       // $(".countryscroll ul").each(function () {

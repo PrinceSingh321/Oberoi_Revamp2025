@@ -8,6 +8,7 @@
     margin-top: 15px;
     overflow-x: scroll;
     overflow-y:hidden;
+    //overflow: hidden;
   }
   &.overFlowScroll{
     @include below(sm) {
